@@ -1,0 +1,107 @@
+# This is the template file for creating symbols with tragesym
+# every line starting with '#' is a comment line.
+
+[options]
+# wordswap swaps labels if the pin is on the right side an looks like this:
+#   "PB1 (CLK)". That's useful for micro controller port labels
+# rotate_labels rotates the pintext of top and bottom pins
+#   this is useful for large symbols like FPGAs with more than 100 pins
+# sort_labels will sort the pins by it's labels
+#   useful for address ports, busses, ...
+wordswap=yes
+rotate_labels=yes
+sort_labels=no
+generate_pinseq=yes
+sym_width=3900
+pinwidthvertical=300
+pinwidthhorizontal=300
+
+[geda_attr]
+# name will be printed in the top of the symbol
+# name is only some graphical text, not an attribute
+# version specifies a gschem version.
+# if you have a device with slots, you'll have to use slot= and slotdef=
+# use comment= if there are special information you want to add
+version=20060113 1
+name=MSP430F550x
+device=MSP430F550x
+refdes=U?
+footprint=TQFP48
+description=
+documentation=
+author=Dan Hirsch <thequux@gmail.com>
+dist-license=WTFPL
+use-license=WTFPL
+numslots=0
+#slot=1
+#slotdef=1:
+#slotdef=2:
+#slotdef=3:
+#slotdef=4:
+#comment=
+#comment=
+#comment=
+
+[pins]
+# tabseparated list of pin descriptions
+# ----------------------------------------
+# pinnr is the physical number of the pin
+# seq is the pinseq= attribute, leave it blank if it doesn't matter
+# type can be (in, out, io, oc, oe, pas, tp, tri, clk, pwr)
+# style can be (line,dot,clk,dotclk,spacer,none). none if only want to add a net
+# posit. can be (l,r,t,b) or empty for nets.
+# net specifies the name of the net. Vcc or GND for example.
+# label represents the pinlabel.
+#	negation lines can be added with "\_" example: \_enable\_ 
+#	if you want to write a "\" use "\\" as escape sequence
+#-----------------------------------------------------
+#pinnr	seq	type	style	posit.	net	label	
+#-----------------------------------------------------
+1 	1 	io	line	l		P6.0 (A0/CB0)
+2 	2 	io	line	l		P6.1 (A1/CB1)
+3 	3 	io	line	l		P6.2 (A2/CB2)
+4 	4 	io	line	l		P6.3 (A3/CB3)
+5 	5 	io	line	l		P5.0 (A8/VeREF+)
+6 	6 	io	line	l		P5.1 (A9/VeREF-)
+7 	7 	io	line	l		AVCC1
+8 	8 	io	line	l		P5.4 (XIN)
+9 	9 	io	line	l		P5.5 (XOUT)
+10	10	io	line	l		AVSS1
+11	11	io	line	l		DVCC1
+12	12	io	line	l		DVSS1
+13	13	io	line	l		VCORE
+14	14	io	line	l		P1.0 (TA0CLK/ACLK)
+15	15	io	line	l		P1.1 (TA0.0)
+16	16	io	line	l		P1.2 (TA0.1)
+17	17	io	line	l		P1.3 (TA0.2)
+18	18	io	line	l		P1.4 (TA0.3)
+19	19	io	line	l		P1.5 (TA0.4)
+20	20	io	line	l		P1.6 (TA1CLK/CBOUT)
+21	21	io	line	l		P1.7 (TA1.0)
+22	22	io	line	l		P2.0 (TA1.1)
+23	23	io	line	l		PJ.0 (TDO)
+24	24	io	line	l		PJ.1 (TDI/TCLK)
+25	25	io	line	r		PJ.2 (TMS)
+26	26	io	line	r		PJ.3 (TCK)
+27	27	io	line	r		DVSS2
+28	28	io	line	r		DVCC2
+29	29	io	line	r		P4.0 (UCB1_STE/UCA1_SCLK)
+30	30	io	line	r		P4.1 (UCB1_MOSI/UCB1_SDA)
+31	31	io	line	r		P4.2 (UCB1_MISO/UCB1_SCL)
+32	32	io	line	r		P4.3 (UCB1_SCLK/UCA1_STE)
+33	33	io	line	r		P4.4 (UCA1_TXD/UCA1_MOSI)
+34	34	io	line	r		P4.5 (UCA1_RXD/UCA1_MISO)
+35	35	io	line	r		P4.6
+36	36	io	line	r		P4.7
+37	37	io	line	r		VSSU
+38	38	io	line	r		PU.0 (D+)
+39	39	io	line	r		PUR
+40	40	io	line	r		PU.1 (D-)
+41	41	io	line	r		VBUS
+42	42	io	line	r		VUSB
+43	43	io	line	r		V18
+44	44	io	line	r		AVSS2
+45	45	io	line	r		P5.2 (XT2IN)
+46	46	io	line	r		P5.3 (XT2OUT)
+47	47	io	line	r		TEST/SBWTCK
+48	48	io	line	r		RST/NMI/SBWTDIO

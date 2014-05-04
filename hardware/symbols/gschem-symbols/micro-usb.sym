@@ -1,0 +1,73 @@
+v 20060113 1
+P 2100 1600 1800 1600 1 0 0
+{
+T 1900 1650 5 8 1 1 0 0 1
+pinnumber=1
+T 1900 1550 5 8 0 1 0 2 1
+pinseq=1
+T 1750 1600 9 8 1 1 0 6 1
+pinlabel=+5V
+T 1750 1600 5 8 0 1 0 8 1
+pintype=pwr
+}
+P 2100 1300 1800 1300 1 0 0
+{
+T 1900 1350 5 8 1 1 0 0 1
+pinnumber=2
+T 1900 1250 5 8 0 1 0 2 1
+pinseq=2
+T 1750 1300 9 8 1 1 0 6 1
+pinlabel=D-
+T 1750 1300 5 8 0 1 0 8 1
+pintype=io
+}
+P 2100 1000 1800 1000 1 0 0
+{
+T 1900 1050 5 8 1 1 0 0 1
+pinnumber=3
+T 1900 950 5 8 0 1 0 2 1
+pinseq=3
+T 1750 1000 9 8 1 1 0 6 1
+pinlabel=D+
+T 1750 1000 5 8 0 1 0 8 1
+pintype=io
+}
+P 2100 700 1800 700 1 0 0
+{
+T 1900 750 5 8 1 1 0 0 1
+pinnumber=4
+T 1900 650 5 8 0 1 0 2 1
+pinseq=4
+T 1750 700 9 8 1 1 0 6 1
+pinlabel=ID
+T 1750 700 5 8 0 1 0 8 1
+pintype=pas
+}
+P 2100 400 1800 400 1 0 0
+{
+T 1900 450 5 8 1 1 0 0 1
+pinnumber=5
+T 1900 350 5 8 0 1 0 2 1
+pinseq=5
+T 1750 400 9 8 1 1 0 6 1
+pinlabel=GND
+T 1750 400 5 8 0 1 0 8 1
+pintype=pwr
+}
+B 400 100 1400 1800 3 0 0 0 -1 -1 0 -1 -1 -1 -1 -1
+T 1800 2000 8 10 1 1 0 6 1
+refdes=U?
+T 400 2000 9 10 1 0 0 0 1
+Micro USB
+T 400 2200 5 10 0 0 0 0 1
+device=MICRO_B
+T 400 2400 5 10 0 0 0 0 1
+author=Dan Hirsch <thequux@gmail.com>
+T 400 2600 5 10 0 0 0 0 1
+description=Micro USB connector
+T 400 2800 5 10 0 0 0 0 1
+numslots=0
+T 400 3000 5 10 0 0 0 0 1
+dist-license=WTFPL
+T 400 3200 5 10 0 0 0 0 1
+use-license=WTFPL
