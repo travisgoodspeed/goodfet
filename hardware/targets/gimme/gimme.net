@@ -1,0 +1,57 @@
+# EESchema Netlist Version 1.1 created  Thu Sep 13 13:57:12 2012
+(
+ ( /505237B2 GSG-0603D D1 LED
+  ( 1 N-000016 )
+  ( 2 GND )
+ )
+ ( /505236D2 GSG-POGOPIN-5-IMME P1 POGOPINS
+  ( 1 /RESET_N )
+  ( 2 /DD )
+  ( 3 /DC )
+  ( 4 3V3 )
+  ( 5 GND )
+ )
+ ( /505236A9 GSG-HEADER-2x7 P2 GOODFET
+  ( 1 /DD )
+  ( 2 N-000012 )
+  ( 3 ? )
+  ( 4 ? )
+  ( 5 /RESET_N )
+  ( 6 ? )
+  ( 7 /DC )
+  ( 8 ? )
+  ( 9 GND )
+  ( 10 ? )
+  ( 11 ? )
+  ( 12 ? )
+  ( 13 ? )
+  ( 14 ? )
+ )
+ ( /505237B8 GSG-0603 R1 330
+  ( 1 3V3 )
+  ( 2 N-000016 )
+ )
+ ( /505236F1 GSG-SSSS810701 SW1 SPST
+  ( 1 N-000012 )
+  ( 2 3V3 )
+ )
+)
+*
+{ Allowed footprints by component:
+$component D1
+ LED-3MM
+ LED-5MM
+ LED-10MM
+ LED-0603
+ LED-0805
+ LED-1206
+ LEDV
+$endlist
+$component R1
+ R?
+ SM0603
+ SM0805
+ R?-*
+$endlist
+$endfootprintlist
+}

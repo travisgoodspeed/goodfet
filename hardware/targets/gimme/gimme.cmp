@@ -1,0 +1,38 @@
+Cmp-Mod V01 Created by CvPcb (2012-05-21 BZR 3261)-stable date = Thu Sep 13 13:57:12 2012
+
+BeginCmp
+TimeStamp = /505237B2;
+Reference = D1;
+ValeurCmp = LED;
+IdModule  = GSG-0603D;
+EndCmp
+
+BeginCmp
+TimeStamp = /505236D2;
+Reference = P1;
+ValeurCmp = POGOPINS;
+IdModule  = GSG-POGOPIN-5-IMME;
+EndCmp
+
+BeginCmp
+TimeStamp = /505236A9;
+Reference = P2;
+ValeurCmp = GOODFET;
+IdModule  = GSG-HEADER-2x7;
+EndCmp
+
+BeginCmp
+TimeStamp = /505237B8;
+Reference = R1;
+ValeurCmp = 330;
+IdModule  = GSG-0603;
+EndCmp
+
+BeginCmp
+TimeStamp = /505236F1;
+Reference = SW1;
+ValeurCmp = SPST;
+IdModule  = GSG-SSSS810701;
+EndCmp
+
+EndListe
