@@ -1,0 +1,31 @@
+#!/usr/bin/env python
+
+import sys
+
+def main():
+    fout = open("include/apps.h", "w+")
+    print >> fout, "#ifndef APPS_H"
+    print >> fout, "#define APPS_H"
+    print >> fout, "#include \"app.h\""
+    for app in sys.argv[1:]:
+        print >> fout, '#include "%s"' % app
+    print >> fout, "#endif"
+    fout.close()
+
+    cout = open("lib/apps.c", "w+")
+    print >> cout, "#include <stdint.h>"
+    print >> cout, "#include \"app.h\""
+    print >> cout, "#include \"apps.h\""
+    print >> cout, "app_t const * const apps[] = {"
+    for app in sys.argv[1:]:
+        print >> cout, "#ifdef %s_H" % app.split('.')[0].upper()
+        print >> cout, "\t&%s_app," % app.split('.')[0]
+        print >> cout, "#endif"
+    print >> cout, "};"
+    print >> cout, "int const num_apps = sizeof(apps) / sizeof(app_t*);"
+    cout.close()
+
+    return 0
+
+if __name__ == "__main__":
+	sys.exit(main())

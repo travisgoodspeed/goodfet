@@ -1,0 +1,109 @@
+Texas TI Launchpad
+==================
+
+$4.30 Just too good to be true, so suddenly it is probably not available anymore,
+On the otherhand, it is effective marketing, it work I am here (from pic/atmega)
+and maybe not that expensive at all and it direclty benefit the develoopers,
+thats something new - well done TI.
+
+$4.30 for 4 CPUs, 2 of which is pretty powerfull. The TUSB3410 and MSP430F1612
+
+My initial goal was to use the TI-Launchpad with goodfet software to developxi
+software for the C1110/C1111 another TI-chip.
+
+But using the supplied MSP430G2211/MSP430G2231 as intelligent portexpanders
+you can have a really powerfull expandable platform here, making it an even better
+bargain.
+
+Only 4 (four) IO pins available on pinhead
+==========================================
+P3.6 TXD1    BTXD
+P3.7 RXD1    BRXD
+P5.3         SBWTCK 47k pull-down
+P2.4 P4.7 P5.1 P5.2 SBWDIO 47k pull-up
+P4.7 P2.4 P5.1 P5.2 SBWDIO 47k pull-up
+P5.1 P4.7 P2.4 P5.2 SBWDIO 47k pull-up
+P5.2 P4.7 P2.4 P5.1 SBWDIO 47k pull-up
+
+Unmodified the TI-Launchpad cripples the F1612, by only making 4 pins
+easily accessable
+
+Quite a few of the GoodFET applications use 4 or less pins.
+
+The MSP430F1612 has tiny pins so at least for me it is very difficult
+to solder on extra wires, The easiest would be P5.4 (pin48).
+The TUSB3410 is easier to attach wires to
+
+MSP430 pins which is also available on the TUSB3410
+===================================================
+P1.3 RTS input	from TUSB3410	(would require modified TUSB3410 firmware)
+P1.4 DTR input	from TUSB3410	(would require modified TUSB3410 firmware)
+P1.5 DSR output	to TUSB3410	(could easily be used)
+P1.6 CTS output	to TUSB3410	(could easily be used)
+P3.1 SDA io	to TUSB3410	(available after successfull boot of TUSB3410)
+P3.3 SCL io	to TUSB3410	(available after successfull boot of TUSB3410)
+P4.6 Reset to TUSB3410
+P5.5 SMCLK 12 Mhz send to TUSG3410
+
+although there are restrictions on some of the bits there is a little more
+room for expansion,  The original GoodFET only uses 6 pins.
+
+Comparison to GoodFET
+=====================
+On the GoodFET, DTR and RTS is connected to Reset and Tck on F1612,
+RXD and TXD is connected to P1.1/P2.2 so BSL is possible, not here !!
+
+We could emulate a BSL, this would be a nice Sunday afternoon project.
+
+Basic design consideration for my adaption
+==========================================
+- Interrupt based.
+- goodfet.??? host-python script compatible. (unmodified if possible)
+- minimal modification to current firmware-sources
+- MSP430F1612 is using 12Mhz X-tal on XT-2, which is supplied to the TUSB3410
+- MSP430F1612 itself runs at 3Mhz X-tal, close enough to goodfet timing at 3M6
+- MSP430F1612 effictively disables EEPROM access for TUSB3410, by pulling SDA, SCL low
+- Without EEPROM the TUSB3410 will load the firmware from /lib/firmware/..../ti3410.fw
+  and act as standard USB-rs232 controller, no further modifications is necessary.
+- MSP430F1612 release reset to TUSB3410,  note, avoid reseting the MSP430F1612 because
+  this will remove the clock from the TUSB3410, NMI can easily implement similar
+  warmstart funtionaity.
+- for "offband" debuging, attach a serial port to BTXD (pin6), and compile with -DDEBUG_LEVEL=3 -DDEBUG_START=3
+- for debugging via USB add -DINBAND_DEBUG
+- four new filesi:
+	README.TI_Lauchpad
+	platform/tilauchpad.h
+	lib/tilaunchpad.c
+	include/msp430_serial.c
+	lib/msp430_serial.h
+- due to bugs in my msp430 library (seems to be fixed in current source)
+	core_common.inc
+	lib/setjmp.S
+- modification to:
+	Makefile:
+
+Other design considerations in my modifications to GoodFET software
+===================================================================
+I am always low on USB-serial adapters, hence this will be
+the default alternative use of the modified TI Launchpad.
+
+1) if a jumper is installed between SBWTCK and SBWDIO, the Launchpad
+will configure itself as a USB-serial adapter at 115k2 no handshakes.
+It might be an idea to implement it as application, if others care
+for this functionality.
+NOTE: this is DISABLED right now,
+
+Since Pins are scarse,
+
+2) usart TX1 and RX1 can be configured independently A using
+uart1 tx for debug messages, while using rx bit for something else
+or we can use full uart1 for pass through
+or not uart1 functions at all,
+
+3) LED can be easily be moved to different pin, or diabled.
+
+June 2011
+
+Best Regards
+
+Peter@Lorenzen.us
