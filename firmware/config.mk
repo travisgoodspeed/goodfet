@@ -30,6 +30,7 @@ endif
 ifneq (,$(findstring $(board),goodfet20 goodfet10 goodfet11))
 mcu ?= msp430f1611
 platform := goodfet
+CONFIG_i2c := n
 endif
 
 ifneq (,$(findstring $(board),goodfet21,goodfet22))
