@@ -1,0 +1,78 @@
+#!/usr/bin/env python
+import Queue
+import math
+import wave
+import sys;
+import binascii;
+import array;
+import csv, time, argparse;
+import datetime
+import os
+import random
+from random import randrange
+
+ 
+# NOW THE FUN STUFF!!!!!
+
+music = wave.open("./beethovensfifth.wav", 'r');
+print "number of frames: %d " %music.getnframes()
+print "number of channels: %d " %music.getnchannels()
+print "sample width: %d " %music.getsampwidth()
+print "framerate: %d " %music.getframerate()
+print "compression: %s " %music.getcompname()
+
+path = "./values.csv"
+outfile= open(path,'w')
+dataWriter = csv.writer(outfile,delimiter=',')
+
+numFramesToRead = music.getframerate()*.1 # grab .1s of audio
+sampNum = 0;
+averageValues = []
+avgprev = 0
+avgprev2 = 0
+while(1):
+    row = []
+    runningSum = 0
+    
+    sample = music.readframes(int(numFramesToRead)) # grab .1s of audio
+    
+    length = len(sample)
+    if( length == 0):
+        break
+    for i in range(0, length,4):
+        runningSum += ord(sample[i]) #average the dual-channel
+        runningSum += ord(sample[i+2])
+      
+    
+# we used 2 of every 4 frames, so divide length by 2
+
+# normalize to speedometer range of values
+    
+    #print "speedometerVal = %f " %val;
+    #print "speed = %f" %(1.617*val-63.5)# speed we're trying to display
+    
+    avg = math.fabs(runningSum/(length /2) -127)       # we used 2 of every 4 frames, so divide length by 2
+    if( sampNum > 0):
+    	avg = (avg+avgprev)/2
+    #if( sampNum == 1):
+    #	avg = (avg + avgprev)/2
+    #if( sampNum > 1 ):
+   # 	avg = (avg + avgprev + avgprev2)/3
+   # avgprev2 = avgprev;
+   # avgprev = avg;
+   	
+    #val = (40 + 5*(avg))            # normalize to speedometer range of values
+    val = avg*15 + 40
+    #print val
+    #print "speedometerVal = %f " %val;
+    speed = int(1.617*val-63.5)
+    if( speed > 120 ):
+    	speed = 120
+    #print "speed = %f" %(1.617*val-63.5)    # speed we're trying to display
+    row.append(sampNum)
+    row.append(avg)
+    row.append(speed)
+    sampNum += 1
+    dataWriter.writerow(row)
+outfile.close()
+    

@@ -1,0 +1,12 @@
+#!/usr/bin/env python
+# GoodFET py2exe Script
+# 
+# Written poorly by Q, amended by Travis.
+# PYTHONCONSOLE is rewritten by sed to be the proper name.
+# Build with 'make py2exe' on Win32 with Python, py2exe, py-serial, and GNU.
+
+from distutils.core import setup
+import py2exe
+
+#setup(console=['PYTHONCONSOLE'])
+setup(console=['mainDisplay.py'])

@@ -1,0 +1,685 @@
+<?xml version="1.0" encoding="ascii"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>experiments.experiments</title>
+  <link rel="stylesheet" href="epydoc.css" type="text/css" />
+  <script type="text/javascript" src="epydoc.js"></script>
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="#204080"
+      alink="#204080">
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+      <th class="navbar" width="100%"></th>
+  </tr>
+</table>
+<table width="100%" cellpadding="0" cellspacing="0">
+  <tr valign="top">
+    <td width="100%">
+      <span class="breadcrumbs">
+        <a href="experiments-module.html">Module&nbsp;experiments</a> ::
+        Class&nbsp;experiments
+      </span>
+    </td>
+    <td>
+      <table cellpadding="0" cellspacing="0">
+        <!-- hide/show private -->
+        <tr><td align="right"><span class="options">[<a href="javascript:void(0);" class="privatelink"
+    onclick="toggle_private();">hide&nbsp;private</a>]</span></td></tr>
+        <tr><td align="right"><span class="options"
+            >[<a href="frames.html" target="_top">frames</a
+            >]&nbsp;|&nbsp;<a href="experiments.experiments-class.html"
+            target="_top">no&nbsp;frames</a>]</span></td></tr>
+      </table>
+    </td>
+  </tr>
+</table>
+<!-- ==================== CLASS DESCRIPTION ==================== -->
+<h1 class="epydoc">Class experiments</h1><p class="nomargin-top"><span class="codelink"><a href="experiments-pysrc.html#experiments">source&nbsp;code</a></span></p>
+<pre class="base-tree">
+<a href="GoodFETMCPCANCommunication.GoodFETMCPCANCommunication-class.html">GoodFETMCPCANCommunication.GoodFETMCPCANCommunication</a> --+
+                                                        |
+                                                       <strong class="uidshort">experiments</strong>
+</pre>
+
+<dl><dt>Known Subclasses:</dt>
+<dd>
+      <ul class="subclass-list">
+<li><a href="FordExperiments.FordExperiments-class.html">FordExperiments.FordExperiments</a></li>  </ul>
+</dd></dl>
+
+<hr />
+<p>This class provides methods for reverse-engineering the protocols on 
+  the CAN bus network via the GOODTHOPTER10 board, <a 
+  href="http://goodfet.sourceforge.net/hardware/goodthopter10/" 
+  target="_top">http://goodfet.sourceforge.net/hardware/goodthopter10/</a></p>
+
+<!-- ==================== INSTANCE METHODS ==================== -->
+<a name="section-InstanceMethods"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Instance Methods</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-InstanceMethods"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="experiments.experiments-class.html#__init__" class="summary-sig-name">__init__</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">data_location</span>=<span class="summary-sig-default"><code class="variable-quote">'</code><code class="variable-string">../../contrib/ThayerData/</code><code class="variable-quote">'</code></span>)</span><br />
+      Constructor</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="experiments-pysrc.html#experiments.__init__">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">list of numbers</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="experiments.experiments-class.html#filterStdSweep" class="summary-sig-name">filterStdSweep</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">freq</span>,
+        <span class="summary-sig-arg">low</span>,
+        <span class="summary-sig-arg">high</span>,
+        <span class="summary-sig-arg">time</span>=<span class="summary-sig-default">5</span>)</span><br />
+      This method will sweep through the range of standard ids given from 
+      low to high.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="experiments-pysrc.html#experiments.filterStdSweep">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">list of numbers, list of numbers</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="experiments.experiments-class.html#sweepRandom" class="summary-sig-name">sweepRandom</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">freq</span>,
+        <span class="summary-sig-arg">number</span>=<span class="summary-sig-default">5</span>,
+        <span class="summary-sig-arg">time</span>=<span class="summary-sig-default">5</span>)</span><br />
+      This method will choose random values to listen out of all the 
+      possible standard ids up to the given number.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="experiments-pysrc.html#experiments.sweepRandom">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">None</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="experiments.experiments-class.html#rtrSweep" class="summary-sig-name">rtrSweep</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">freq</span>,
+        <span class="summary-sig-arg">lowID</span>,
+        <span class="summary-sig-arg">highID</span>,
+        <span class="summary-sig-arg">attempts</span>=<span class="summary-sig-default">1</span>,
+        <span class="summary-sig-arg">duration</span>=<span class="summary-sig-default">1</span>,
+        <span class="summary-sig-arg">verbose</span>=<span class="summary-sig-default">True</span>)</span><br />
+      This method will sweep through the range of ids given by lowID to 
+      highID and send a remote transmissions request (RTR) to each id and 
+      then listen for a response.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="experiments-pysrc.html#experiments.rtrSweep">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">None</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="experiments.experiments-class.html#generationFuzzer" class="summary-sig-name">generationFuzzer</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">freq</span>,
+        <span class="summary-sig-arg">standardIDs</span>,
+        <span class="summary-sig-arg">dbLimits</span>,
+        <span class="summary-sig-arg">period</span>,
+        <span class="summary-sig-arg">writesPerFuzz</span>,
+        <span class="summary-sig-arg">Fuzzes</span>)</span><br />
+      This method will perform generation based fuzzing on the bus.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="experiments-pysrc.html#experiments.generationFuzzer">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">None</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="experiments.experiments-class.html#generalFuzz" class="summary-sig-name">generalFuzz</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">freq</span>,
+        <span class="summary-sig-arg">Fuzzes</span>,
+        <span class="summary-sig-arg">period</span>,
+        <span class="summary-sig-arg">writesPerFuzz</span>)</span><br />
+      The method will inject properly formatted, randomly generated 
+      messages at a given period for a <i>writesPerFuzz</i> number of 
+      times.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="experiments-pysrc.html#experiments.generalFuzz">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="experiments.experiments-class.html#packetRespond" class="summary-sig-name">packetRespond</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">freq</span>,
+        <span class="summary-sig-arg">time</span>,
+        <span class="summary-sig-arg">repeats</span>,
+        <span class="summary-sig-arg">period</span>,
+        <span class="summary-sig-arg">responseID</span>,
+        <span class="summary-sig-arg">respondPacket</span>,
+        <span class="summary-sig-arg">listenID</span>,
+        <span class="summary-sig-arg">listenPacket</span>=<span class="summary-sig-default">None</span>)</span><br />
+      This method will allow the user to listen for a specific packet and 
+      then respond with a given message.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="experiments-pysrc.html#experiments.packetRespond">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2" class="summary">
+    <p class="indent-wrapped-lines"><b>Inherited from <code><a href="GoodFETMCPCANCommunication.GoodFETMCPCANCommunication-class.html">GoodFETMCPCANCommunication.GoodFETMCPCANCommunication</a></code></b>:
+      <code><a href="GoodFETMCPCANCommunication.GoodFETMCPCANCommunication-class.html#addFilter">addFilter</a></code>,
+      <code><a href="GoodFETMCPCANCommunication.GoodFETMCPCANCommunication-class.html#filterForPacket">filterForPacket</a></code>,
+      <code><a href="GoodFETMCPCANCommunication.GoodFETMCPCANCommunication-class.html#freqtest">freqtest</a></code>,
+      <code><a href="GoodFETMCPCANCommunication.GoodFETMCPCANCommunication-class.html#isniff">isniff</a></code>,
+      <code><a href="GoodFETMCPCANCommunication.GoodFETMCPCANCommunication-class.html#multiPacketSpit">multiPacketSpit</a></code>,
+      <code><a href="GoodFETMCPCANCommunication.GoodFETMCPCANCommunication-class.html#multiPacketTest">multiPacketTest</a></code>,
+      <code><a href="GoodFETMCPCANCommunication.GoodFETMCPCANCommunication-class.html#printInfo">printInfo</a></code>,
+      <code><a href="GoodFETMCPCANCommunication.GoodFETMCPCANCommunication-class.html#reset">reset</a></code>,
+      <code><a href="GoodFETMCPCANCommunication.GoodFETMCPCANCommunication-class.html#setRate">setRate</a></code>,
+      <code><a href="GoodFETMCPCANCommunication.GoodFETMCPCANCommunication-class.html#sniff">sniff</a></code>,
+      <code><a href="GoodFETMCPCANCommunication.GoodFETMCPCANCommunication-class.html#sniffTest">sniffTest</a></code>,
+      <code><a href="GoodFETMCPCANCommunication.GoodFETMCPCANCommunication-class.html#spit">spit</a></code>,
+      <code><a href="GoodFETMCPCANCommunication.GoodFETMCPCANCommunication-class.html#spitSetup">spitSetup</a></code>,
+      <code><a href="GoodFETMCPCANCommunication.GoodFETMCPCANCommunication-class.html#spitSingle">spitSingle</a></code>,
+      <code><a href="GoodFETMCPCANCommunication.GoodFETMCPCANCommunication-class.html#test">test</a></code>,
+      <code><a href="GoodFETMCPCANCommunication.GoodFETMCPCANCommunication-class.html#writeData">writeData</a></code>
+      </p>
+    </td>
+  </tr>
+</table>
+<!-- ==================== INSTANCE VARIABLES ==================== -->
+<a name="section-InstanceVariables"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Instance Variables</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-InstanceVariables"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+  <tr>
+    <td colspan="2" class="summary">
+    <p class="indent-wrapped-lines"><b>Inherited from <code><a href="GoodFETMCPCANCommunication.GoodFETMCPCANCommunication-class.html">GoodFETMCPCANCommunication.GoodFETMCPCANCommunication</a></code></b>:
+      <code><a href="GoodFETMCPCANCommunication.GoodFETMCPCANCommunication-class.html#INJECT_DATA_LOCATION">INJECT_DATA_LOCATION</a></code>
+      </p>
+    </td>
+  </tr>
+</table>
+<!-- ==================== METHOD DETAILS ==================== -->
+<a name="section-MethodDetails"></a>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Method Details</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-MethodDetails"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+</table>
+<a name="__init__"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">__init__</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">data_location</span>=<span class="sig-default"><code class="variable-quote">'</code><code class="variable-string">../../contrib/ThayerData/</code><code class="variable-quote">'</code></span>)</span>
+    <br /><em class="fname">(Constructor)</em>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="experiments-pysrc.html#experiments.__init__">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Constructor</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>data_location</code></strong> (string) - path to the folder where data will be stored</li>
+    </ul></dd>
+    <dt>Overrides:
+        <a href="GoodFETMCPCANCommunication.GoodFETMCPCANCommunication-class.html#__init__">GoodFETMCPCANCommunication.GoodFETMCPCANCommunication.__init__</a>
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="filterStdSweep"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">filterStdSweep</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">freq</span>,
+        <span class="sig-arg">low</span>,
+        <span class="sig-arg">high</span>,
+        <span class="sig-arg">time</span>=<span class="sig-default">5</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="experiments-pysrc.html#experiments.filterStdSweep">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>This method will sweep through the range of standard ids given from 
+  low to high. This will actively filter for 6 ids at a time and sniff for 
+  the given amount of time in seconds. If at least one message is read in 
+  then it will go individually through the 6 ids and sniff only for that id
+  for the given amount of time. This does not save any sniffed packets.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>freq</code></strong> (number) - The frequency at which the bus is communicating</li>
+        <li><strong class="pname"><code>low</code></strong> (integer) - The low end of the id sweep</li>
+        <li><strong class="pname"><code>high</code></strong> (integer) - The high end of the id sweep</li>
+        <li><strong class="pname"><code>time</code></strong> (number) - Sniff time for each trial. Default is 5 seconds</li>
+    </ul></dd>
+    <dt>Returns: list of numbers</dt>
+        <dd>A list of all IDs found during the sweep.</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="sweepRandom"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">sweepRandom</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">freq</span>,
+        <span class="sig-arg">number</span>=<span class="sig-default">5</span>,
+        <span class="sig-arg">time</span>=<span class="sig-default">5</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="experiments-pysrc.html#experiments.sweepRandom">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>This method will choose random values to listen out of all the 
+  possible standard ids up to the given number. It will sniff for the given
+  amount of time on each set of ids on the given frequency. Sniffs in 
+  groups of 6 but when at least one message is read in it will go through 
+  all six individually before continuing. This does not save any sniffed 
+  packets.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>freq</code></strong> (number) - The frequency at which the bus is communicating</li>
+        <li><strong class="pname"><code>number</code></strong> (integer) - High end of the possible ids. This will define a range from 0 to 
+          number that the ids will be chosen from</li>
+        <li><strong class="pname"><code>time</code></strong> (number) - Sniff time for each trial. Default is 5 seconds</li>
+    </ul></dd>
+    <dt>Returns: list of numbers, list of numbers</dt>
+        <dd>A list of all IDs found during the sweep and a list of all the 
+          IDs that were listened for throughout the test</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="rtrSweep"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">rtrSweep</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">freq</span>,
+        <span class="sig-arg">lowID</span>,
+        <span class="sig-arg">highID</span>,
+        <span class="sig-arg">attempts</span>=<span class="sig-default">1</span>,
+        <span class="sig-arg">duration</span>=<span class="sig-default">1</span>,
+        <span class="sig-arg">verbose</span>=<span class="sig-default">True</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="experiments-pysrc.html#experiments.rtrSweep">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>This method will sweep through the range of ids given by lowID to 
+  highID and send a remote transmissions request (RTR) to each id and then 
+  listen for a response. The RTR will be repeated in the given number of 
+  attempts and will sniff for the given duration continuing to the next 
+  id.</p>
+  <p>Any messages that are sniffed will be saved to a csv file. The 
+  filename will be stored in the DATA_LOCATION folder with a filename that 
+  is the date (YYYYMMDD)_rtr.csv. If the file already exists it will append
+  to the end of the file The format will follow that of <a 
+  href="GoodFETMCPCANCommunication.GoodFETMCPCANCommunication-class.html#sniff"
+  class="link">GoodFETMCPCANCommunication.sniff</a> in that the columns 
+  will be as follows:</p>
+<pre class="literalblock">
+   1. timestamp:     as floating point number
+   2. error boolean: 1 if there was an error detected of packet formatting (not exhaustive check). 0 otherwise
+   3. comment tag:   comment about experiments as String
+   4. duration:      Length of overall sniff
+   5. filtering:     1 if there was filtering. 0 otherwise
+   6. db0:           Integer
+   
+       ---
+   7. db7:           Integer
+</pre>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>freq</code></strong> (number) - The frequency at which the bus is communicating</li>
+        <li><strong class="pname"><code>lowID</code></strong> (integer) - The low end of the id sweep</li>
+        <li><strong class="pname"><code>highID</code></strong> (integer) - The high end of the id sweep</li>
+        <li><strong class="pname"><code>attempts</code></strong> (integer) - The number of times a RTR will be repeated for a given standard 
+          id</li>
+        <li><strong class="pname"><code>duration</code></strong> (integer) - The length of time that it will listen to the bus after sending 
+          an RTR</li>
+        <li><strong class="pname"><code>verbose</code></strong> (boolean) - When true, messages will be printed out to the terminal</li>
+    </ul></dd>
+    <dt>Returns: None</dt>
+        <dd>Does not return anything</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="generationFuzzer"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">generationFuzzer</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">freq</span>,
+        <span class="sig-arg">standardIDs</span>,
+        <span class="sig-arg">dbLimits</span>,
+        <span class="sig-arg">period</span>,
+        <span class="sig-arg">writesPerFuzz</span>,
+        <span class="sig-arg">Fuzzes</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="experiments-pysrc.html#experiments.generationFuzzer">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>This method will perform generation based fuzzing on the bus. The 
+  method will inject properly formatted, randomly generated messages at a 
+  given period for a <i>writesPerFuzz</i> number of times. The packets that
+  are injected into the bus will all be saved in the following path 
+  DATALOCATION/InjectedData/(today's date 
+  (YYYYMMDD))_GenerationFuzzedPackets.csv. An example filename would be 
+  20130222_GenerationFuzzedPackets.csv Where DATALOCATION is provided when 
+  the class is initiated. The data will be saved as integers. Each row will
+  be formatted in the following form:</p>
+<pre class="literalblock">
+            row = [time of injection, standardID, 8, db0, db1, db2, db3, db4, db5, db6, db7]
+</pre>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>freq</code></strong> (number) - The frequency at which the bus is communicating</li>
+        <li><strong class="pname"><code>standardIDs</code></strong> (list of integers) - List of standard IDs the user wishes to fuzz on. An ID will 
+          randomly be chosen with every new random packet generated. If 
+          only 1 ID is input in the list then it will only fuzz on that one
+          ID.</li>
+        <li><strong class="pname"><code>dbLimits</code></strong> (dictionary) - This is a dictionary that holds the limits of each bytes values. 
+          Each value in the dictionary will be a list containing the lowest
+          possible value for the byte and the highest possible value. The 
+          form is shown below:
+<pre class="literalblock">
+  dbLimits['db0'] = [low, high]
+  dbLimits['db1'] = [low, high]
+  ...
+  dbLimits['db7'] = [low, high] 
+</pre></li>
+        <li><strong class="pname"><code>period</code></strong> (number) - The time gap between packet inejctions given in milliseconds</li>
+        <li><strong class="pname"><code>writesPerFuzz</code></strong> (integer) - This will be the number of times that each randomly generated 
+          packet will be injected onto the bus before a new packet is 
+          generated</li>
+        <li><strong class="pname"><code>Fuzzes</code></strong> (integer) - The number of packets to be generated and injected onto bus</li>
+    </ul></dd>
+    <dt>Returns: None</dt>
+        <dd>This method does not return anything</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="generalFuzz"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">generalFuzz</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">freq</span>,
+        <span class="sig-arg">Fuzzes</span>,
+        <span class="sig-arg">period</span>,
+        <span class="sig-arg">writesPerFuzz</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="experiments-pysrc.html#experiments.generalFuzz">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>The method will inject properly formatted, randomly generated messages
+  at a given period for a <i>writesPerFuzz</i> number of times. A new 
+  random standard id will be chosen with each newly generated packet. IDs 
+  will be chosen from the full range of potential ids ranging from 0 to 
+  4095. The packets that are injected into the bus will all be saved in the
+  following path DATALOCATION/InjectedData/(today's date 
+  (YYYYMMDD))_GenerationFuzzedPackets.csv. An example filename would be 
+  20130222_GenerationFuzzedPackets.csv Where DATALOCATION is provided when 
+  the class is initiated. The data will be saved as integers. Each row will
+  be formatted in the following form:</p>
+<pre class="literalblock">
+            row = [time of injection, standardID, 8, db0, db1, db2, db3, db4, db5, db6, db7]
+</pre>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>freq</code></strong> (number) - The frequency at which the bus is communicating</li>
+        <li><strong class="pname"><code>period</code></strong> (number) - The time gap between packet inejctions given in milliseconds</li>
+        <li><strong class="pname"><code>writesPerFuzz</code></strong> (integer) - This will be the number of times that each randomly generated 
+          packet will be injected onto the bus before a new packet is 
+          generated</li>
+        <li><strong class="pname"><code>Fuzzes</code></strong> (integer) - The number of packets to be generated and injected onto bus</li>
+    </ul></dd>
+    <dt>Returns: None</dt>
+        <dd>This method does not return anything</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="packetRespond"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">packetRespond</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">freq</span>,
+        <span class="sig-arg">time</span>,
+        <span class="sig-arg">repeats</span>,
+        <span class="sig-arg">period</span>,
+        <span class="sig-arg">responseID</span>,
+        <span class="sig-arg">respondPacket</span>,
+        <span class="sig-arg">listenID</span>,
+        <span class="sig-arg">listenPacket</span>=<span class="sig-default">None</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="experiments-pysrc.html#experiments.packetRespond">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>This method will allow the user to listen for a specific packet and 
+  then respond with a given message. If no listening packet is included 
+  then the method will only listen for the id and respond with the 
+  specified packet when it receives a message from that id. This process 
+  will continue for the given amount of time (in seconds). and with each 
+  message received that matches the listenPacket and ID the transmit 
+  message will be sent the <i>repeats</i> number of times at the specified 
+  <i>period</i>. This message assumes a packet length of 8 for both 
+  messages, although the listenPacket can be None</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>freq</code></strong> (number) - Frequency of the CAN bus</li>
+        <li><strong class="pname"><code>time</code></strong> (number) - Length of time to perform the packet listen/response in seconds.</li>
+        <li><strong class="pname"><code>repeats</code></strong> (Integer) - The number of times the response packet will be injected onto the
+          bus after the listening criteria has been met.</li>
+        <li><strong class="pname"><code>period</code></strong> (number) - The time interval between messages being injected onto the CAN 
+          bus. This will be specified in milliseconds</li>
+        <li><strong class="pname"><code>responseID</code></strong> (Integer) - The standard ID of the message that we want to inject</li>
+        <li><strong class="pname"><code>respondPacket</code></strong> (List of integers) - The data we wish to inject into the bus. In the format where 
+          respondPacket[0] = databyte 0 ... respondPacket[7] = databyte 7 
+          This assumes a packet length of 8.</li>
+        <li><strong class="pname"><code>listenID</code></strong> (Integer) - The standard ID of the messages that we are listening for. When 
+          we read the correct message from this ID off of the bus, the 
+          method will begin re-injecting the responsePacket on the 
+          responseID</li>
+        <li><strong class="pname"><code>listenPacket</code></strong> (List of Integers) - The data we wish to listen for before we inject packets. This 
+          will be a list of the databytes, stored as integers such that 
+          listenPacket[0] = data byte 0, ..., listenPacket[7] = databyte 7.
+          This assumes a packet length of 8. This input can be None and 
+          this will lead to the program only listening for the standardID 
+          and injecting the response as soon as any message from that ID is
+          given</li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<br />
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+      <th class="navbar" width="100%"></th>
+  </tr>
+</table>
+<table border="0" cellpadding="0" cellspacing="0" width="100%%">
+  <tr>
+    <td align="left" class="footer">
+    Generated by Epydoc 3.0.1 on Wed Mar  6 20:20:31 2013
+    </td>
+    <td align="right" class="footer">
+      <a target="mainFrame" href="http://epydoc.sourceforge.net"
+        >http://epydoc.sourceforge.net</a>
+    </td>
+  </tr>
+</table>
+
+<script type="text/javascript">
+  <!--
+  // Private objects are initially displayed (because if
+  // javascript is turned off then we want them to be
+  // visible); but by default, we want to hide them.  So hide
+  // them unless we have a cookie that says to show them.
+  checkCookie();
+  // -->
+</script>
+</body>
+</html>

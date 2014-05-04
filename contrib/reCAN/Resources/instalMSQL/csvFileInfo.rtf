@@ -1,0 +1,30 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1038\cocoasubrtf360
+{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
+{\colortbl;\red255\green255\blue255;}
+\margl1440\margr1440\vieww11900\viewh10560\viewkind0
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+
+\f0\b\fs34 \cf0 File Format for CAN data.
+\fs30 \
+
+\fs26  How it will be stored in a csv file for loading onto the SQL database\
+
+\fs30 \
+
+\b0\fs24 The first row will be a header row containing the name of the field that is being stored. This is simply for user friendlyness if somebody wants to open the file that is not using it within the internal program itself. \
+\
+Any row begining with the '#' character will be considered a comment row and ignored. This will allow us to store information about when the data was taken and such should we want it.\
+\
+Here is the assumed column order:\
+\
+1. timestamp (floating point)\
+2. error\
+3. byte 1\
+....\
+\
+The timestamp is a floating point type\
+The error is a bit (either 1 for there is an error or 0, there isn't\
+The bytes will be stored as character string hex.\
+\
+\
+}

@@ -1,0 +1,28 @@
+The following are informal notes about py-bluez support.
+
+
+1) Linux
+
+   With py-bluez installed, you should be able to set GOODFET=bluetooth
+   to scan for devices and GOODFET=aa:bb:cc:11:22:33 to connect to
+   a specific device.
+
+2) Mac
+
+   At present, py-bluez isn't functional on OS X.  As such, users will
+   need to stick to the FTDI variant or run the client from within VMWare.
+   Linux in VMWare offers decent Bluetooth support.
+
+3) N900
+
+   The regular client runs on the N900 with py-bluez.  If a particular
+   port requires py-serial, that's a bug which can easily be patched
+   by removing the import.
+
+4) Android
+
+   A port to Python for Android is in progress, to be distributed as a
+   .egg archive with hands-off example scripts.  Until then, it is
+   likely best to run the command-line version through a chrooted
+   Debian installation.
+

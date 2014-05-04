@@ -1,0 +1,22 @@
+#
+# donbL - the donb Loader
+# donb@capitolhillconsultants.com
+# http://pa-ri.sc/goodfet
+# Oct. 7st, 2011
+#
+
+# goal
+#
+ - develop a simple bootloader for use on the AVR architecture
+ - primarily to be used with the AVR port of the GoodFET project
+	- http://goodfet.sourceforge.net/
+
+# notes
+#
+ - is less than 2048 bytes in size (1024 words)
+ - programs BOOTRST, so the NRWW section always executes first
+ - expects a 20MHz external clock
+ - not security hardened, not tested on AVR security-robust chips
+ - interrupts will be managed from the BL in the future
+	- applications may register vectors with the BL
+

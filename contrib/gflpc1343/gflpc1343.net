@@ -1,0 +1,623 @@
+# EESchema Netlist Version 1.1 created  Tue Sep 18 12:25:03 2012
+(
+ ( /5056A094 $noname  R16 10k {Lib=R}
+  (    1 3V3 )
+  (    2 /WAKEUP )
+ )
+ ( /5056A08F $noname  R17 R-SHORTED {Lib=R-SHORTED}
+  (    1 /WAKEUP )
+  (    2 GND )
+ )
+ ( /50569E68 $noname  R13 330 {Lib=R}
+  (    1 /LED2 )
+  (    2 N-000050 )
+ )
+ ( /50569E64 $noname  D4 LED2 {Lib=LED}
+  (    1 N-000050 )
+  (    2 GND )
+ )
+ ( /50569D00 $noname  R15 2k {Lib=R}
+  (    1 3V3 )
+  (    2 /SCL )
+ )
+ ( /50569CE6 $noname  R14 2k {Lib=R}
+  (    1 3V3 )
+  (    2 /SDA )
+ )
+ ( /505685A5 $noname  P4 EXPANSION {Lib=CONN_7X2}
+  (    1 GND )
+  (    2 3V3 )
+  (    3 /SDA )
+  (    4 +5V )
+  (    5 /SCL )
+  (    6 /PIO2_4 )
+  (    7 /PIO2_7 )
+  (    8 /PIO2_5 )
+  (    9 /PIO2_6 )
+  (   10 /PIO0_11 )
+  (   11 /PIO1_0 )
+  (   12 /PIO1_1 )
+  (   13 /PIO1_2 )
+  (   14 /PIO2_3 )
+ )
+ ( /505629EC $noname  P2 SWD {Lib=CONN_6}
+  (    1 3V3 )
+  (    2 /SWCLK )
+  (    3 GND )
+  (    4 /SWDIO )
+  (    5 /!RESET )
+  (    6 /MOSI0 )
+ )
+ ( /50562540 $noname  P3 ISP {Lib=CONN_6}
+  (    1 GND )
+  (    2 /!ISP )
+  (    3 ? )
+  (    4 /RXD )
+  (    5 /TXD )
+  (    6 /!RESET )
+ )
+ ( /50561542 $noname  R12 330 {Lib=R}
+  (    1 /LED1 )
+  (    2 N-000005 )
+ )
+ ( /50561540 $noname  R11 330 {Lib=R}
+  (    1 /TXLED )
+  (    2 N-000004 )
+ )
+ ( /50561534 $noname  R10 330 {Lib=R}
+  (    1 /RXLED )
+  (    2 N-000003 )
+ )
+ ( /50561522 $noname  D3 LED1 {Lib=LED}
+  (    1 N-000005 )
+  (    2 GND )
+ )
+ ( /50561521 $noname  D2 TXLED {Lib=LED}
+  (    1 N-000004 )
+  (    2 GND )
+ )
+ ( /5056151B $noname  D1 RXLED {Lib=LED}
+  (    1 N-000003 )
+  (    2 GND )
+ )
+ ( /5056141B $noname  R7 22k {Lib=R}
+  (    1 /USB_VBUS )
+  (    2 GND )
+ )
+ ( /50561413 $noname  R5 10k {Lib=R}
+  (    1 +5V )
+  (    2 /USB_VBUS )
+ )
+ ( /50560FF2 $noname  C8 1uF {Lib=C}
+  (    1 3V3 )
+  (    2 GND )
+ )
+ ( /50560FE5 $noname  C7 10uF {Lib=C}
+  (    1 +5V )
+  (    2 GND )
+ )
+ ( /50560FDF $noname  U2 AP7333 {Lib=AP7333}
+  (    1 +5V )
+  (    2 3V3 )
+  (    3 GND )
+ )
+ ( /5055FFF2 $noname  R3 10k {Lib=R}
+  (    1 /!RESET )
+  (    2 3V3 )
+ )
+ ( /5055FF82 $noname  C3 100nF {Lib=C}
+  (    1 GND )
+  (    2 3V3 )
+ )
+ ( /5055FF63 $noname  C4 100nF {Lib=C}
+  (    1 3V3 )
+  (    2 GND )
+ )
+ ( /5055FB4C $noname  R2 10k {Lib=R}
+  (    1 3V3 )
+  (    2 N-000039 )
+ )
+ ( /5055F6BC $noname  R4 1k5 {Lib=R}
+  (    1 N-000039 )
+  (    2 /!USB_CONNECT )
+ )
+ ( /5055F650 $noname  Q1 PNP {Lib=PNP}
+  (    1 3V3 )
+  (    2 N-000039 )
+  (    3 N-000045 )
+ )
+ ( /5055F4FF $noname  R1 10k {Lib=R}
+  (    1 /!ISP )
+  (    2 3V3 )
+ )
+ ( /5055F4F3 $noname  C5 18pF {Lib=C}
+  (    1 /USB_DM )
+  (    2 GND )
+ )
+ ( /5055F4EF $noname  C6 18pF {Lib=C}
+  (    1 /USB_DP )
+  (    2 GND )
+ )
+ ( /5055F449 $noname  R6 1k5 {Lib=R}
+  (    1 N-000045 )
+  (    2 /D+ )
+ )
+ ( /5055F436 $noname  R8 33 {Lib=R}
+  (    1 /USB_DM )
+  (    2 /D- )
+ )
+ ( /5055F411 $noname  R9 33 {Lib=R}
+  (    1 /USB_DP )
+  (    2 /D+ )
+ )
+ ( /5055F3B2 $noname  C1 18pF {Lib=C}
+  (    1 /XTALOUT )
+  (    2 GND )
+ )
+ ( /5055F394 $noname  C2 18pF {Lib=C}
+  (    1 /XTALIN )
+  (    2 GND )
+ )
+ ( /5055F32E $noname  J1 USB-MICRO-B {Lib=USB-MICRO-B}
+  (    1 +5V )
+  (    2 /D- )
+  (    3 /D+ )
+  (    4 ? )
+  (    5 GND )
+ )
+ ( /5055F324 $noname  X1 XTAL4PIN {Lib=XTAL4PIN}
+  (    1 /XTALOUT )
+  (    2 ? )
+  (    3 /XTALIN )
+  (    4 ? )
+ )
+ ( /5055E86B $noname  U1 LPC1343FBD48 {Lib=LPC1343FBD48}
+  (    1 /PIO2_6 )
+  (    2 /!DTR )
+  (    3 /!RESET )
+  (    4 /!ISP )
+  (    5 GND )
+  (    6 /XTALIN )
+  (    7 /XTALOUT )
+  (    8 3V3 )
+  (    9 /RXLED )
+  (   10 /SSEL0 )
+  (   11 /PIO2_7 )
+  (   12 ? )
+  (   13 /!DSR )
+  (   14 /USB_VBUS )
+  (   15 /SCL )
+  (   16 /SDA )
+  (   17 ? )
+  (   18 /PIO2_4 )
+  (   19 /USB_DM )
+  (   20 /USB_DP )
+  (   21 /PIO2_5 )
+  (   22 /!USB_CONNECT )
+  (   23 /!CTS )
+  (   24 ? )
+  (   25 /TXLED )
+  (   26 /!DCD )
+  (   27 /MISO0 )
+  (   28 /MOSI0 )
+  (   29 /SWCLK )
+  (   30 /LED2 )
+  (   31 /SCK0 )
+  (   32 /PIO0_11 )
+  (   33 /PIO1_0 )
+  (   34 /PIO1_1 )
+  (   35 /PIO1_2 )
+  (   36 ? )
+  (   37 ? )
+  (   38 /PIO2_3 )
+  (   39 /SWDIO )
+  (   40 /WAKEUP )
+  (   41 GND )
+  (   42 ? )
+  (   43 ? )
+  (   44 3V3 )
+  (   45 /!RTS )
+  (   46 /RXD )
+  (   47 /TXD )
+  (   48 /LED1 )
+ )
+ ( /5055E021 $noname  P1 GOODFET {Lib=CONN_7X2}
+  (    1 /MISO0 )
+  (    2 3V3 )
+  (    3 /MOSI0 )
+  (    4 3V3 )
+  (    5 /SSEL0 )
+  (    6 /!DTR )
+  (    7 /SCK0 )
+  (    8 /!RTS )
+  (    9 GND )
+  (   10 /!CTS )
+  (   11 /!DSR )
+  (   12 /RXD )
+  (   13 /!DCD )
+  (   14 /TXD )
+ )
+)
+*
+{ Allowed footprints by component:
+$component R16
+ R?
+ SM0603
+ SM0805
+ R?-*
+$endlist
+$component R17
+ R?
+ SM0603
+ SM0805
+ R?-*
+$endlist
+$component R13
+ R?
+ SM0603
+ SM0805
+ R?-*
+$endlist
+$component D4
+ LED-3MM
+ LED-5MM
+ LED-10MM
+ LED-0603
+ LED-0805
+ LED-1206
+ LEDV
+$endlist
+$component R15
+ R?
+ SM0603
+ SM0805
+ R?-*
+$endlist
+$component R14
+ R?
+ SM0603
+ SM0805
+ R?-*
+$endlist
+$component R12
+ R?
+ SM0603
+ SM0805
+ R?-*
+$endlist
+$component R11
+ R?
+ SM0603
+ SM0805
+ R?-*
+$endlist
+$component R10
+ R?
+ SM0603
+ SM0805
+ R?-*
+$endlist
+$component D3
+ LED-3MM
+ LED-5MM
+ LED-10MM
+ LED-0603
+ LED-0805
+ LED-1206
+ LEDV
+$endlist
+$component D2
+ LED-3MM
+ LED-5MM
+ LED-10MM
+ LED-0603
+ LED-0805
+ LED-1206
+ LEDV
+$endlist
+$component D1
+ LED-3MM
+ LED-5MM
+ LED-10MM
+ LED-0603
+ LED-0805
+ LED-1206
+ LEDV
+$endlist
+$component R7
+ R?
+ SM0603
+ SM0805
+ R?-*
+$endlist
+$component R5
+ R?
+ SM0603
+ SM0805
+ R?-*
+$endlist
+$component C8
+ SM*
+ C?
+ C1-1
+$endlist
+$component C7
+ SM*
+ C?
+ C1-1
+$endlist
+$component R3
+ R?
+ SM0603
+ SM0805
+ R?-*
+$endlist
+$component C3
+ SM*
+ C?
+ C1-1
+$endlist
+$component C4
+ SM*
+ C?
+ C1-1
+$endlist
+$component R2
+ R?
+ SM0603
+ SM0805
+ R?-*
+$endlist
+$component R4
+ R?
+ SM0603
+ SM0805
+ R?-*
+$endlist
+$component R1
+ R?
+ SM0603
+ SM0805
+ R?-*
+$endlist
+$component C5
+ SM*
+ C?
+ C1-1
+$endlist
+$component C6
+ SM*
+ C?
+ C1-1
+$endlist
+$component R6
+ R?
+ SM0603
+ SM0805
+ R?-*
+$endlist
+$component R8
+ R?
+ SM0603
+ SM0805
+ R?-*
+$endlist
+$component R9
+ R?
+ SM0603
+ SM0805
+ R?-*
+$endlist
+$component C1
+ SM*
+ C?
+ C1-1
+$endlist
+$component C2
+ SM*
+ C?
+ C1-1
+$endlist
+$endfootprintlist
+}
+{ Pin List by Nets
+Net 1 "GND" "GND"
+ J1 5
+ D4 2
+ C2 2
+ C1 2
+ C6 2
+ C5 2
+ R17 2
+ P2 3
+ U1 41
+ P3 1
+ C4 2
+ U1 5
+ P4 1
+ P1 9
+ D3 2
+ D2 2
+ D1 2
+ R7 2
+ C8 2
+ C3 1
+ C7 2
+ U2 3
+Net 2 "+5V" "+5V"
+ U2 1
+ C7 1
+ P4 4
+ J1 1
+ R5 1
+Net 3 "" ""
+ D1 1
+ R10 2
+Net 4 "" ""
+ D2 1
+ R11 2
+Net 5 "" ""
+ D3 1
+ R12 2
+Net 6 "3V3" "3V3"
+ R16 1
+ P1 4
+ P1 2
+ R2 1
+ Q1 1
+ R14 1
+ R1 2
+ U1 8
+ R15 1
+ C4 1
+ U1 44
+ P4 2
+ C8 1
+ R3 2
+ C3 2
+ U2 2
+ P2 1
+Net 7 "/!RESET" "!RESET"
+ P2 5
+ P3 6
+ R3 1
+ U1 3
+Net 9 "/TXLED" "TXLED"
+ R11 1
+ U1 25
+Net 10 "/SCL" "SCL"
+ R15 2
+ U1 15
+ P4 5
+Net 11 "/PIO1_1" "PIO1_1"
+ U1 34
+ P4 12
+Net 14 "/!CTS" "!CTS"
+ P1 10
+ U1 23
+Net 15 "/!DSR" "!DSR"
+ U1 13
+ P1 11
+Net 18 "/!RTS" "!RTS"
+ U1 45
+ P1 8
+Net 19 "/SCK0" "SCK0"
+ U1 31
+ P1 7
+Net 20 "/LED2" "LED2"
+ R13 1
+ U1 30
+Net 21 "/SSEL0" "SSEL0"
+ P1 5
+ U1 10
+Net 22 "/XTALOUT" "XTALOUT"
+ C1 1
+ U1 7
+ X1 1
+Net 23 "/XTALIN" "XTALIN"
+ C2 1
+ X1 3
+ U1 6
+Net 24 "/SWDIO" "SWDIO"
+ U1 39
+ P2 4
+Net 25 "/TXD" "TXD"
+ P1 14
+ P3 5
+ U1 47
+Net 26 "/RXD" "RXD"
+ P1 12
+ U1 46
+ P3 4
+Net 27 "/MOSI0" "MOSI0"
+ P2 6
+ P1 3
+ U1 28
+Net 28 "/!DTR" "!DTR"
+ P1 6
+ U1 2
+Net 29 "/SWCLK" "SWCLK"
+ U1 29
+ P2 2
+Net 31 "/MISO0" "MISO0"
+ P1 1
+ U1 27
+Net 34 "/!DCD" "!DCD"
+ U1 26
+ P1 13
+Net 35 "/SDA" "SDA"
+ P4 3
+ R14 2
+ U1 16
+Net 36 "/!USB_CONNECT" "!USB_CONNECT"
+ R4 2
+ U1 22
+Net 38 "/USB_DP" "USB_DP"
+ C6 1
+ U1 20
+ R9 1
+Net 39 "" ""
+ R2 2
+ R4 1
+ Q1 2
+Net 40 "/PIO2_6" "PIO2_6"
+ P4 9
+ U1 1
+Net 43 "/D-" "D-"
+ J1 2
+ R8 2
+Net 44 "/!ISP" "!ISP"
+ P3 2
+ U1 4
+ R1 1
+Net 45 "" ""
+ R6 1
+ Q1 3
+Net 46 "/USB_DM" "USB_DM"
+ U1 19
+ R8 1
+ C5 1
+Net 47 "/D+" "D+"
+ R9 2
+ J1 3
+ R6 2
+Net 48 "/USB_VBUS" "USB_VBUS"
+ U1 14
+ R7 1
+ R5 2
+Net 49 "/PIO2_5" "PIO2_5"
+ U1 21
+ P4 8
+Net 50 "" ""
+ D4 1
+ R13 2
+Net 51 "/PIO1_2" "PIO1_2"
+ P4 13
+ U1 35
+Net 52 "/PIO2_3" "PIO2_3"
+ U1 38
+ P4 14
+Net 53 "/PIO2_7" "PIO2_7"
+ P4 7
+ U1 11
+Net 54 "/PIO1_0" "PIO1_0"
+ P4 11
+ U1 33
+Net 55 "/RXLED" "RXLED"
+ U1 9
+ R10 1
+Net 56 "/LED1" "LED1"
+ R12 1
+ U1 48
+Net 57 "/WAKEUP" "WAKEUP"
+ U1 40
+ R16 2
+ R17 1
+Net 58 "/PIO2_4" "PIO2_4"
+ P4 6
+ U1 18
+Net 59 "/PIO0_11" "PIO0_11"
+ P4 10
+ U1 32
+}
+#End

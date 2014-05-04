@@ -1,0 +1,23 @@
+import threading
+
+from node import *
+from LL import *
+
+class sniff(threading.Thread):
+    
+    def __init__(self, stop_cond,LList):
+        threading.Thread.__init__(self)
+        self.stop_cond = stop_cond;
+        self.LList = LList
+        
+        
+    def run(self):
+        while(not self.stopSniff.is_set()):
+            packet = self.client.rxpacket();
+            if( packet != None):
+                node = node(packet,0,None)
+                self.LList.addNode(node);
+        
+        print "Sniffing Terminated"
+        return
+        

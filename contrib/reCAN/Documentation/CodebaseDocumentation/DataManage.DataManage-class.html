@@ -1,0 +1,1709 @@
+<?xml version="1.0" encoding="ascii"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>DataManage.DataManage</title>
+  <link rel="stylesheet" href="epydoc.css" type="text/css" />
+  <script type="text/javascript" src="epydoc.js"></script>
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="#204080"
+      alink="#204080">
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+      <th class="navbar" width="100%"></th>
+  </tr>
+</table>
+<table width="100%" cellpadding="0" cellspacing="0">
+  <tr valign="top">
+    <td width="100%">
+      <span class="breadcrumbs">
+        <a href="DataManage-module.html">Module&nbsp;DataManage</a> ::
+        Class&nbsp;DataManage
+      </span>
+    </td>
+    <td>
+      <table cellpadding="0" cellspacing="0">
+        <!-- hide/show private -->
+        <tr><td align="right"><span class="options">[<a href="javascript:void(0);" class="privatelink"
+    onclick="toggle_private();">hide&nbsp;private</a>]</span></td></tr>
+        <tr><td align="right"><span class="options"
+            >[<a href="frames.html" target="_top">frames</a
+            >]&nbsp;|&nbsp;<a href="DataManage.DataManage-class.html"
+            target="_top">no&nbsp;frames</a>]</span></td></tr>
+      </table>
+    </td>
+  </tr>
+</table>
+<!-- ==================== CLASS DESCRIPTION ==================== -->
+<h1 class="epydoc">Class DataManage</h1><p class="nomargin-top"><span class="codelink"><a href="DataManage-pysrc.html#DataManage">source&nbsp;code</a></span></p>
+<p>This class will do the data Management for the CAN analysis. This 
+  includes loading data up to the MYSQL database, downloading data from the
+  MYSQL database, converting data to pcap, loading in packets.</p>
+
+<hr />
+<div class="fields">      <p><strong>To Do:</strong>
+        change the way to upload data to run bulk inserts and not item by item 
+    as it is now
+      </p>
+</div><!-- ==================== INSTANCE METHODS ==================== -->
+<a name="section-InstanceMethods"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Instance Methods</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-InstanceMethods"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="DataManage.DataManage-class.html#__init__" class="summary-sig-name">__init__</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">host</span>,
+        <span class="summary-sig-arg">db</span>,
+        <span class="summary-sig-arg">username</span>,
+        <span class="summary-sig-arg">password</span>,
+        <span class="summary-sig-arg">table</span>,
+        <span class="summary-sig-arg">dataLocation</span>)</span><br />
+      Constructor method.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="DataManage-pysrc.html#DataManage.__init__">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">string</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="DataManage.DataManage-class.html#getSQLLocation" class="summary-sig-name">getSQLLocation</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      This method returns the path to folder where all sql queries will be 
+      saved</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="DataManage-pysrc.html#DataManage.getSQLLocation">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">String</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="DataManage.DataManage-class.html#getDataLocation" class="summary-sig-name">getDataLocation</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      This method returns the path to the main folder where all data will 
+      be stored and read from.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="DataManage-pysrc.html#DataManage.getDataLocation">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">String</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="DataManage.DataManage-class.html#getInjectedLocation" class="summary-sig-name">getInjectedLocation</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      This method returns the path to the sub folder where data that was 
+      injected will be read from.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="DataManage-pysrc.html#DataManage.getInjectedLocation">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="DataManage.DataManage-class.html#createTable" class="summary-sig-name">createTable</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">table</span>)</span><br />
+      This method will create a new table in the MYSQL database.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="DataManage-pysrc.html#DataManage.createTable">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="DataManage.DataManage-class.html#changeTable" class="summary-sig-name">changeTable</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">table</span>)</span><br />
+      Changes the dtable that we are going to be reading from and uploading
+      to in the MYSQL database</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="DataManage-pysrc.html#DataManage.changeTable">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">String</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="DataManage.DataManage-class.html#getTable" class="summary-sig-name">getTable</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Returns the name of the table that we are set to upload to.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="DataManage-pysrc.html#DataManage.getTable">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="DataManage.DataManage-class.html#addData" class="summary-sig-name">addData</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">cmd</span>)</span><br />
+      This method will insert data into the MYSQL database based on the 
+      given command and the MYSQL information provided in the constructor, 
+      <a href="DataManage.DataManage-class.html#__init__" 
+      class="link">__init__</a>.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="DataManage-pysrc.html#DataManage.addData">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">List of Lists</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="DataManage.DataManage-class.html#getData" class="summary-sig-name">getData</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">cmd</span>)</span><br />
+      This method is designed to grab data from the MYSQL database and 
+      return it to the user.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="DataManage-pysrc.html#DataManage.getData">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="DataManage.DataManage-class.html#addDataPacket" class="summary-sig-name">addDataPacket</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">data</span>,
+        <span class="summary-sig-arg">time</span>,
+        <span class="summary-sig-arg">error</span>)</span><br />
+      This method will take in a data packet (such as one read from our 
+      sniff file) and then upload it to the MYSQL database that is set for 
+      the class.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="DataManage-pysrc.html#DataManage.addDataPacket">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">String</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="DataManage.DataManage-class.html#getCmd" class="summary-sig-name">getCmd</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">packet</span>,
+        <span class="summary-sig-arg">time</span>,
+        <span class="summary-sig-arg">error</span>,
+        <span class="summary-sig-arg">duration</span>,
+        <span class="summary-sig-arg">filter</span>,
+        <span class="summary-sig-arg">comment</span>=<span class="summary-sig-default">None</span>)</span><br />
+      This method will create a sql insertion command based on the given 
+      data and the MYSQL information stored in the class.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="DataManage-pysrc.html#DataManage.getCmd">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="DataManage.DataManage-class.html#writeDataCsv" class="summary-sig-name">writeDataCsv</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">data</span>,
+        <span class="summary-sig-arg">filename</span>)</span><br />
+      This method will write the given data to the given filename as a csv 
+      file.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="DataManage-pysrc.html#DataManage.writeDataCsv">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="DataManage.DataManage-class.html#writePcapUpload" class="summary-sig-name">writePcapUpload</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">filenameUp</span>,
+        <span class="summary-sig-arg">filenameWriteTo</span>)</span><br />
+      This method will create a pcap file of the data contained in a given 
+      csv file.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="DataManage-pysrc.html#DataManage.writePcapUpload">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="DataManage.DataManage-class.html#writeToPcap" class="summary-sig-name">writeToPcap</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">filenameWriteTo</span>,
+        <span class="summary-sig-arg">data</span>)</span><br />
+      This method will create a pcap formatted file from the data that was 
+      supplied.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="DataManage-pysrc.html#DataManage.writeToPcap">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="testSQLPCAP"></a><span class="summary-sig-name">testSQLPCAP</span>(<span class="summary-sig-arg">self</span>)</span><br />
+      This is an internal test method</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="DataManage-pysrc.html#DataManage.testSQLPCAP">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="DataManage.DataManage-class.html#writetoPcapfromSQL" class="summary-sig-name">writetoPcapfromSQL</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">filenameWriteto</span>,
+        <span class="summary-sig-arg">results</span>)</span><br />
+      This method will create a pcap formatted file from the data that was 
+      supplied.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="DataManage-pysrc.html#DataManage.writetoPcapfromSQL">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">Dictionary</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="DataManage.DataManage-class.html#parseMessage" class="summary-sig-name">parseMessage</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">data</span>)</span><br />
+      This method will parse a row of the data packets that is of the form 
+      of the packet as returned by the GoodFETMCPCAN rxpacket method will 
+      simply convert each databyte to integers and then call <a 
+      href="DataManage.DataManage-class.html#parseMessageInt" 
+      class="link">parseMessageInt</a>.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="DataManage-pysrc.html#DataManage.parseMessage">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">Dictionary</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="DataManage.DataManage-class.html#parseMessageInt" class="summary-sig-name">parseMessageInt</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">data</span>)</span><br />
+      Returns:
+      This is a dictionary that contains the information for an entire data
+      packet sniffed off of the CAN bus it has already been parsed from the
+      format that it is saved as in the sniff method from 
+      GoodFETMCPCANCommuniation.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="DataManage-pysrc.html#DataManage.parseMessageInt">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">String</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="DataManage.DataManage-class.html#packet2str" class="summary-sig-name">packet2str</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">packet</span>)</span><br />
+      Converts the packet, in the form of the datapacket provided by 
+      GoodFETMCPCAN rxpacket and each element is a string ASCII character 
+      corresponding to the Hex number of the databyte.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="DataManage-pysrc.html#DataManage.packet2str">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="DataManage.DataManage-class.html#uploadData" class="summary-sig-name">uploadData</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">filename</span>)</span><br />
+      This method will upload all the data contained in the given file path
+      to the MYSQL database.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="DataManage-pysrc.html#DataManage.uploadData">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">List of lists</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="DataManage.DataManage-class.html#opencsv" class="summary-sig-name">opencsv</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">fileObj</span>)</span><br />
+      This method will load packet data from a csv file.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="DataManage-pysrc.html#DataManage.opencsv">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">List of Lists</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="DataManage.DataManage-class.html#readWriteFileHex" class="summary-sig-name">readWriteFileHex</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">filename</span>)</span><br />
+      This method will be used for reading a file for of packets to be 
+      written to the the CAN bus.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="DataManage-pysrc.html#DataManage.readWriteFileHex">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">List of Lists</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="DataManage.DataManage-class.html#readWriteFileDEC" class="summary-sig-name">readWriteFileDEC</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">filename</span>)</span><br />
+      This method will be used for reading a file for of packets to be 
+      written to the the CAN bus.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="DataManage-pysrc.html#DataManage.readWriteFileDEC">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">List of Lists</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="DataManage.DataManage-class.html#readInjectedFileDEC" class="summary-sig-name">readInjectedFileDEC</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">filename</span>,
+        <span class="summary-sig-arg">startTime</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">endTime</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">id</span>=<span class="summary-sig-default">None</span>)</span><br />
+      This method will read packets from a file that was saved from packets
+      that were injected onto the bus.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="DataManage-pysrc.html#DataManage.readInjectedFileDEC">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="DataManage.DataManage-class.html#uploadFiles" class="summary-sig-name">uploadFiles</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      This method will upload all data files from sniffing experiments that
+      have been saved.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="DataManage-pysrc.html#DataManage.uploadFiles">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="DataManage.DataManage-class.html#saveJson" class="summary-sig-name">saveJson</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">filename</span>,
+        <span class="summary-sig-arg">data</span>)</span><br />
+      This method will dump a json data structure to the filename given.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="DataManage-pysrc.html#DataManage.saveJson">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="DataManage.DataManage-class.html#loadJson" class="summary-sig-name">loadJson</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">filename</span>)</span><br />
+      This method will load a json file into memory.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="DataManage-pysrc.html#DataManage.loadJson">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+</table>
+<!-- ==================== INSTANCE VARIABLES ==================== -->
+<a name="section-InstanceVariables"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Instance Variables</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-InstanceVariables"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="DATALOCATION"></a><span class="summary-name">DATALOCATION</span><br />
+      Location of main data folder
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="SQLDDATALOCATION"></a><span class="summary-name">SQLDDATALOCATION</span><br />
+      Location where MYSQL data will be stored
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="INJECTDATALOCATION"></a><span class="summary-name">INJECTDATALOCATION</span><br />
+      Location where injection data will be stored
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="MIN_TIME_DELAY"></a><span class="summary-name">MIN_TIME_DELAY</span><br />
+      This is the minimum time between 2 packets that we will consider 
+      there to be a delay between injection of the packets.
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="MAX_TIME_DELAY"></a><span class="summary-name">MAX_TIME_DELAY</span><br />
+      This is the maximum time between 2 packets that we will consider as a
+      time delay between the two packets
+    </td>
+  </tr>
+</table>
+<!-- ==================== METHOD DETAILS ==================== -->
+<a name="section-MethodDetails"></a>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Method Details</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-MethodDetails"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+</table>
+<a name="__init__"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">__init__</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">host</span>,
+        <span class="sig-arg">db</span>,
+        <span class="sig-arg">username</span>,
+        <span class="sig-arg">password</span>,
+        <span class="sig-arg">table</span>,
+        <span class="sig-arg">dataLocation</span>)</span>
+    <br /><em class="fname">(Constructor)</em>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="DataManage-pysrc.html#DataManage.__init__">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Constructor method.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>table</code></strong> (string) - SQL table to add data to</li>
+        <li><strong class="pname"><code>host</code></strong> (string) - Host for MYSQL table</li>
+        <li><strong class="pname"><code>username</code></strong> (string) - MYSQL username</li>
+        <li><strong class="pname"><code>password</code></strong> (string) - MYSQL username password</li>
+        <li><strong class="pname"><code>dataLocation</code></strong> (String) - path to the folder where data will be saved and loaded from</li>
+        <li><strong class="pname"><code>db</code></strong> (String)</li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="getSQLLocation"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">getSQLLocation</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="DataManage-pysrc.html#DataManage.getSQLLocation">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>This method returns the path to folder where all sql queries will be 
+  saved</p>
+  <dl class="fields">
+    <dt>Returns: string</dt>
+        <dd>path to the folder where sql data is stored. this will be a sub 
+          folder of the data location path that was passed into the 
+          constructor, <a href="DataManage.DataManage-class.html#__init__" 
+          class="link">__init__</a>.</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="getDataLocation"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">getDataLocation</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="DataManage-pysrc.html#DataManage.getDataLocation">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>This method returns the path to the main folder where all data will be
+  stored and read from.</p>
+  <dl class="fields">
+    <dt>Returns: String</dt>
+        <dd>path to the main folder where data will be saved and loaded from</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="getInjectedLocation"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">getInjectedLocation</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="DataManage-pysrc.html#DataManage.getInjectedLocation">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>This method returns the path to the sub folder where data that was 
+  injected will be read from.</p>
+  <dl class="fields">
+    <dt>Returns: String</dt>
+        <dd>Path, relative to dataLocation, give in the constructor <a 
+          href="DataManage.DataManage-class.html#__init__" 
+          class="link">__init__</a>, where the injection data will be 
+          stored</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="createTable"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">createTable</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">table</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="DataManage-pysrc.html#DataManage.createTable">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>This method will create a new table in the MYSQL database. There is no
+  error checking so be careful when adding in a new table</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>table</code></strong> (String) - Name of the new table in the database. The database information 
+          was set in the constructor, <a 
+          href="DataManage.DataManage-class.html#__init__" 
+          class="link">__init__</a></li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="changeTable"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">changeTable</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">table</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="DataManage-pysrc.html#DataManage.changeTable">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Changes the dtable that we are going to be reading from and uploading 
+  to in the MYSQL database</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>table</code></strong> (String) - String that is the name of the table we want to communicate with 
+          in the MYSQL database</li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="getTable"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">getTable</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="DataManage-pysrc.html#DataManage.getTable">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Returns the name of the table that we are set to upload to.</p>
+  <dl class="fields">
+    <dt>Returns: String</dt>
+        <dd>The table we are set to communicate with</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="addData"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">addData</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">cmd</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="DataManage-pysrc.html#DataManage.addData">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>This method will insert data into the MYSQL database based on the 
+  given command and the MYSQL information provided in the constructor, <a 
+  href="DataManage.DataManage-class.html#__init__" 
+  class="link">__init__</a>. This method is designed for the insertion of 
+  data and not for retrieving data. Use the method <a 
+  href="DataManage.DataManage-class.html#getData" class="link">getData</a> 
+  to retrieve data from the MYSQL database.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>cmd</code></strong> (String) - MYSQL command that we want executed. This is designed for the 
+          insertion of data.</li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="getData"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">getData</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">cmd</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="DataManage-pysrc.html#DataManage.getData">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>This method is designed to grab data from the MYSQL database and 
+  return it to the user. It is not designed for insertions. See <a 
+  href="DataManage.DataManage-class.html#getData" class="link">getData</a> 
+  for a method to insert data to the database.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>cmd</code></strong> (String) - MYSQL command requesting data</li>
+    </ul></dd>
+    <dt>Returns: List of Lists</dt>
+        <dd>SQL data that you requested. The format will be a list of all the
+          rows of data. Each row will be a list of the columns you 
+          requested.</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="addDataPacket"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">addDataPacket</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">data</span>,
+        <span class="sig-arg">time</span>,
+        <span class="sig-arg">error</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="DataManage-pysrc.html#DataManage.addDataPacket">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>This method will take in a data packet (such as one read from our 
+  sniff file) and then upload it to the MYSQL database that is set for the 
+  class.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>data</code></strong> (List) - This is a list that is one packet as it read off by GooDFETMCPCAN
+          rxpacket method. It is 14 elements long and each byte is stored 
+          to an element as an ASCII character .</li>
+        <li><strong class="pname"><code>time</code></strong> (float) - The time stamp of the packet</li>
+        <li><strong class="pname"><code>error</code></strong> (Boolean) - An additional boolean to set if there was an error detected with 
+          this packet during its parsing.</li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="getCmd"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">getCmd</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">packet</span>,
+        <span class="sig-arg">time</span>,
+        <span class="sig-arg">error</span>,
+        <span class="sig-arg">duration</span>,
+        <span class="sig-arg">filter</span>,
+        <span class="sig-arg">comment</span>=<span class="sig-default">None</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="DataManage-pysrc.html#DataManage.getCmd">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>This method will create a sql insertion command based on the given 
+  data and the MYSQL information stored in the class. This is designed for 
+  inserting 1 packet.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>packet</code></strong> (Dictionary) - This is a dictionary that contains the information for an entire 
+          data packet sniffed off of the CAN bus it has already been parsed
+          from the format that it is saved as in the sniff method from 
+          GoodFETMCPCANCommuniation, <a 
+          href="GoodFETMCPCANCommunication.GoodFETMCPCANCommunication-class.html#sniff"
+          class="link">GoodFETMCPCANCommunication.sniff</a>. See <a 
+          href="DataManage.DataManage-class.html#parseMessageInt" 
+          class="link">parseMessageInt</a> to parse the message and for 
+          information on the packet Dictionary. The keys expected to be 
+          contained in this dictionary are as follows sID, 
+          length,rtr,error, ide, eID (optional), db0 (optional), ... , db7 
+          (optional). See the parsing method for information on all 
+          components</li>
+        <li><strong class="pname"><code>time</code></strong> (float) - Time stamp of the packet</li>
+        <li><strong class="pname"><code>error</code></strong> (Boolean) - 1 if there is an error in the packet, 0 otherwise. This is a 
+          field in the MYSQL database</li>
+        <li><strong class="pname"><code>duration</code></strong> (Float) - The length of the observation time during which this packet was 
+          sniffed off of the CAN bus.</li>
+        <li><strong class="pname"><code>filter</code></strong> (Boolean) - 1 if there was filtering applied during this experiment, 0 
+          otherwise</li>
+        <li><strong class="pname"><code>comment</code></strong> (string) - Comment tag that can be assigned to the field in the MYSQL 
+          database</li>
+    </ul></dd>
+    <dt>Returns: String</dt>
+        <dd>SQL command for insertion of the packet to the MYSQL database 
+          table set in the class</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="writeDataCsv"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">writeDataCsv</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">data</span>,
+        <span class="sig-arg">filename</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="DataManage-pysrc.html#DataManage.writeDataCsv">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>This method will write the given data to the given filename as a csv 
+  file. This is designed to write packet data to files</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>data</code></strong> (List of Lists) - A list of the data we wish to write to the csv file. The format 
+          is that each element in the list is a considered a row. and then 
+          each element in the row is a column in the csv file. This can 
+          handle both string and numeric elements in the lists. This is the
+          format that is returned by <a 
+          href="DataManage.DataManage-class.html#opencsv" 
+          class="link">opencsv</a>.</li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="writePcapUpload"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">writePcapUpload</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">filenameUp</span>,
+        <span class="sig-arg">filenameWriteTo</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="DataManage-pysrc.html#DataManage.writePcapUpload">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>This method will create a pcap file of the data contained in a given 
+  csv file. The csv file is assumed to be of the format saved by the sniff 
+  method in the GoodFETMCPCANCommunication class, <a 
+  href="GoodFETMCPCANCommunication.GoodFETMCPCANCommunication-class.html#sniff"
+  class="link">GoodFETMCPCANCommunication.sniff</a>.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>filenameUp</code></strong> (String) - path/filename for the csv file that will be read and used for 
+          making a pcap file. This assumes that the .csv is included in the
+          input.</li>
+        <li><strong class="pname"><code>filenameWriteTo</code></strong> (String) - path/filename for the pcap to be saved to. This assumes that 
+          there is the .pcap ending included in the input.</li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="writeToPcap"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">writeToPcap</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">filenameWriteTo</span>,
+        <span class="sig-arg">data</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="DataManage-pysrc.html#DataManage.writeToPcap">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>This method will create a pcap formatted file from the data that was 
+  supplied.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>filenameWriteTo</code></strong> (String) - path/filename for the pcap to be saved to. This assumes that 
+          there is the .pcap ending included in the input.</li>
+        <li><strong class="pname"><code>data</code></strong> (List of Lists) - A list of the data we wish to write to the csv file. The format 
+          is that each element in the list is a considered a row. and then 
+          each element in the row is a column in the csv file. This can 
+          handle both string and numeric elements in the lists. This is the
+          format that is returned by <a 
+          href="DataManage.DataManage-class.html#opencsv" 
+          class="link">opencsv</a>.</li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="writetoPcapfromSQL"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">writetoPcapfromSQL</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">filenameWriteto</span>,
+        <span class="sig-arg">results</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="DataManage-pysrc.html#DataManage.writetoPcapfromSQL">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>This method will create a pcap formatted file from the data that was 
+  supplied.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>filenameWriteto</code></strong> (String) - path/filename for the pcap to be saved to. This assumes that 
+          there is the .pcap ending included in the input.</li>
+        <li><strong class="pname"><code>results</code></strong> (List of Lists) - A list of the data we wish to write to the csv file. The format 
+          is that each element in the list is a considered a row. and then 
+          each element in the row is a column in the csv file. This can 
+          handle both string and numeric elements in the lists. This is the
+          format that is returned by a MYSQL query.</li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="parseMessage"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">parseMessage</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">data</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="DataManage-pysrc.html#DataManage.parseMessage">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>This method will parse a row of the data packets that is of the form 
+  of the packet as returned by the GoodFETMCPCAN rxpacket method will 
+  simply convert each databyte to integers and then call <a 
+  href="DataManage.DataManage-class.html#parseMessageInt" 
+  class="link">parseMessageInt</a>. See this method for more 
+  information.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>data</code></strong> (List) - This is a list that is one packet as returned by GoodFETMCPCAN 
+          rxpacket method. It is 13 bytes long and ASCII value.</li>
+    </ul></dd>
+    <dt>Returns: Dictionary</dt>
+        <dd>This is a dictionary that contains the information for an entire 
+          data packet sniffed off of the CAN bus it has already been parsed
+          from the format that it is saved as in the sniff method from 
+          GoodFETMCPCANCommuniation. See <a 
+          href="DataManage.DataManage-class.html#parseMessageInt" 
+          class="link">parseMessageInt</a> to parse the message and for 
+          information on the packet Dictionary. The keys expected to be 
+          contained in this dictionary are as follows sID, 
+          length,rtr,error, ide, eID (optional), db0 (optional), ... , db7 
+          (optional).
+          <ol start="1">
+            <li>
+              sID: standard ID of the packet
+            </li>
+            <li>
+              length: length of the data packet (number of data bytes). 
+              This will be 0 for an Remote Transmission Request frame
+            </li>
+            <li>
+              rtr: boolean that is 1 if the message is a Remote 
+              Transmission Request, 0 otherwise
+            </li>
+            <li>
+              ide: Boolean that is 1 if the message has an extended id. 0 
+              otherwise
+            </li>
+            <li>
+              eID: Extended ID. Only included if one exists
+            </li>
+            <li>
+              db0: Databyte 0. Only included if one exists
+              <p>---</p>
+            </li>
+            <li>
+              db7: Databyte 7. Only included if one exists
+            </li>
+          </ol></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="parseMessageInt"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">parseMessageInt</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">data</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="DataManage-pysrc.html#DataManage.parseMessageInt">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>data</code></strong> (List) - This is a list that is one packet as it read off by <a 
+          href="DataManage.DataManage-class.html#opencsv" 
+          class="link">opencsv</a> method. The Elements will have been 
+          convereted to integers.</li>
+    </ul></dd>
+    <dt>Returns: Dictionary</dt>
+        <dd>This is a dictionary that contains the information for an entire 
+          data packet sniffed off of the CAN bus it has already been parsed
+          from the format that it is saved as in the sniff method from 
+          GoodFETMCPCANCommuniation. See <a 
+          href="DataManage.DataManage-class.html#parseMessageInt" 
+          class="link">parseMessageInt</a> to parse the message and for 
+          information on the packet Dictionary. The keys expected to be 
+          contained in this dictionary are as follows sID, 
+          length,rtr,error, ide, eID (optional), db0 (optional), ... , db7 
+          (optional).
+          <ol start="1">
+            <li>
+              sID: standard ID of the packet
+            </li>
+            <li>
+              length: length of the data packet (number of data bytes). 
+              This will be 0 for an Remote Transmission Request frame
+            </li>
+            <li>
+              rtr: boolean that is 1 if the message is a Remote 
+              Transmission Request, 0 otherwise
+            </li>
+            <li>
+              ide: Boolean that is 1 if the message has an extended id. 0 
+              otherwise
+            </li>
+            <li>
+              eID: Extended ID. Only included if one exists
+            </li>
+            <li>
+              db0: Databyte 0. Only included if one exists
+              <p>---</p>
+            </li>
+            <li>
+              db7: Databyte 7. Only included if one exists
+            </li>
+          </ol></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="packet2str"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">packet2str</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">packet</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="DataManage-pysrc.html#DataManage.packet2str">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Converts the packet, in the form of the datapacket provided by 
+  GoodFETMCPCAN rxpacket and each element is a string ASCII character 
+  corresponding to the Hex number of the databyte. This will convert the 
+  list to a string of the hex bytes.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>packet</code></strong> (List) - This is a list that is one packet as it read off by the 
+          GoodFETMCPCANComunication class. It is 13 bytes long and string 
+          character is in each element.</li>
+    </ul></dd>
+    <dt>Returns: String</dt>
+        <dd>String that is the data packet printed out where each byte has 
+          been converted to the hex characters.</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="uploadData"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">uploadData</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">filename</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="DataManage-pysrc.html#DataManage.uploadData">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>This method will upload all the data contained in the given file path 
+  to the MYSQL database.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>filename</code></strong> (String) - This is the path to the file that the user wishes to upload. It 
+          is assumed to contain the .csv ending and be a file in the format
+          of the data that is saved by GoodFETMCPCANCommunication sniff 
+          method.</li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="opencsv"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">opencsv</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">fileObj</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="DataManage-pysrc.html#DataManage.opencsv">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>This method will load packet data from a csv file. The format of the 
+  data will be of the form of the data that was saved by the 
+  GoodFETMCPCANCommunication sniff method. See <a 
+  href="GoodFETMCPCANCommunication.GoodFETMCPCANCommunication-class.html#sniff"
+  class="link">GoodFETMCPCANCommunication.sniff</a> for more information on
+  the meaning of the databytes. The elements in each row of the csv file 
+  will be parsed as if they are the following types:</p>
+  <ol start="1">
+    <li>
+      float
+    </li>
+    <li>
+      string
+    </li>
+    <li>
+      integer 4 Hex value (i.e. 'ff' or 'af')
+    </li>
+  </ol>
+  <p>This will ignore any lines in the csv document that begin with # in 
+  the first column. This allows for comments to be added.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>fileObj</code></strong> (Object of the file) - This is the file object (i.e. what is returned by the open 
+          command) of the csv document that is to be read.</li>
+    </ul></dd>
+    <dt>Returns: List of lists</dt>
+        <dd>The csv file parsed by rows and columns. The format will be that 
+          each element in the return list will be one row of the csv file. 
+          All entries will be stored as a number except column 2 which will
+          be stored as a string (see above).</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="readWriteFileHex"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">readWriteFileHex</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">filename</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="DataManage-pysrc.html#DataManage.readWriteFileHex">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>This method will be used for reading a file for of packets to be 
+  written to the the CAN bus. The format of the csv layout is expected to 
+  be as follows with each element stored as a hex except for the time 
+  delay:</p>
+  <ul>
+    <li>
+      col 0: delay time from previous row (0 if no delay)
+    </li>
+    <li>
+      col 1: Standard ID
+    </li>
+    <li>
+      col 2: Data Length (0-8)
+    </li>
+    <li>
+      col 3: db 0 ---
+    </li>
+    <li>
+      col 7: db7 (as needed, based on data length)
+    </li>
+  </ul>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>filename</code></strong> (String) - path/filenae to the csv file to be uploaded. This is expected to 
+          include the .csv ending. The format of the rows is described 
+          above.</li>
+    </ul></dd>
+    <dt>Returns: List of Lists</dt>
+        <dd>This will simply turn the csv file to a list of lists where the 
+          elements of the outer list are rows in the csv file. Each row is 
+          a list of all the columns.  The time delay will be converted to a
+          float while all other columns are converted to an integer.</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="readWriteFileDEC"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">readWriteFileDEC</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">filename</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="DataManage-pysrc.html#DataManage.readWriteFileDEC">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>This method will be used for reading a file for of packets to be 
+  written to the the CAN bus. The format of the csv layout is expected to 
+  be as follows with each element stored as an integer value except for the
+  time delay which is expected as a float:</p>
+  <ul>
+    <li>
+      col 0: delay time from previous row (0 if no delay)
+    </li>
+    <li>
+      col 1: Standard ID
+    </li>
+    <li>
+      col 2: Data Length (0-8)
+    </li>
+    <li>
+      col 3: db 0 ---
+    </li>
+    <li>
+      col 7: db7 (as needed, based on data length)
+    </li>
+  </ul>
+  <p>Additionally, this can now take in the packets that the sniff method 
+  writes out, <a 
+  href="GoodFETMCPCANCommunication.GoodFETMCPCANCommunication-class.html#sniff"
+  class="link">GoodFETMCPCANCommunication.sniff</a>. It will detect either 
+  the header that is added to these files or that the length is longer than
+  those written by the fuzz methods.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>filename</code></strong> (String) - path/filenae to the csv file to be uploaded. This is expected to 
+          include the .csv ending. The format of the rows is described 
+          above.</li>
+    </ul></dd>
+    <dt>Returns: List of Lists</dt>
+        <dd>This will simply turn the csv file to a list of lists where the 
+          elements of the outer list are rows in the csv file. Each row is 
+          a list of all the columns.  The time delay will be converted to a
+          float while all other columns are converted to an integer.</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="readInjectedFileDEC"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">readInjectedFileDEC</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">filename</span>,
+        <span class="sig-arg">startTime</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">endTime</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">id</span>=<span class="sig-default">None</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="DataManage-pysrc.html#DataManage.readInjectedFileDEC">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>This method will read packets from a file that was saved from packets 
+  that were injected onto the bus. An example of a method that does this 
+  would be the experiments method <a 
+  href="experiments.experiments-class.html#generationFuzzer" 
+  class="link">experiments.generationFuzzer</a>. The file is assumed to be 
+  a csv file with the .csv included matching this format. Any lines that 
+  begin with a # in the first column will be ignored. The user can specify 
+  start and end times to only get a subset of the packet. If no startTime 
+  is provided then it will return packets starting from the begining up 
+  until the endTime. If no endTime is provided then it will return all 
+  packets in the file after the startTime. An id can be provided and it 
+  will return only the packets with the given id.</p>
+  <p>When parsing the data it will assume the data is of the following form
+  where the first column is parsed as a float and all subsequent are parsed
+  as a decimal ineteger:</p>
+  <ol start="1">
+    <li>
+      time of injection
+    </li>
+    <li>
+      standard Id
+    </li>
+    <li>
+      8 (data length) @todo: extend to varied length
+    </li>
+    <li>
+      db0
+      <p>---</p>
+    </li>
+    <li>
+      db7
+    </li>
+  </ol>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>filename</code></strong> (String) - path/filenae to the csv file to be uploaded. This is expected to 
+          include the .csv ending. The format of the rows is described 
+          above.</li>
+        <li><strong class="pname"><code>startTime</code></strong> (timestamp) - This is a timestamp of the start time for the earliest time for 
+          packets you want. The method will not return any packets that 
+          were injected before this start time. This input is optional.</li>
+        <li><strong class="pname"><code>endTime</code></strong> (timestamp) - This is the timestamp of the latest inject time for packets you 
+          want. The method will return no packets with an endTime after 
+          this timestamp. This input is optional.</li>
+        <li><strong class="pname"><code>id</code></strong> (Integer) - This is an optional parameter that allows you to positively 
+          filter for the id that you want of packets. Only packets with the
+          given id will be returned.</li>
+    </ul></dd>
+    <dt>Returns: List of Lists</dt>
+        <dd>This imports the data on the csv file. Each element in the list 
+          will correspond to a row. each element in the row will correspond
+          to the column. The types of the column will be a float for the 
+          first columna and integer for all subsequent columns.</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="uploadFiles"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">uploadFiles</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="DataManage-pysrc.html#DataManage.uploadFiles">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>This method will upload all data files from sniffing experiments that 
+  have been saved. The sniff would be called by <a 
+  href="GoodFETMCPCANCommunication.GoodFETMCPCANCommunication-class.html#sniff"
+  class="link">GoodFETMCPCANCommunication.sniff</a> and it will be all .csv
+  files saved in the self.DATALOCATION which is input by the user when the 
+  class is initiated.</p>
+  <p>This method will find all .csv files in the folder and attemp to 
+  upload them all. It will call the <a 
+  href="DataManage.DataManage-class.html#uploadData" 
+  class="link">uploadData</a> method on all the filenames. Once a file has 
+  been uploaded (or attempted to) the file will be moved to a subfolder 
+  that is named by todays date in the following format: YYYYMMDD. If the 
+  folder does not exist, it will be created. The filename will then be 
+  changed by adding  &quot;_Uploaded&quot; to the end of the csv. To ensure
+  that no files are overwritten, the program will ensure that the file does
+  not exist. if one does of the same filename it will append &quot;_i&quot;
+  where i is the first integer that does not have a conflicting filename. 
+  This allows the user to upload multiple times during the same day without
+  loosing the origional data files.</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="saveJson"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">saveJson</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">filename</span>,
+        <span class="sig-arg">data</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="DataManage-pysrc.html#DataManage.saveJson">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>This method will dump a json data structure to the filename given.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>filename</code></strong> (String) - path to the .json file that the data will be saved to</li>
+        <li><strong class="pname"><code>data</code></strong> (json data) - Data to be saved to a json file</li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="loadJson"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">loadJson</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">filename</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="DataManage-pysrc.html#DataManage.loadJson">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>This method will load a json file into memory.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>filename</code></strong> (String) - path to the .json file that is to be loaded into memory</li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<br />
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+      <th class="navbar" width="100%"></th>
+  </tr>
+</table>
+<table border="0" cellpadding="0" cellspacing="0" width="100%%">
+  <tr>
+    <td align="left" class="footer">
+    Generated by Epydoc 3.0.1 on Wed Mar  6 20:20:31 2013
+    </td>
+    <td align="right" class="footer">
+      <a target="mainFrame" href="http://epydoc.sourceforge.net"
+        >http://epydoc.sourceforge.net</a>
+    </td>
+  </tr>
+</table>
+
+<script type="text/javascript">
+  <!--
+  // Private objects are initially displayed (because if
+  // javascript is turned off then we want them to be
+  // visible); but by default, we want to hide them.  So hide
+  // them unless we have a cookie that says to show them.
+  checkCookie();
+  // -->
+</script>
+</body>
+</html>

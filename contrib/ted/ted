@@ -1,0 +1,366 @@
+#!/usr/bin/env python
+# GoodFET SPI Flash Client
+#
+# (C) 2012 Travis Goodspeed <travis at radiantmachines.com>
+#
+#
+# Ted's working copy
+#   1) getting hot reads on frequency
+#   2) allow sniffing in "normal" mode to get ack bits
+#       --check if that's whats causing error flags in board-to-board transmission
+#
+#
+
+import sys;
+import binascii;
+import array;
+import csv, time, argparse;
+
+from GoodFETMCPCAN import GoodFETMCPCAN;
+from intelhex import IntelHex;
+
+if(len(sys.argv)==1):
+    print "Usage: %s verb [objects]\n" % sys.argv[0];
+    print "%s info" % sys.argv[0];
+    print "%s test" % sys.argv[0];
+    print "%s peek 0x$start [0x$stop]" % sys.argv[0];
+    #print "%s poke 0x$adr 0x$val" % sys.argv[0];
+    print "%s reset" % sys.argv[0];
+
+    print "\n%s sniff [kHz] [time (s)] [filename]" % sys.argv[0];
+    print "%s isniff [kHz]" % sys.argv[0];
+    print "%s freqtest [kHz]" %sys.argv[0];
+    print "%s spit [kHz]" % sys.argv[0];
+    print "%s setbitrate [kHz]" % sys.argv[0];
+
+    print "\nSupported rates: 10.3, 41.6, 83.3, 100, 125, 250, 500, 1000 kHz.";
+    sys.exit();
+
+#Initialize FET and set baud rate
+client=GoodFETMCPCAN();
+client.serInit()
+
+
+client.MCPsetup();
+
+
+#Dummy read.
+#Might read as all ones if chip has a startup delay.
+
+
+                
+
+
+
+
+##########################
+#   INFO
+##########################
+#
+# Prints MCP state info
+#
+
+if(sys.argv[1]=="info"):
+    print "MCP2515 Info:\n\n";
+    
+    print "Mode: %s" % client.MCPcanstatstr();
+    print "Read Status: %02x" % client.MCPreadstatus();
+    print "Rx Status:   %02x" % client.MCPrxstatus();
+    print "Tx Errors:  %3d" % client.peek8(0x1c);
+    print "Rx Errors:  %3d\n" % client.peek8(0x1d);
+    
+    print "Timing Info:";
+    print "CNF1: %02x" %client.peek8(0x2a);
+    print "CNF2: %02x" %client.peek8(0x29);
+    print "CNF3: %02x\n" %client.peek8(0x28);
+    print "RXB0 CTRL: %02x" %client.peek8(0x60);
+    print "RXB1 CTRL: %02x" %client.peek8(0x70);
+    print "RX Buffers:"
+    packet0=client.readrxbuffer(0);
+    packet1=client.readrxbuffer(1);
+    for foo in [packet0, packet1]:
+        print client.packet2str(foo);
+        
+if(sys.argv[1]=="reset"):
+    client.MCPsetup();
+    
+##########################
+#   SNIFF
+##########################
+#
+#   runs in ListenOnly mode
+#   utility function to pull info off the car's CAN bus
+#
+#   TODO: dump into CSV file
+#
+
+if(sys.argv[1]=="sniff"):
+
+    client.MCPsetup();
+ 
+    if len(sys.argv)>2:
+        rate=float(sys.argv[2]);
+    else: 
+        rate = 500;
+    client.MCPsetrate(rate);
+    
+    if len(sys.argv)>3:
+        duration = float(sys.argv[3]);
+    else:
+        duration = 15;
+        
+    if len(sys.argv)>4:
+        filename=sys.argv[4];
+    else:
+        filename = "../../contrib/ted/sniff_out.csv";
+        
+    outfile = open(filename,'a');
+    dataWriter = csv.writer(outfile,delimiter=',');
+    dataWriter.writerow(['# Time     Error        Bytes 1-13']);
+    
+    starttime = time.time();
+    
+    client.MCPreqstatListenOnly();
+    print "Listening...";
+    
+    while((time.time()-starttime < duration)):
+        packet=client.rxpacket();
+        if packet!=None:      
+            row = [];
+            row.append(time.time());
+            if (client.peek8(0x2C) & 0x80):
+                client.MCPbitmodify(0x2C,0x80,0x00);
+                print "ERROR: Malformed packet recieved: " + client.packet2str(packet);
+                row.append(1);
+            else:
+                row.append(0);
+            for byte in packet:
+                row.append(ord(byte));
+            dataWriter.writerow(row);
+    outfile.close()
+
+                
+##########################
+#   SNIFF TEST
+##########################
+#
+#   runs in NORMAL mode
+#   intended for NETWORKED MCP chips to verify proper operation
+#
+
+
+if(sys.argv[1]=="snifftest"):
+    client.MCPsetup();
+
+    if len(sys.argv)>2:
+        rate=float(sys.argv[2]);
+        print "Calling MCPsetrate for %i." %rate;
+        client.MCPsetrate(rate);
+    client.MCPreqstatNormal();
+    
+    print "Mode: %s" % client.MCPcanstatstr();
+    print "CNF1: %02x" %client.peek8(0x2a);
+    print "CNF2: %02x" %client.peek8(0x29);
+    print "CNF3: %02x\n" %client.peek8(0x28);
+    
+    while(1):
+        packet=client.rxpacket();
+        
+        if packet!=None:                
+            if (client.peek8(0x2C) & 0x80):
+                client.MCPbitmodify(0x2C,0x80,0x00);
+                print "malformed packet recieved: "+ client.packet2str(packet);
+                break;
+            else:
+                print "properly formatted packet recieved";
+    
+##########################
+#   FREQ TEST
+##########################
+#
+#   runs in LISTEN ONLY mode
+#   tests bus for desired frequency --> reads MCP for 400 packets
+#   gives % malformed
+#
+#   TODO:
+#   1) add auto-runthrough capability?
+#
+#
+
+client.MCPsetup();
+    
+
+if(sys.argv[1]=="freqtest"):
+
+    if len(sys.argv)>2:
+        rate=float(sys.argv[2]);
+        print "Calling MCPsetrate for %i." %rate;
+        client.MCPsetrate(rate);
+    client.MCPreqstatListenOnly();
+
+    print "CAN Freq Test: %3d kHz" %rate;
+    print "Mode: %s" % client.MCPcanstatstr();
+    x = 0;
+    errors = 0;
+
+    for n in range(0,400):
+        packet=client.rxpacket();
+        if packet!=None:
+            x+=1;
+            
+            if (client.peek8(0x2C) & 0x80):
+                print "malformed packet recieved"
+                errors+=1;
+                client.MCPbitmodify(0x2C,0x80,0x00);
+            else:         
+                print client.packet2str(packet);
+
+    if x==0:
+        print "No packets sniffed for %3d kHz" %rate;
+    else:
+        percentvalid = (1-float(errors/x))*100;
+    
+        print "Results for %3.1d kHz: recieved %3d packets, registered %3d RX errors." %(rate, x, errors);
+
+
+
+if(sys.argv[1]=="isniff"):
+    """ An intelligent sniffer, decodes message format """
+    """ More features to be added soon """
+    if len(sys.argv)>2:
+        rate=float(sys.argv[2]);
+        client.MCPsetrate(rate);
+    client.MCPreqstatListenOnly();
+    while 1:
+        packet=client.rxpacket();
+        if packet!=None:
+            plist=[];
+            for byte in packet:
+                plist.append(byte);
+            arbid=plist[0:2];
+            eid=plist[2:4];
+            dlc=plist[4:5];
+            data=plist[5:13];         
+            print "\nArbID: " + client.packet2str(arbid);
+            print "EID: " + client.packet2str(eid);
+            print "DLC: " + client.packet2str(dlc);
+            print "Data: " + client.packet2str(data);
+            
+            
+##########################
+#   MCP TEST
+##########################
+#
+#   Runs in LOOPBACK mode
+#   self-check diagnostic
+#   wasn't working before due to improperly formatted packet
+#
+#   ...add automatic packet check rather than making user verify successful packet
+
+
+if(sys.argv[1]=="test"):
+    print "\nMCP2515 Self Test:";
+    
+    #Switch to config mode and try to rewrite TEC.
+    client.MCPreqstatConfiguration();
+    client.poke8(0x00,0xde);
+    if client.peek8(0x00)!=0xde:
+        print "ERROR: Poke to TEC failed.";
+    else:
+        print "SUCCESS: Register read/write.";
+    
+    #Switch to Loopback mode and try to catch our own packet.
+    client.MCPreqstatLoopback();
+
+    packet1 = [0x00, 
+               0x08, # LOWER nibble must be 8 or greater to set EXTENDED ID 
+               0x00, 0x00,
+               0x08, # UPPER nibble must be 0 to set RTR bit for DATA FRAME
+                     # LOWER nibble is DLC
+               0x01,0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0xFF]
+    client.txpacket(packet1);
+    client.txpacket(packet1);
+    print "Waiting on loopback packets.";
+    packet=None;
+    while(1):
+        packet=client.rxpacket();
+        if packet!=None:
+            print "Message recieved: %s" % client.packet2str(packet);
+
+    
+    
+if(sys.argv[1]=="peek"):
+    start=0x0000;
+    if(len(sys.argv)>2):
+        start=int(sys.argv[2],16);
+    stop=start;
+    if(len(sys.argv)>3):
+        stop=int(sys.argv[3],16);
+    print "Peeking from %04x to %04x." % (start,stop);
+    while start<=stop:
+        print "%04x: %02x" % (start,client.peek8(start));
+        start=start+1;
+        
+##########################
+#   SPIT
+##########################
+#
+#   Basic packet transmission
+#   runs in NORMAL MODE!
+# 
+#   checking TX error flags--> currently throwing error flags on every
+#   transmission (travis thinks this is because we're sniffing in listen-only
+#   and thus not generating an ack bit on the recieving board)
+
+
+if(sys.argv[1]=="spit"):
+
+    if len(sys.argv)>2:
+        rate=float(sys.argv[2]);
+        print "Calling MCPsetrate for %i." %rate;
+        client.MCPsetrate(rate);
+
+    client.MCPreqstatNormal();
+    
+    print "Tx Errors:  %3d" % client.peek8(0x1c);
+    print "Rx Errors:  %3d" % client.peek8(0x1d);
+    print "Error Flags:  %02x\n" % client.peek8(0x2d);
+    print "TXB0CTRL: %02x" %client.peek8(0x30);
+    print "CANINTF: %02x"  %client.peek8(0x2C);
+
+    
+    packet = [0x00, 
+               0x08, # LOWER nibble must be 8 or greater to set EXTENDED ID 
+               0x00, 0x00,
+               0x08, # UPPER nibble must be 0 to set RTR bit for DATA FRAME
+                  # LOWER nibble is DLC
+               0x01,0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0xFF]    
+    
+    client.txpacket(packet);
+
+    if(client.peek8(0x2C)&0x80)==0x80:
+        print "Error flag raised on transmission. Clearing this flag and proceeding.\n"
+        print "INT Flags:  %02x" % client.peek8(0x2c);
+        client.MCPbitmodify(0x2C,0x80,0x00);
+        print "INT Flags modified to:  %02x\n" % client.peek8(0x2c);
+        print "TXB0CTRL: %02x" %client.peek8(0x30);
+        client.MCPbitmodify(0x30,0x08,0x00);
+        print "TXB0CTRL modified to: %02x\n" %client.peek8(0x30);
+
+    print "message sending attempted.";
+    print "Tx Errors:  %02x" % client.peek8(0x1c);
+    print "Rx Errors:  %02x" % client.peek8(0x1d);
+    print "Error Flags:  %02x" % client.peek8(0x2d);
+
+
+if(sys.argv[1]=="setbitrate"):
+    if len(sys.argv)>2:
+        rate=float(sys.argv[2]);
+        print "Calling MCPsetrate for %i." %rate;
+        client.MCPsetrate(rate);
+
+
+
+
+    
+    

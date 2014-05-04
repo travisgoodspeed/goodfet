@@ -1,0 +1,1029 @@
+This should apply cleanly to avrdude's SVN, r950.
+It has only been tested on an atmega328p; bug reports are welcome.
+
+   --Dan Hirsch <thequux@google.com>
+
+diff --git a/avrdude/Makefile.am b/avrdude/Makefile.am
+index cd0388c..91315ca 100644
+--- a/avrdude/Makefile.am
++++ b/avrdude/Makefile.am
+@@ -104,6 +104,8 @@ libavrdude_a_SOURCES = \
+ 	fileio.c \
+ 	fileio.h \
+ 	freebsd_ppi.h \
++	goodfet.c \
++	goodfet.h \
+ 	jtagmkI.c \
+ 	jtagmkI.h \
+ 	jtagmkI_private.h \
+diff --git a/avrdude/avrdude.conf.in b/avrdude/avrdude.conf.in
+index 8790fff..6a839cc 100644
+--- a/avrdude/avrdude.conf.in
++++ b/avrdude/avrdude.conf.in
+@@ -587,6 +587,12 @@ programmer
+ ;
+ 
+ programmer
++  id	= "goodfet";
++  desc	= "Goodfet";
++  baudrate = 115200;
++  type	= goodfet;
++;
++programmer
+   id    = "pavr";
+   desc  = "Jason Kyle's pAVR Serial Programmer";
+   type  = avr910;
+diff --git a/avrdude/config_gram.y b/avrdude/config_gram.y
+index 2ff8452..340b0f4 100644
+--- a/avrdude/config_gram.y
++++ b/avrdude/config_gram.y
+@@ -104,6 +104,7 @@ static int parse_cmdbits(OPCODE * op);
+ %token K_EEPROM
+ %token K_ERRLED
+ %token K_FLASH
++%token K_GOODFET
+ %token K_ID
+ %token K_IO
+ %token K_JTAG_MKI
+@@ -550,7 +551,11 @@ prog_parm :
+       stk500v2_dragon_pp_initpgm(current_prog);
+     }
+   } |
+-
++  K_TYPE TKN_EQUAL K_GOODFET {
++    {
++      goodfet_initpgm(current_prog);
++    }
++  } |
+   K_DESC TKN_EQUAL TKN_STRING {
+     strncpy(current_prog->desc, $3->value.string, PGM_DESCLEN);
+     current_prog->desc[PGM_DESCLEN-1] = 0;
+diff --git a/avrdude/goodfet.c b/avrdude/goodfet.c
+index c3131d5..2af37b0 100644
+--- a/avrdude/goodfet.c
++++ b/avrdude/goodfet.c
+@@ -3,7 +3,7 @@
+  *
+  * avrdude support for Travis Goodspeed's GoodFET
+  *
+- * Copyright (C) 2009 Michal Ludvig <mludvig@logix.net.nz>
++ * Copyright (C) 2010 Dan Hirsch <thequux@google.com>
+  *
+  * This program is free software; you can redistribute it and/or modify
+  * it under the terms of the GNU General Public License as published by
+@@ -44,6 +44,7 @@
+ #if defined(WIN32NATIVE)
+ #  include <malloc.h>  /* for alloca() */
+ #endif
++#include <assert.h>
+ 
+ #include "avrdude.h"
+ #include "avr.h"
+@@ -53,44 +54,34 @@
+ /* ====== Private data structure ====== */
+ /* CS and AUX pin bitmasks in
+  * 0100wxyz - Configure peripherals command */
+-#define BP_RESET_CS     0x01
+-#define BP_RESET_AUX    0x02
+-#define BP_RESET_AUX2   0x04
+ 
+-#define BP_FLAG_IN_BINMODE          (1<<0)
+-#define BP_FLAG_XPARM_FORCE_ASCII   (1<<1)
+-#define BP_FLAG_XPARM_RESET         (1<<2)
+-#define BP_FLAG_XPARM_SPIFREQ       (1<<3)
++#define GF_APP_MONITOR 0x00
++#define GF_APP_SPI     0x01
++#define GF_APP_AVR     0x32
++
++#define GF_VERB_READ   0x00
++#define GF_VERB_PEEK   0x02
++#define GF_VERB_SETUP  0x10
++#define GF_VERB_START  0x20
++#define GF_VERB_STOP   0x21
++#define GF_VERB_AVR_BULKLOAD 0x86
++
++#define GF_VERB_NOK    0x7e
+ 
+ struct pdata
+ {
+-	char	hw_version[10];
+-	int	fw_version;		/* = 100*fw_major + fw_minor */
+-	int	binmode_version;
+-	int	bin_spi_version;
+-	int	current_peripherals_config;
+ 	int	spifreq;		/* 0..7 - see buspirate manual for what freq each value means */
+ 	int	reset;			/* See BP_RESET_* above */
+ };
+-#define PDATA(pgm) ((struct pdata *)(pgm->cookie))
+ 
+-/* Binary mode is available from firmware v2.7 on */
+-#define FW_BINMODE_VER	207
++typedef struct goodfet_message {
++	char app;
++	char verb;
++	int len;
++	unsigned char *data;
++} goodfet_message_t;
+ 
+-/* ====== Feature checks ====== */
+-static inline int
+-buspirate_has_aux2(struct programmer_t *pgm)
+-{
+-	return ((PDATA(pgm)->fw_version >= 300) &&
+-		strcmp(PDATA(pgm)->hw_version, "v1a") == 0);
+-}
+-
+-static inline int
+-buspirate_uses_ascii(struct programmer_t *pgm)
+-{
+-	return (pgm->flag & BP_FLAG_XPARM_FORCE_ASCII) ||
+-		(PDATA(pgm)->fw_version < FW_BINMODE_VER);
+-}
++#define PDATA(pgm) ((struct pdata *)(pgm->cookie))
+ 
+ /* ====== Serial talker functions - binmode ====== */
+ 
+@@ -111,265 +102,79 @@ static void dump_mem(char *buf, size_t len)
+ 		fprintf(stderr, "\n");
+ }
+ 
+-static int goodfet_send_bin(struct programmer_t *pgm, char *data, size_t len)
+-{
+-	int rc;
+-
+-	if (verbose > 1) {
+-		fprintf(stderr, "%s: goodfet_send_bin():\n", progname);
+-		dump_mem(data, len);
+-	}
+-
+-	rc = serial_send(&pgm->fd, (unsigned char *)data, len);
+-
+-	return rc;
+-}
+-
+-static int buspirate_recv_bin(struct programmer_t *pgm, char *buf, size_t len)
+-{
+-	int rc;
+-
+-	rc = serial_recv(&pgm->fd, (unsigned char *)buf, len);
+-	if (rc < 0)
+-		return EOF;
+-	if (verbose > 1) {
+-		fprintf(stderr, "%s: buspirate_recv_bin():\n", progname);
+-		dump_mem(buf, len);
+-	}
+-
+-	return len;
+-}
+-
+-static int buspirate_expect_bin(struct programmer_t *pgm,
+-				char *send_data, size_t send_len,
+-				char *expect_data, size_t expect_len)
+-{
+-	char *recv_buf = alloca(expect_len);
+-	if (!pgm->flag & BP_FLAG_IN_BINMODE) {
+-		fprintf(stderr, "BusPirate: Internal error: buspirate_send_bin() called from ascii mode");
+-		exit(1);
+-	}
+-
+-	buspirate_send_bin(pgm, send_data, send_len);
+-	buspirate_recv_bin(pgm, recv_buf, expect_len);
+-	if (memcmp(expect_data, recv_buf, expect_len) != 0)
+-		return 0;
+-	return 1;
+-}
+-
+-static int buspirate_expect_bin_byte(struct programmer_t *pgm,
+-					char send_byte, char expect_byte)
+-{
+-	return buspirate_expect_bin(pgm, &send_byte, 1, &expect_byte, 1);
+-}
+-
+-/* ====== Serial talker functions - ascii mode ====== */
+-
+-static int buspirate_getc(struct programmer_t *pgm)
+-{
+-	int rc;
+-	unsigned char ch = 0;
+-
+-	if (pgm->flag & BP_FLAG_IN_BINMODE) {
+-		fprintf(stderr, "BusPirate: Internal error: buspirate_getc() called from binmode");
+-		exit(1);
+-	}
+-
+-	rc = serial_recv(&pgm->fd, &ch, 1);
+-	if (rc < 0)
+-		return EOF;
+-	return ch;
+-}
+-
+-static char *buspirate_readline_noexit(struct programmer_t *pgm, char *buf, size_t len)
+-{
+-	char *buf_p;
+-	long orig_serial_recv_timeout = serial_recv_timeout;
+-
+-	/* Static local buffer - this may come handy at times */
+-	static char buf_local[100];
+-
+-	if (buf == NULL) {
+-		buf = buf_local;
+-		len = sizeof(buf_local);
+-	}
+-	buf_p = buf;
+-	memset(buf, 0, len);
+-	while (buf_p < (buf + len - 1)) { /* keep the very last byte == 0 */
+-		*buf_p = buspirate_getc(pgm);
+-		if (*buf_p == '\r')
+-			continue;
+-		if (*buf_p == '\n')
+-			break;
+-		if (*buf_p == EOF) {
+-			*buf_p = '\0';
+-			break;
+-		}
+-		buf_p++;
+-		serial_recv_timeout = 100;
+-	}
+-	serial_recv_timeout = orig_serial_recv_timeout;
+-	if (verbose)
+-		fprintf(stderr, "%s: buspirate_readline(): %s%s",
+-			progname, buf,
+-			buf[strlen(buf) - 1] == '\n' ? "" : "\n");
+-	if (! buf[0])
+-		return NULL;
+-
+-	return buf;
+-}
+-
+-static char *buspirate_readline(struct programmer_t *pgm, char *buf, size_t len)
+-{
+-	char *ret;
+-	
+-	ret = buspirate_readline_noexit(pgm, buf, len);
+-	if (! ret) {
+-		fprintf(stderr,
+-			"%s: buspirate_readline(): programmer is not responding\n",
+-			progname);
+-		exit(1);
+-	}
+-	return ret;
+-}
+-static int buspirate_send(struct programmer_t *pgm, char *str)
+-{
+-	int rc;
+-
+-	if (verbose)
+-		fprintf(stderr, "%s: buspirate_send(): %s", progname, str);
+-
+-	if (pgm->flag & BP_FLAG_IN_BINMODE) {
+-		fprintf(stderr, "BusPirate: Internal error: buspirate_send() called from binmode");
+-		exit(1);
+-	}
+-
+-	rc = serial_send(&pgm->fd, (unsigned char *)str, strlen(str));
+-	if (rc)
+-		return rc;
+-	while (strcmp(buspirate_readline(pgm, NULL, 0), str) != 0)
+-		/* keep reading until we get what we sent there */
+-		;
+-	/* by now we should be in sync */
+-	return 0;
+-}
+-
+-static int buspirate_is_prompt(char *str)
+-{
+-	/* Prompt ends with '>' or '> '
+-	 * all other input probably ends with '\n' */
+-	return (str[strlen(str) - 1] == '>' || str[strlen(str) - 2] == '>');
+-}
+-
+-static int buspirate_expect(struct programmer_t *pgm, char *send,
+-				char *expect, int wait_for_prompt)
+-{
+-	int got_it = 0;
+-	size_t expect_len = strlen(expect);
+-	char *rcvd;
+-
+-	buspirate_send(pgm, send);
+-	while (1) {
+-		rcvd = buspirate_readline(pgm, NULL, 0);
+-
+-		if (strncmp(rcvd, expect, expect_len) == 0)
+-			got_it = 1;
+-
+-		if (buspirate_is_prompt(rcvd))
+-			break;
+-	}
+-	return got_it;
+-}
++static void goodfet_write_word(unsigned char* buf, int word) {
++	buf[0] = word & 0xff;
++	buf[1] = (word >> 8) & 0xff;
++}
++		
++static void goodfet_send_message(struct programmer_t *pgm,
++				 goodfet_message_t *msg,
++				 goodfet_message_t *response) {
++	unsigned char buf[4];
++	buf[0] = msg->app;
++	buf[1] = msg->verb;
++	buf[2] = msg->len & 0xff;
++	buf[3] = (msg->len >> 8) & 0xff;
++		
++	serial_send(&pgm->fd, buf, 4);
++	if (msg->len > 0)
++		serial_send(&pgm->fd, msg->data, msg->len);
++	serial_recv(&pgm->fd, buf, 4);
++	response->app = buf[0];
++	response->verb = buf[1];
++	response->len = buf[2] | (buf[3] << 8);
++	if (response->data)
++		free(response->data);
++	if (response->len > 0) {
++		response->data = malloc(response->len);
++		memset(response->data, 0, response->len);
++		serial_recv(&pgm->fd, response->data, response->len);
++	} else
++		response->data = NULL;
++}
++
++static void goodfet_spi_exchange(struct programmer_t *pgm, unsigned char* data, int len) {
++	goodfet_message_t msg, resp;
++	msg.app = GF_APP_AVR;
++	msg.verb = GF_VERB_READ;
++	msg.len = len;
++	msg.data = data;
++
++	resp.data = NULL;
++       	goodfet_send_message(pgm, &msg, &resp);
++	if (len != resp.len) {
++		printf ("<%d %02x:%02x:%d>\n", len,  resp.app, resp.verb, resp.len);
++		assert(len == resp.len);
++	}
++	if (verbose) {
++		int i;
++		fprintf(stderr, "\x1b[1;32m");
++		for (i = 0; i < len; i++)
++			fprintf(stderr, "%02x.", data[i]);
++		fprintf(stderr, "\x1b[1;31m");
++		for (i = 0; i < len; i++)
++			fprintf(stderr, "%02x.", resp.data[i]);
++		fprintf(stderr, "\x1b[0m\n");
++	}
++	memcpy(data, resp.data, resp.len);
++	free(resp.data);
++}		
+ 
+ /* ====== Do-nothing functions ====== */
+-static void gootfet_dummy_6(struct programmer_t *pgm,
++static void goodfet_dummy_6(struct programmer_t *pgm,
+                             const char *p)
+ {
+ }
+ 
+ /* ====== Config / parameters handling functions ====== */
+-static int
+-buspirate_parseextparms(struct programmer_t *pgm, LISTID extparms)
+-{
+-	LNODEID ln;
+-	const char *extended_param;
+-	char reset[10];
+-	char *preset = reset;	/* for strtok() */
+-	int spifreq;
+-
+-	for (ln = lfirst(extparms); ln; ln = lnext(ln)) {
+-    	extended_param = ldata(ln);
+-		if (strcmp(extended_param, "ascii") == 0) {
+-			pgm->flag |= BP_FLAG_XPARM_FORCE_ASCII;
+-			continue;
+-		}
+-		if (sscanf(extended_param, "spifreq=%d", &spifreq) == 1) {
+-			if (spifreq & (~0x07)) {
+-				fprintf(stderr, "BusPirate: spifreq must be between 0 and 7.\n");
+-				fprintf(stderr, "BusPirate: see BusPirate manual for details.\n");
+-				return -1;
+-			}
+-			PDATA(pgm)->spifreq = spifreq;
+-			pgm->flag |= BP_FLAG_XPARM_SPIFREQ;
+-			continue;
+-		}
+-
+-		if (sscanf(extended_param, "reset=%s", reset) == 1) {
+-			char *resetpin;
+-			while ((resetpin = strtok(preset, ","))) {
+-				preset = NULL;	/* for subsequent strtok() calls */
+-				if (strcasecmp(resetpin, "cs") == 0)
+-					PDATA(pgm)->reset |= BP_RESET_CS;
+-				else if (strcasecmp(resetpin, "aux") == 0 || strcasecmp(reset, "aux1") == 0)
+-					PDATA(pgm)->reset |= BP_RESET_AUX;
+-				else if (strcasecmp(resetpin, "aux2") == 0)
+-					PDATA(pgm)->reset |= BP_RESET_AUX2;
+-				else {
+-					fprintf(stderr, "BusPirate: reset must be either CS or AUX.\n");
+-					return -1;
+-				}
+-			}
+-			pgm->flag |= BP_FLAG_XPARM_RESET;
+-			continue;
+-		}
+-	}
+-
+-	return 0;
+-}
+-
+-static int
+-buspirate_verifyconfig(struct programmer_t *pgm)
+-{
+-	/* Default reset pin is CS */
+-	if (PDATA(pgm)->reset == 0x00)
+-		PDATA(pgm)->reset |= BP_RESET_CS;
+-
+-	/* reset=AUX2 is only available on HW=v1a and FW>=3.0 */
+-	if ((PDATA(pgm)->reset & BP_RESET_AUX2) && !buspirate_has_aux2(pgm)) {
+-		fprintf(stderr, "BusPirate: Pin AUX2 is only available in binary mode\n");
+-		fprintf(stderr, "BusPirate: with hardware==v1a && firmware>=3.0\n");
+-		fprintf(stderr, "BusPirate: Your hardware==%s and firmware==%d.%d\n",
+-				PDATA(pgm)->hw_version, PDATA(pgm)->fw_version/100, PDATA(pgm)->fw_version%100);
+-		return -1;
+-	}
+-
+-	if ((PDATA(pgm)->reset != BP_RESET_CS) && buspirate_uses_ascii(pgm)) {
+-		fprintf(stderr, "BusPirate: RESET pin other than CS is not supported in ASCII mode\n");
+-		return -1;
+-	}
+-
+-	if ((pgm->flag & BP_FLAG_XPARM_SPIFREQ) && buspirate_uses_ascii(pgm)) {
+-		fprintf(stderr, "BusPirate: SPI speed selection is not supported in ASCII mode\n");
+-		return -1;
+-	}
+-
+-	return 0;
+-}
+ 
+ /* ====== Programmer methods ======= */
+-static int buspirate_open(struct programmer_t *pgm, char * port)
++static int goodfet_open(struct programmer_t *pgm, char * port)
+ {
+-	/* BusPirate runs at 115200 by default */
++	int len;
++	char *dbuf;
++	unsigned char hbuf[4];
++	/* Goodfet runs at 115200 by default */
+ 	if(pgm->baudrate == 0)
+ 		pgm->baudrate = 115200;
+ 
+@@ -380,343 +185,77 @@ static int buspirate_open(struct programmer_t *pgm, char * port)
+ 
+ 	/* drain any extraneous input */
+ 	serial_drain(&pgm->fd, 0);
++	// drop DTR to start goodfet
++	serial_set_dtr_rts(&pgm->fd, 1);
++	usleep(50 * 1000);
++	serial_set_dtr_rts(&pgm->fd, 0);
+ 
++	/* Read the initialization string */
++	
++	serial_recv(&pgm->fd, hbuf, 4);
++	len = hbuf[2] | (hbuf[3] << 8);
++	if (len > 0) {
++		dbuf = malloc(len);
++		serial_recv(&pgm->fd, dbuf, len);
++		free(dbuf);
++	}
++		
+ 	return 0;
+ }
+ 
+-static void buspirate_close(struct programmer_t *pgm)
++static void goodfet_close(struct programmer_t *pgm)
+ {
+ 	serial_close(&pgm->fd);
+ 	pgm->fd.ifd = -1;
+ }
+ 
+-static void buspirate_reset_from_binmode(struct programmer_t *pgm)
+-{
+-	char buf[10];
+-
+-	buf[0] = 0x00;	/* BinMode: revert to HiZ */
+-	buspirate_send_bin(pgm, buf, 1);
+-
+-	buf[0] = 0x0F;	/* BinMode: reset */
+-	buspirate_send_bin(pgm, buf, 1);
+-
+-	/* read back all output */
+-	memset(buf, '\0', sizeof(buf));
+-	for (;;) {
+-		int rc;
+-		rc = buspirate_recv_bin(pgm, buf, sizeof(buf) - 1);
+-
+-		if (buspirate_is_prompt(buf)) {
+-			pgm->flag &= ~BP_FLAG_IN_BINMODE;
+-			break;
+-		}
+-		if (rc == EOF)
+-			break;
+-		memset(buf, '\0', sizeof(buf));
+-	}
+-
+-	if (pgm->flag & BP_FLAG_IN_BINMODE) {
+-		fprintf(stderr, "BusPirate reset failed. You may need to powercycle it.\n");
+-		exit(1);
+-	}
+-
+-	if (verbose)
+-		fprintf(stderr, "BusPirate is back in the text mode\n");
+-}
+-
+-static int buspirate_start_spi_mode_bin(struct programmer_t *pgm)
++static void goodfet_enable(struct programmer_t *pgm)
+ {
+-	char buf[20] = { '\0' };
+-
+-	/* == Switch to binmode - send 20x '\0' == */
+-	buspirate_send_bin(pgm, buf, sizeof(buf));
+-
+-	/* Expecting 'BBIOx' reply */
+-	memset(buf, 0, sizeof(buf));
+-	buspirate_recv_bin(pgm, buf, 5);
+-	if (sscanf(buf, "BBIO%d", &PDATA(pgm)->binmode_version) != 1) {
+-		fprintf(stderr, "Binary mode not confirmed: '%s'\n", buf);
+-		buspirate_reset_from_binmode(pgm);
+-		return -1;
+-	}
+-	if (verbose)
+-		fprintf(stderr, "BusPirate binmode version: %d\n",
+-			PDATA(pgm)->binmode_version);
+-
+-	pgm->flag |= BP_FLAG_IN_BINMODE;
+-
+-	/* == Enter SPI mode == */
+-	buf[0] = 0x01;	/* Enter raw SPI mode */
+-	buspirate_send_bin(pgm, buf, 1);
+-	memset(buf, 0, sizeof(buf));
+-	buspirate_recv_bin(pgm, buf, 4);
+-	if (sscanf(buf, "SPI%d", &PDATA(pgm)->bin_spi_version) != 1) {
+-		fprintf(stderr, "SPI mode not confirmed: '%s'\n", buf);
+-		buspirate_reset_from_binmode(pgm);
+-		return -1;
+-	}
+-	if (verbose)
+-		fprintf(stderr, "BusPirate SPI version: %d\n",
+-			PDATA(pgm)->bin_spi_version);
+-
+-	/* 0b0100wxyz - Configure peripherals w=power, x=pull-ups/aux2, y=AUX, z=CS
+-	 * we want power (0x48) and all reset pins high. */
+-	PDATA(pgm)->current_peripherals_config  = 0x48;
+-	PDATA(pgm)->current_peripherals_config |= BP_RESET_CS;
+-	PDATA(pgm)->current_peripherals_config |= BP_RESET_AUX;
+-	if (buspirate_has_aux2(pgm))
+-		PDATA(pgm)->current_peripherals_config |= BP_RESET_AUX2;
+-	buspirate_expect_bin_byte(pgm, PDATA(pgm)->current_peripherals_config, 0x01);
+-	usleep(50000);	// sleep for 50ms after power up
+-
+-	/* 01100xxx -  SPI speed
+-	 * xxx = 000=30kHz, 001=125kHz, 010=250kHz, 011=1MHz,
+-	 *       100=2MHz, 101=2.6MHz, 110=4MHz, 111=8MHz
+-	 * use 30kHz = 0x60 */
+-	buspirate_expect_bin_byte(pgm, 0x60 | PDATA(pgm)->spifreq, 0x01);
+-
+-	/* 1000wxyz - SPI config, w=HiZ(0)/3.3v(1), x=CLK idle, y=CLK edge, z=SMP sample
+-	 * we want: 3.3V(1), idle low(0), data change on trailing edge (1),
+-	 *          sample in the middle of the pulse (0)
+-	 *       => 0b10001010 = 0x8a */
+-	buspirate_expect_bin_byte(pgm, 0x8A, 0x01);
+-
+-	return 0;
+-}
+-
+-static int buspirate_start_spi_mode_ascii(struct programmer_t *pgm)
+-{
+-	int spi_cmd = -1;
+-	int cmd;
+-	char *rcvd, mode[11], buf[5];
+-
+-	buspirate_send(pgm, "M\n");
+-	while(1) {
+-		rcvd = buspirate_readline(pgm, NULL, 0);
+-		if (spi_cmd == -1 && sscanf(rcvd, "%d. %10s", &cmd, mode)) {
+-			if (strcmp(mode, "SPI") == 0)
+-				spi_cmd = cmd;
+-		}
+-		if (buspirate_is_prompt(rcvd))
+-			break;
+-	}
+-	if (spi_cmd == -1) {
+-		fprintf(stderr,
+-				"%s: SPI mode number not found. Does your BusPirate support SPI?\n",
+-				progname);
+-		fprintf(stderr, "%s: Try powercycling your BusPirate and try again.\n",
+-				progname);
+-		return -1;
+-	}
+-	snprintf(buf, sizeof(buf), "%d\n", spi_cmd);
+-	buspirate_send(pgm, buf);
+-	buf[0] = '\0';
+-	while (1) {
+-		rcvd = buspirate_readline(pgm, NULL, 0);
+-		if (strstr(rcvd, "Normal (H=3.3V, L=GND)")) {
+-			/* BP firmware 2.1 defaults to Open-drain output.
+-			 * That doesn't work on my board, even with pull-up
+-			 * resistors. Select 3.3V output mode instead. */
+-			sscanf(rcvd, " %d.", &cmd);
+-			snprintf(buf, sizeof(buf), "%d\n", cmd);
+-		}
+-		if (buspirate_is_prompt(rcvd)) {
+-			if (strncmp(rcvd, "SPI>", 4) == 0) {
+-				fprintf(stderr, "BusPirate is now configured for SPI\n");
+-				break;
+-			}
+-			/* Not yet 'SPI>' prompt */
+-			if (buf[0]) {
+-				buspirate_send(pgm, buf);
+-				buf[0] = '\0';
+-			} else
+-				buspirate_send(pgm, "\n");
+-		}
+-	}
+-	return 0;
++	goodfet_message_t cmd, resp;
++	cmd.app = GF_APP_AVR;
++	cmd.verb = GF_VERB_START;
++	cmd.len = 0;
++	cmd.data = resp.data = NULL;
++	goodfet_send_message(pgm, &cmd, &resp);
+ }
+ 
+-static void buspirate_enable(struct programmer_t *pgm)
++static void goodfet_disable(struct programmer_t *pgm)
+ {
+-	unsigned char *reset_str = "#\n";
+-	unsigned char *accept_str = "y\n";
+-	char *rcvd;
+-	int fw_v1 = 0, fw_v2 = 0;
+-	int rc, print_banner = 0;
+-
+-	fprintf(stderr, "Detecting BusPirate...\n");
+-
+-	/* Call buspirate_send_bin() instead of buspirate_send() 
+-	 * because we don't know if BP is in text or bin mode */
+-	rc = buspirate_send_bin(pgm, reset_str, strlen(reset_str));
+-	if (rc) {
+-		fprintf(stderr, "BusPirate is not responding. Serial port error: %d\n", rc);
+-		exit(1);
+-	}
+-
+-	while(1) {
+-		rcvd = buspirate_readline_noexit(pgm, NULL, 0);
+-		if (! rcvd) {
+-			fprintf(stderr, "BusPirate is not responding. Attempting reset.\n");
+-			buspirate_reset_from_binmode(pgm);
+-			/* re-run buspirate_enable() */
+-			buspirate_enable(pgm);
+-			return;
+-		}
+-		if (strncmp(rcvd, "Are you sure?", 13) == 0) {
+-			buspirate_send_bin(pgm, accept_str, strlen(accept_str));
+-		}
+-		if (strncmp(rcvd, "RESET", 5) == 0) {
+-			print_banner = 1;
+-			continue;
+-		}
+-		if (buspirate_is_prompt(rcvd)) {
+-			puts("**");
+-			break;
+-		}
+-		sscanf(rcvd, "Bus Pirate %9s", PDATA(pgm)->hw_version);
+-		sscanf(rcvd, "Firmware v%d.%d", &fw_v1, &fw_v2);
+-		if (print_banner)
+-			fprintf(stderr, "**  %s", rcvd);
+-	}
+-
+-	PDATA(pgm)->fw_version = 100 * fw_v1 + fw_v2;
+-	if (PDATA(pgm)->hw_version[0] == 0 || PDATA(pgm)->fw_version == 0) {
+-		fprintf(stderr, "BusPirate not detected. Aborting.\n");
+-		exit(1);
+-	}
+-
+-	if (buspirate_verifyconfig(pgm) < 0)
+-		exit(1);
+-
+-	if (PDATA(pgm)->fw_version >= FW_BINMODE_VER && !(pgm->flag & BP_FLAG_XPARM_FORCE_ASCII)) {
+-		fprintf(stderr, "BusPirate: using BINARY mode\n");
+-		if (buspirate_start_spi_mode_bin(pgm) < 0)
+-			fprintf(stderr, "%s: Failed to start binary SPI mode\n", progname);
+-	}
+-	if (!pgm->flag & BP_FLAG_IN_BINMODE) {
+-		fprintf(stderr, "BusPirate: using ASCII mode\n");
+-		if (buspirate_start_spi_mode_ascii(pgm) < 0) {
+-			fprintf(stderr, "%s: Failed to start ascii SPI mode\n", progname);
+-			exit(1);
+-		}
+-	}
+-}
+-
+-static void buspirate_disable(struct programmer_t *pgm)
+-{
+-	if (pgm->flag & BP_FLAG_IN_BINMODE) {
+-		serial_recv_timeout = 100;
+-		buspirate_reset_from_binmode(pgm);
+-	} else
+-		buspirate_expect(pgm, "#\n", "RESET", 1);
+-}
+-
+-static int buspirate_initialize(struct programmer_t *pgm, AVRPART * p)
+-{
+-	pgm->powerup(pgm);
+-
+-	return pgm->program_enable(pgm, p);
++	goodfet_message_t cmd, resp;
++	cmd.app = GF_APP_AVR;
++	cmd.verb = GF_VERB_STOP;
++	cmd.len = 0;
++	cmd.data = resp.data = NULL;
++	goodfet_send_message(pgm, &cmd, &resp);
+ }
+ 
+-static void buspirate_powerup(struct programmer_t *pgm)
++static int goodfet_initialize(struct programmer_t *pgm, AVRPART * p)
+ {
+-	if (pgm->flag & BP_FLAG_IN_BINMODE) {
+-		/* Powerup in BinMode is handled in SPI init */
+-		return;
+-	} else
+-		if (buspirate_expect(pgm, "W\n", "POWER SUPPLIES ON", 1))
+-			return;
+-
+-	fprintf(stderr, "%s: warning: did not get a response to PowerUp command.\n", progname);
+-	fprintf(stderr, "%s: warning: Trying to continue anyway...\n", progname);
+-}
+-
+-static void buspirate_powerdown(struct programmer_t *pgm)
+-{
+-	if (pgm->flag & BP_FLAG_IN_BINMODE) {
+-		/* 0b0100wxyz - Configure peripherals w=power, x=pull-ups, y=AUX, z=CS
+-		 * we want everything off -- 0b01000000 = 0x40 */
+-		if (buspirate_expect_bin_byte(pgm, 0x40, 0x01))
+-			return;
+-	} else
+-		if (buspirate_expect(pgm, "w\n", "POWER SUPPLIES OFF", 1))
+-			return;
+-
+-	fprintf(stderr, "%s: warning: did not get a response to PowerDown command.\n", progname);
+-}
+-
+-static int buspirate_cmd_bin(struct programmer_t *pgm,
+-				unsigned char cmd[4],
+-				unsigned char res[4])
+-{
+-	/* 0001xxxx - Bulk SPI transfer, send/read 1-16 bytes (0=1byte!)
+-	 * we are sending 4 bytes -> 0x13 */
+-	if (!buspirate_expect_bin_byte(pgm, 0x13, 0x01))
+-		return -1;
+-
+-	buspirate_send_bin(pgm, (char *)cmd, 4);
+-	buspirate_recv_bin(pgm, (char *)res, 4);
+-
++	goodfet_message_t cmd, resp;
++	cmd.app = GF_APP_AVR;
++	cmd.verb = GF_VERB_START;
++	cmd.len = 0;
++	cmd.data = resp.data = NULL;
++	goodfet_send_message(pgm, &cmd, &resp);
+ 	return 0;
++	//return pgm->program_enable(pgm, p);
+ }
+ 
+-static int buspirate_cmd_ascii(struct programmer_t *pgm,
++static int goodfet_cmd(struct programmer_t *pgm,
+ 				unsigned char cmd[4],
+ 				unsigned char res[4])
+ {
+-	char buf[25];
+-	char *rcvd;
+-	int spi_write, spi_read, i = 0;
+-
+-	snprintf(buf, sizeof(buf), "0x%02x 0x%02x 0x%02x 0x%02x\n",
+-		cmd[0], cmd[1], cmd[2], cmd[3]);
+-	buspirate_send(pgm, buf);
+-	while (i < 4) {
+-		rcvd = buspirate_readline(pgm, NULL, 0);
+-		/* WRITE: 0xAC READ: 0x04 */
+-		if (sscanf(rcvd, "WRITE: 0x%x READ: 0x%x", &spi_write, &spi_read) == 2) {
+-			res[i++] = spi_read;
+-		}
+-		if (buspirate_is_prompt(rcvd))
+-			break;
+-	}
+-
+-	if (i != 4) {
+-		fprintf(stderr, "%s: error: SPI has not read 4 bytes back\n", progname);
+-		return -1;
+-	}
+-
+-	/* wait for prompt */
+-	while (buspirate_getc(pgm) != '>')
+-		/* do nothing */;
+-
++	memcpy(res, cmd, 4);
++	//res[1] = cmd[0];
++	goodfet_spi_exchange(pgm, res, 4);
+ 	return 0;
+ }
+ 
+-static int buspirate_cmd(struct programmer_t *pgm,
+-				unsigned char cmd[4],
+-				unsigned char res[4])
+-{
+-	if (pgm->flag & BP_FLAG_IN_BINMODE)
+-		return buspirate_cmd_bin(pgm, cmd, res);
+-	else
+-		return buspirate_cmd_ascii(pgm, cmd, res);
+-}
+-
+-static int buspirate_program_enable(struct programmer_t *pgm, AVRPART * p)
++static int goodfet_program_enable(struct programmer_t *pgm, AVRPART * p)
+ {
+ 	unsigned char cmd[4];
+ 	unsigned char res[4];
+ 
+-	if (pgm->flag & BP_FLAG_IN_BINMODE) {
+-		/* Clear configured reset pin(s): CS and/or AUX and/or AUX2 */
+-		PDATA(pgm)->current_peripherals_config &= ~PDATA(pgm)->reset;
+-		buspirate_expect_bin_byte(pgm, PDATA(pgm)->current_peripherals_config, 0x01);
+-	}
+-	else
+-		buspirate_expect(pgm, "{\n", "CS ENABLED", 1);
+-
+ 	if (p->op[AVR_OP_PGM_ENABLE] == NULL) {
+ 		fprintf(stderr,
+ 			"program enable instruction not defined for part \"%s\"\n",
+@@ -734,7 +273,7 @@ static int buspirate_program_enable(struct programmer_t *pgm, AVRPART * p)
+ 	return 0;
+ }
+ 
+-static int buspirate_chip_erase(struct programmer_t *pgm, AVRPART * p)
++static int goodfet_chip_erase(struct programmer_t *pgm, AVRPART * p)
+ {
+ 	unsigned char cmd[4];
+ 	unsigned char res[4];
+@@ -760,13 +299,116 @@ static int buspirate_chip_erase(struct programmer_t *pgm, AVRPART * p)
+ 	return 0;
+ }
+ 
+-void buspirate_initpgm(struct programmer_t *pgm)
++int goodfet_paged_write(struct programmer_t *pgm, AVRPART * p, AVRMEM * m,
++			int page_size, int n_bytes) {
++
++	OPCODE* wp;
++	int n, addr;
++	if (strcmp(m->desc, "flash") != 0)
++		return -1;
++	wp = m->op[AVR_OP_WRITEPAGE];
++
++	struct goodfet_message cmd, rsp;
++	rsp.data = NULL;
++	
++	if (n_bytes > m->size) {
++		n_bytes = m->size;
++		n = m->size;
++	}
++	else {
++		if ((n_bytes % page_size) != 0) {
++			n = n_bytes + page_size - (n_bytes % page_size);
++		}
++		else {
++			n = n_bytes;
++		}
++	}
++	cmd.app = GF_APP_AVR;
++	cmd.verb = GF_VERB_AVR_BULKLOAD;
++	for (addr = 0; addr < n; addr += page_size) {
++		report_progress (addr, n_bytes, NULL);
++		if (page_size > n - addr)
++			page_size = n - addr;
++
++		// skip writing blank pages
++		int nz = 0xff, i;
++		for (i = addr; i < addr + page_size; i++)
++			nz &= m->buf[i];
++		if (nz == 0xff)
++			continue;
++
++		// ok; non-blank page.
++		cmd.data = malloc(page_size + 2);
++		cmd.len = page_size + 2;
++		cmd.data[0] = addr & 0xff;
++		cmd.data[1] = (addr >> 8) & 0xff;
++		memcpy(cmd.data + 2, m->buf + addr, page_size);
++		goodfet_send_message(pgm, &cmd, &rsp);
++		free(cmd.data);
++		avr_write_page(pgm, p, m, addr);
++	}
++	return n;
++}
++
++int goodfet_paged_load(struct programmer_t *pgm, AVRPART *p, AVRMEM *m,
++			int page_size, int n_bytes) {
++	int n, adr;
++	int block_size = page_size;
++	unsigned char cmddata[4];
++	struct goodfet_message cmd, resp;
++	
++	if (block_size < 1024)
++		block_size = 1024;
++	if (block_size > n_bytes)
++		block_size = n_bytes;
++       
++	// Goodfet protocol only supports this much...
++	if (n_bytes > 65536)
++		return -1;
++	// Only flash for now...
++	if (strcmp(m->desc, "flash") != 0)
++		return -1;
++	
++	if (n_bytes > m->size)
++		n = m->size;
++	else
++		n = n_bytes;
++
++	resp.data = NULL;
++	cmd.app = GF_APP_AVR;
++	cmd.verb = GF_VERB_PEEK;
++	cmd.data = cmddata;
++	cmd.len = 4;
++		
++	for (adr = 0; adr < n; adr += block_size) {
++		report_progress (adr, n, NULL);
++		if (adr + block_size > n)
++			block_size = n - adr;
++
++		goodfet_write_word(cmd.data, adr);
++		goodfet_write_word(cmd.data + 2, block_size);
++		goodfet_send_message(pgm, &cmd, &resp);
++		if (resp.verb == GF_VERB_NOK)
++			goto err;
++		memcpy(m->buf + adr, resp.data, resp.len);
++	}
++	
++	
++      	free(resp.data);
++	return n;
++
++ err:
++	free(resp.data);
++	return -1;
++}
++	
++void goodfet_initpgm(struct programmer_t *pgm)
+ {
+ 	strcpy(pgm->type, "GoodFET");
+ 
+ 	pgm->display        = goodfet_dummy_6;
+ 
+-	/* BusPirate itself related methods */
++	/* Goodfet itself related methods */
+ 	pgm->open           = goodfet_open;
+ 	pgm->close          = goodfet_close;
+ 	pgm->enable         = goodfet_enable;
+@@ -779,9 +421,11 @@ void buspirate_initpgm(struct programmer_t *pgm)
+ 	pgm->cmd            = goodfet_cmd;
+ 	pgm->read_byte      = avr_read_byte_default;
+ 	pgm->write_byte     = avr_write_byte_default;
++	pgm->paged_write    = goodfet_paged_write;
++	pgm->paged_load     = goodfet_paged_load;
+ 
+ 	/* Support functions */
+-	pgm->parseextparams = goodfet_parseextparms;
++	//pgm->parseextparams = goodfet_parseextparms;
+ 
+ 	/* Allocate private data */
+ 	if ((pgm->cookie = calloc(1, sizeof(struct pdata))) == 0) {
+diff --git a/avrdude/goodfet.h b/avrdude/goodfet.h
+index 730ea3b..800d591 100644
+--- a/avrdude/goodfet.h
++++ b/avrdude/goodfet.h
+@@ -1,9 +1,9 @@
+ /*
+  * avrdude - A Downloader/Uploader for AVR device programmers
+  *
+- * avrdude support for The Bus Pirate - universal serial interface
++ * avrdude support for Travis Goodspeed's GoodFET
+  *
+- * Copyright (C) 2009 Michal Ludvig <mludvig@logix.net.nz>
++ * Copyright (C) 2010 Dan Hirsch <thequux@google.com>
+  *
+  * This program is free software; you can redistribute it and/or modify
+  * it under the terms of the GNU General Public License as published by
+diff --git a/avrdude/lexer.l b/avrdude/lexer.l
+index 926aca1..8135dc3 100644
+--- a/avrdude/lexer.l
++++ b/avrdude/lexer.l
+@@ -146,6 +146,7 @@ eeprom           { yylval=NULL; return K_EEPROM; }
+ enablepageprogramming { yylval=NULL; return K_ENABLEPAGEPROGRAMMING; }
+ errled           { yylval=NULL; return K_ERRLED; }
+ flash            { yylval=NULL; return K_FLASH; }
++goodfet          { yylval=NULL; return K_GOODFET; }
+ has_jtag         { yylval=NULL; return K_HAS_JTAG; }
+ has_debugwire    { yylval=NULL; return K_HAS_DW; }
+ has_pdi          { yylval=NULL; return K_HAS_PDI; }

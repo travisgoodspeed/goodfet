@@ -1,0 +1,8 @@
+[Activity]
+name = GoodFET
+bundle_id = com.goodfet.GoodFET
+class = GoodFETActivity.GoodFETActivity
+icon = activity-goodfet
+activity_version = 1
+host_version = 1
+show_launcher = yes

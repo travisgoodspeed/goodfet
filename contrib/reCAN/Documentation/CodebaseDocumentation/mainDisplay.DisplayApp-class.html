@@ -1,0 +1,3786 @@
+<?xml version="1.0" encoding="ascii"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>mainDisplay.DisplayApp</title>
+  <link rel="stylesheet" href="epydoc.css" type="text/css" />
+  <script type="text/javascript" src="epydoc.js"></script>
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="#204080"
+      alink="#204080">
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+      <th class="navbar" width="100%"></th>
+  </tr>
+</table>
+<table width="100%" cellpadding="0" cellspacing="0">
+  <tr valign="top">
+    <td width="100%">
+      <span class="breadcrumbs">
+        <a href="mainDisplay-module.html">Module&nbsp;mainDisplay</a> ::
+        Class&nbsp;DisplayApp
+      </span>
+    </td>
+    <td>
+      <table cellpadding="0" cellspacing="0">
+        <!-- hide/show private -->
+        <tr><td align="right"><span class="options">[<a href="javascript:void(0);" class="privatelink"
+    onclick="toggle_private();">hide&nbsp;private</a>]</span></td></tr>
+        <tr><td align="right"><span class="options"
+            >[<a href="frames.html" target="_top">frames</a
+            >]&nbsp;|&nbsp;<a href="mainDisplay.DisplayApp-class.html"
+            target="_top">no&nbsp;frames</a>]</span></td></tr>
+      </table>
+    </td>
+  </tr>
+</table>
+<!-- ==================== CLASS DESCRIPTION ==================== -->
+<h1 class="epydoc">Class DisplayApp</h1><p class="nomargin-top"><span class="codelink"><a href="mainDisplay-pysrc.html#DisplayApp">source&nbsp;code</a></span></p>
+<p>This is the main display for the graphical user interface (GUI). This 
+  GUI is designed to aid the user in their work listening to CAN traffic 
+  via the GOODTHOPTER10 board, <a 
+  href="http://goodfet.sourceforge.net/hardware/goodthopter10/" 
+  target="_top">http://goodfet.sourceforge.net/hardware/goodthopter10/</a>.
+  There are no inputs to this class but all default data is loaded from the
+  settings file.</p>
+
+<!-- ==================== INSTANCE METHODS ==================== -->
+<a name="section-InstanceMethods"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Instance Methods</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-InstanceMethods"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="__init__"></a><span class="summary-sig-name">__init__</span>(<span class="summary-sig-arg">self</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="mainDisplay-pysrc.html#DisplayApp.__init__">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="mainDisplay.DisplayApp-class.html#writeiniFile" class="summary-sig-name">writeiniFile</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">filename</span>,
+        <span class="summary-sig-arg">section</span>,
+        <span class="summary-sig-arg">option</span>,
+        <span class="summary-sig-arg">value</span>)</span><br />
+      Writes the given settings to the given settings filename.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="mainDisplay-pysrc.html#DisplayApp.writeiniFile">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">Dictionary</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="mainDisplay.DisplayApp-class.html#ConfigSectionMap" class="summary-sig-name">ConfigSectionMap</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">Config</span>,
+        <span class="summary-sig-arg">section</span>)</span><br />
+      This method has been implemented based on the following exmaple, <a 
+      href="http://wiki.python.org/moin/ConfigParserExamples" 
+      target="_top">http://wiki.python.org/moin/ConfigParserExamples</a>.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="mainDisplay-pysrc.html#DisplayApp.ConfigSectionMap">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="buildMenus"></a><span class="summary-sig-name">buildMenus</span>(<span class="summary-sig-arg">self</span>)</span><br />
+      This method will build the menu bars</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="mainDisplay-pysrc.html#DisplayApp.buildMenus">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="selectall"></a><span class="summary-sig-name">selectall</span>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">event</span>)</span><br />
+      This method is called when the user wishes to select the entire text 
+      box.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="mainDisplay-pysrc.html#DisplayApp.selectall">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="mainDisplay.DisplayApp-class.html#buildExperimentCanvas" class="summary-sig-name">buildExperimentCanvas</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      This method will build out the experiment frame which will display to
+      the user the various experiments that can be run.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="mainDisplay-pysrc.html#DisplayApp.buildExperimentCanvas">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="mainDisplay.DisplayApp-class.html#buildInfoFrame" class="summary-sig-name">buildInfoFrame</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      This builds the tab that displays our information about the 
+      arbitration ids and any known information about the packets at the 
+      moment.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="mainDisplay-pysrc.html#DisplayApp.buildInfoFrame">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="buttonTest"></a><span class="summary-sig-name">buttonTest</span>(<span class="summary-sig-arg">self</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="mainDisplay-pysrc.html#DisplayApp.buttonTest">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="mainDisplay.DisplayApp-class.html#deleteArbID" class="summary-sig-name">deleteArbID</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      This method will delete an ID from the JSON file that stores packet 
+      information.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="mainDisplay-pysrc.html#DisplayApp.deleteArbID">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="mainDisplay.DisplayApp-class.html#addArbID" class="summary-sig-name">addArbID</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      This method will add a new arbitration id to the json file.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="mainDisplay-pysrc.html#DisplayApp.addArbID">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr class="private">
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="mainDisplay.DisplayApp-class.html#_reset_option_menu" class="summary-sig-name" onclick="show_private();">_reset_option_menu</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">om</span>,
+        <span class="summary-sig-arg">options</span>,
+        <span class="summary-sig-arg">variable</span>,
+        <span class="summary-sig-arg">index</span>=<span class="summary-sig-default">None</span>)</span><br />
+      reset the values in the option menu</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="mainDisplay-pysrc.html#DisplayApp._reset_option_menu">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="mainDisplay.DisplayApp-class.html#buildByteInfoFrame" class="summary-sig-name">buildByteInfoFrame</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">i</span>)</span><br />
+      This method will build the frame that will display our information 
+      about the specific bytes of an arbitration ID.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="mainDisplay-pysrc.html#DisplayApp.buildByteInfoFrame">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="mainDisplay.DisplayApp-class.html#buildPacketInfoFrame" class="summary-sig-name">buildPacketInfoFrame</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">i</span>)</span><br />
+      This method will build the frame that will display our information 
+      about the specific packets of an arbitration ID.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="mainDisplay-pysrc.html#DisplayApp.buildPacketInfoFrame">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="mainDisplay.DisplayApp-class.html#buildGeneralInfoFrame" class="summary-sig-name">buildGeneralInfoFrame</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">i</span>)</span><br />
+      This method will build the frame that will display our information 
+      about our general knowledge of an arbitration ID.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="mainDisplay-pysrc.html#DisplayApp.buildGeneralInfoFrame">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="liftGeneralInfo"></a><span class="summary-sig-name">liftGeneralInfo</span>(<span class="summary-sig-arg">self</span>)</span><br />
+      This method lifts the General information tab to the top and makes it
+      viewable to the screen.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="mainDisplay-pysrc.html#DisplayApp.liftGeneralInfo">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="liftBytesInfo"></a><span class="summary-sig-name">liftBytesInfo</span>(<span class="summary-sig-arg">self</span>)</span><br />
+      This method lifts the Bytes information tab to the top and makes it 
+      viewable to the screen.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="mainDisplay-pysrc.html#DisplayApp.liftBytesInfo">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="liftPackets"></a><span class="summary-sig-name">liftPackets</span>(<span class="summary-sig-arg">self</span>)</span><br />
+      This method lifts the Packets information tab to the top and makes it
+      viewable to the screen.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="mainDisplay-pysrc.html#DisplayApp.liftPackets">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="mainDisplay.DisplayApp-class.html#updateQueryInfo" class="summary-sig-name">updateQueryInfo</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">name</span>,
+        <span class="summary-sig-arg">index</span>,
+        <span class="summary-sig-arg">mode</span>)</span><br />
+      This method will update the query tab so that it is correct and so 
+      that the user does not try to save a .pcap file to .csv or vice 
+      versa.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="mainDisplay-pysrc.html#DisplayApp.updateQueryInfo">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="mainDisplay.DisplayApp-class.html#saveJsonInfo" class="summary-sig-name">saveJsonInfo</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">event</span>=<span class="summary-sig-default">None</span>)</span><br />
+      This file will save all of the user's information to the json file 
+      specified in settings.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="mainDisplay-pysrc.html#DisplayApp.saveJsonInfo">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="mainDisplay.DisplayApp-class.html#updateInfo" class="summary-sig-name">updateInfo</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">name</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">index</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">mode</span>=<span class="summary-sig-default">None</span>)</span><br />
+      This method is called when the user changes the option menu for 
+      arbitration IDs under our packetInformation tab.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="mainDisplay-pysrc.html#DisplayApp.updateInfo">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="mainDisplay.DisplayApp-class.html#injectPacket" class="summary-sig-name">injectPacket</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">data</span>)</span><br />
+      This method will take the data that is given and fill the write 
+      method section in the sniff tab.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="mainDisplay-pysrc.html#DisplayApp.injectPacket">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="mainDisplay.DisplayApp-class.html#buildCarFrame" class="summary-sig-name">buildCarFrame</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      This method will build the car module tab.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="mainDisplay-pysrc.html#DisplayApp.buildCarFrame">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="mainDisplay.DisplayApp-class.html#buildCarModule" class="summary-sig-name">buildCarModule</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      This will build the car module.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="mainDisplay-pysrc.html#DisplayApp.buildCarModule">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="mainDisplay.DisplayApp-class.html#buildSQLCanvas" class="summary-sig-name">buildSQLCanvas</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      This method will build the SQL tab frame where some of the database 
+      information is stored.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="mainDisplay-pysrc.html#DisplayApp.buildSQLCanvas">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="mainDisplay.DisplayApp-class.html#buildCanvas" class="summary-sig-name">buildCanvas</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      This builds the Frame that controls the sniffing and writing with the
+      CAN bus.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="mainDisplay-pysrc.html#DisplayApp.buildCanvas">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="buildDataCanvas"></a><span class="summary-sig-name">buildDataCanvas</span>(<span class="summary-sig-arg">self</span>)</span><br />
+      This methods will build the left frame that contains a display for 
+      information pulled off of the bus.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="mainDisplay-pysrc.html#DisplayApp.buildDataCanvas">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="addtextToScreen"></a><span class="summary-sig-name">addtextToScreen</span>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">text</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="mainDisplay-pysrc.html#DisplayApp.addtextToScreen">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="buildControls"></a><span class="summary-sig-name">buildControls</span>(<span class="summary-sig-arg">self</span>)</span><br />
+      This method builds out the top frame bar which allows the user to 
+      switch tabs between the experiments, sniff/write, MYSQL and 
+      Arbitration id tabs</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="mainDisplay-pysrc.html#DisplayApp.buildControls">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="mainDisplay.DisplayApp-class.html#setBindings" class="summary-sig-name">setBindings</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      This method will set bindings on the window.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="mainDisplay-pysrc.html#DisplayApp.setBindings">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="handleKeys"></a><span class="summary-sig-name">handleKeys</span>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">event</span>)</span><br />
+      This will handle an event for when a key is pressed</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="mainDisplay-pysrc.html#DisplayApp.handleKeys">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="mainDisplay.DisplayApp-class.html#handleQuit" class="summary-sig-name">handleQuit</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">event</span>=<span class="summary-sig-default">None</span>)</span><br />
+      This method is called when the user quits the program.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="mainDisplay-pysrc.html#DisplayApp.handleQuit">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="mainDisplay.DisplayApp-class.html#setCarModule" class="summary-sig-name">setCarModule</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">experimentFileLocation</span>,
+        <span class="summary-sig-arg">experimentGUILocation</span>)</span><br />
+      This method will save the new car module file locations that can be 
+      set in the settings dialog box.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="mainDisplay-pysrc.html#DisplayApp.setCarModule">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="mainDisplay.DisplayApp-class.html#setDataManage" class="summary-sig-name">setDataManage</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">table</span>,
+        <span class="summary-sig-arg">name</span>,
+        <span class="summary-sig-arg">host</span>,
+        <span class="summary-sig-arg">username</span>,
+        <span class="summary-sig-arg">password</span>,
+        <span class="summary-sig-arg">database</span>)</span><br />
+      This method will update the stored information for accessing the 
+      MYSQL database.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="mainDisplay-pysrc.html#DisplayApp.setDataManage">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="handleSettings"></a><span class="summary-sig-name">handleSettings</span>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">event</span>=<span class="summary-sig-default">None</span>)</span><br />
+      This method will open the settings dialog box for the user to change 
+      various components of the GUI.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="mainDisplay-pysrc.html#DisplayApp.handleSettings">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="handleModQ"></a><span class="summary-sig-name">handleModQ</span>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">event</span>)</span><br />
+      This method will quit the GUI</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="mainDisplay-pysrc.html#DisplayApp.handleModQ">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="setRunning"></a><span class="summary-sig-name">setRunning</span>(<span class="summary-sig-arg">self</span>)</span><br />
+      This method sets the running boolean when a method is communicating 
+      with the bus</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="mainDisplay-pysrc.html#DisplayApp.setRunning">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="unsetRunning"></a><span class="summary-sig-name">unsetRunning</span>(<span class="summary-sig-arg">self</span>)</span><br />
+      This method unsets the running boolean when a method is done 
+      communicating with the bus</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="mainDisplay-pysrc.html#DisplayApp.unsetRunning">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="getRate"></a><span class="summary-sig-name">getRate</span>(<span class="summary-sig-arg">self</span>)</span><br />
+      This method returns the rate that the GOODTHOPTER10 is set to</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="mainDisplay-pysrc.html#DisplayApp.getRate">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="testConnect"></a><span class="summary-sig-name">testConnect</span>(<span class="summary-sig-arg">self</span>)</span><br />
+      this is to test module files</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="mainDisplay-pysrc.html#DisplayApp.testConnect">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="mainDisplay.DisplayApp-class.html#connectBus" class="summary-sig-name">connectBus</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      This method will try to reconnect with the GOODTHOPTER10.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="mainDisplay-pysrc.html#DisplayApp.connectBus">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">Boolean</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="mainDisplay.DisplayApp-class.html#checkComm" class="summary-sig-name">checkComm</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      This method check to see if the program is able to begin 
+      communication with the GOODTHOPTER10 board.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="mainDisplay-pysrc.html#DisplayApp.checkComm">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="getExperimentFileLocations"></a><span class="summary-sig-name">getExperimentFileLocations</span>(<span class="summary-sig-arg">self</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="mainDisplay-pysrc.html#DisplayApp.getExperimentFileLocations">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">string</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="mainDisplay.DisplayApp-class.html#getDataLocation" class="summary-sig-name">getDataLocation</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Returns the path to the data location</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="mainDisplay-pysrc.html#DisplayApp.getDataLocation">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="mainDisplay.DisplayApp-class.html#setDataLocation" class="summary-sig-name">setDataLocation</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">location</span>)</span><br />
+      Sets the data location path in the program as well as saved to the 
+      settings file.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="mainDisplay-pysrc.html#DisplayApp.setDataLocation">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="mainDisplay.DisplayApp-class.html#setRate" class="summary-sig-name">setRate</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">freq</span>)</span><br />
+      This method will set the rate that the board communicates with  the 
+      CAN Bus on.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="mainDisplay-pysrc.html#DisplayApp.setRate">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="mainDisplay.DisplayApp-class.html#clearFilters" class="summary-sig-name">clearFilters</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      This method will clear the filters that the user has input into the 
+      dialog spots.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="mainDisplay-pysrc.html#DisplayApp.clearFilters">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="mainDisplay.DisplayApp-class.html#sniff" class="summary-sig-name">sniff</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      This method will sniff the CAN bus.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="mainDisplay-pysrc.html#DisplayApp.sniff">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="mainDisplay.DisplayApp-class.html#sniffControl" class="summary-sig-name">sniffControl</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">freq</span>,
+        <span class="summary-sig-arg">duration</span>,
+        <span class="summary-sig-arg">description</span>,
+        <span class="summary-sig-arg">verbose</span>=<span class="summary-sig-default">False</span>,
+        <span class="summary-sig-arg">comment</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">filename</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">standardid</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">debug</span>=<span class="summary-sig-default">False</span>,
+        <span class="summary-sig-arg">faster</span>=<span class="summary-sig-default">False</span>,
+        <span class="summary-sig-arg">parsed</span>=<span class="summary-sig-default">True</span>,
+        <span class="summary-sig-arg">data</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">writeToFile</span>=<span class="summary-sig-default">True</span>)</span><br />
+      This method will actively do the sniffing on the bus.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="mainDisplay-pysrc.html#DisplayApp.sniffControl">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="mainDisplay.DisplayApp-class.html#updateStatus" class="summary-sig-name">updateStatus</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">name</span>,
+        <span class="summary-sig-arg">index</span>,
+        <span class="summary-sig-arg">mode</span>)</span><br />
+      This method will update the status indicator for the user in the 
+      bottom of of the data Frame.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="mainDisplay-pysrc.html#DisplayApp.updateStatus">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="mainDisplay.DisplayApp-class.html#updateCanvas" class="summary-sig-name">updateCanvas</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      This method will update the data to be displayed on the screen (in 
+      the text box) to the user.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="mainDisplay-pysrc.html#DisplayApp.updateCanvas">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="mainDisplay.DisplayApp-class.html#arbIDInfo" class="summary-sig-name">arbIDInfo</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">id</span>)</span><br />
+      This method is called when the user clicks on an arbID in the data 
+      textboxes.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="mainDisplay-pysrc.html#DisplayApp.arbIDInfo">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="loadJson"></a><span class="summary-sig-name">loadJson</span>(<span class="summary-sig-arg">self</span>)</span><br />
+      This method will load our packet informtion from the Json file 
+      specified in the settings.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="mainDisplay-pysrc.html#DisplayApp.loadJson">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="mainDisplay.DisplayApp-class.html#write" class="summary-sig-name">write</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      This method handles injecting packets onto the bus.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="mainDisplay-pysrc.html#DisplayApp.write">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="mainDisplay.DisplayApp-class.html#writeControl" class="summary-sig-name">writeControl</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">freq</span>,
+        <span class="summary-sig-arg">sID</span>,
+        <span class="summary-sig-arg">repeat</span>,
+        <span class="summary-sig-arg">writes</span>,
+        <span class="summary-sig-arg">period</span>,
+        <span class="summary-sig-arg">debug</span>=<span class="summary-sig-default">False</span>,
+        <span class="summary-sig-arg">packet</span>=<span class="summary-sig-default">None</span>)</span><br />
+      This method will spit a single message onto the bus.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="mainDisplay-pysrc.html#DisplayApp.writeControl">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="mainDisplay.DisplayApp-class.html#uploaddb" class="summary-sig-name">uploaddb</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      This method will upload all files that have been sniffed to the 
+      designated folder <a 
+      href="mainDisplay.DisplayApp-class.html#DATA_LOCATION" 
+      class="link">self.DATA_LOCATION</a> to the MYSQL data base that was 
+      specified in the settins.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="mainDisplay-pysrc.html#DisplayApp.uploaddb">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="mainDisplay.DisplayApp-class.html#infoFrameLift" class="summary-sig-name">infoFrameLift</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">event</span>=<span class="summary-sig-default">None</span>)</span><br />
+      This method is used in the tabbing of the right side frames.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="mainDisplay-pysrc.html#DisplayApp.infoFrameLift">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="mainDisplay.DisplayApp-class.html#sqlFrameLift" class="summary-sig-name">sqlFrameLift</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">event</span>=<span class="summary-sig-default">None</span>)</span><br />
+      This method is used in the tabbing of the right side frames.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="mainDisplay-pysrc.html#DisplayApp.sqlFrameLift">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="mainDisplay.DisplayApp-class.html#sniffFrameLift" class="summary-sig-name">sniffFrameLift</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">event</span>=<span class="summary-sig-default">None</span>)</span><br />
+      This method is used in the tabbing of the right side frames.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="mainDisplay-pysrc.html#DisplayApp.sniffFrameLift">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="mainDisplay.DisplayApp-class.html#experimentFrameLift" class="summary-sig-name">experimentFrameLift</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">event</span>=<span class="summary-sig-default">None</span>)</span><br />
+      This method is used in the tabbing of the right side frames.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="mainDisplay-pysrc.html#DisplayApp.experimentFrameLift">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="ourCarFrameLift"></a><span class="summary-sig-name">ourCarFrameLift</span>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">event</span>=<span class="summary-sig-default">None</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="mainDisplay-pysrc.html#DisplayApp.ourCarFrameLift">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="idInfo"></a><span class="summary-sig-name">idInfo</span>(<span class="summary-sig-arg">self</span>)</span><br />
+      This method will open an info box for the user to gain information on
+      a known arbID</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="mainDisplay-pysrc.html#DisplayApp.idInfo">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="mainDisplay.DisplayApp-class.html#sqlQuery" class="summary-sig-name">sqlQuery</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      This method will take in the user's inputed MYSQL query and query the
+      database for it.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="mainDisplay-pysrc.html#DisplayApp.sqlQuery">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="isConnected"></a><span class="summary-sig-name">isConnected</span>(<span class="summary-sig-arg">self</span>)</span><br />
+      This method checks to see if the GOODTHOPTER10 is connected</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="mainDisplay-pysrc.html#DisplayApp.isConnected">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="handleCmd1"></a><span class="summary-sig-name">handleCmd1</span>(<span class="summary-sig-arg">self</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="mainDisplay-pysrc.html#DisplayApp.handleCmd1">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="handleCmd2"></a><span class="summary-sig-name">handleCmd2</span>(<span class="summary-sig-arg">self</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="mainDisplay-pysrc.html#DisplayApp.handleCmd2">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="handleCmd3"></a><span class="summary-sig-name">handleCmd3</span>(<span class="summary-sig-arg">self</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="mainDisplay-pysrc.html#DisplayApp.handleCmd3">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="mainDisplay.DisplayApp-class.html#generalFuzz" class="summary-sig-name">generalFuzz</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      This method grabs user input to perform a general fuzz.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="mainDisplay-pysrc.html#DisplayApp.generalFuzz">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">None</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="mainDisplay.DisplayApp-class.html#generalFuzzControl" class="summary-sig-name">generalFuzzControl</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">freq</span>,
+        <span class="summary-sig-arg">Fuzzes</span>,
+        <span class="summary-sig-arg">period</span>,
+        <span class="summary-sig-arg">writesPerFuzz</span>)</span><br />
+      The method will inject properly formatted, randomly generated 
+      messages at a given period for a <i>writesPerFuzz</i> number of 
+      times.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="mainDisplay-pysrc.html#DisplayApp.generalFuzzControl">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="mainDisplay.DisplayApp-class.html#packetResponse" class="summary-sig-name">packetResponse</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      This method compiles the user input for running the Packet Response 
+      method.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="mainDisplay-pysrc.html#DisplayApp.packetResponse">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="mainDisplay.DisplayApp-class.html#packetResponseControl" class="summary-sig-name">packetResponseControl</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">freq</span>,
+        <span class="summary-sig-arg">time</span>,
+        <span class="summary-sig-arg">repeats</span>,
+        <span class="summary-sig-arg">period</span>,
+        <span class="summary-sig-arg">responseID</span>,
+        <span class="summary-sig-arg">respondPacket</span>,
+        <span class="summary-sig-arg">listenID</span>,
+        <span class="summary-sig-arg">listenPacket</span>=<span class="summary-sig-default">None</span>)</span><br />
+      This method will allow the user to listen for a specific packet and 
+      then respond with a given message.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="mainDisplay-pysrc.html#DisplayApp.packetResponseControl">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="mainDisplay.DisplayApp-class.html#reInjectFuzzed" class="summary-sig-name">reInjectFuzzed</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      This method compiles user input to be able to re-inject packets that 
+      were injected as part of the fuzzing methods.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="mainDisplay-pysrc.html#DisplayApp.reInjectFuzzed">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="mainDisplay.DisplayApp-class.html#reInjectFuzzedControl" class="summary-sig-name">reInjectFuzzedControl</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">filename</span>,
+        <span class="summary-sig-arg">startTime</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">endTime</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">id</span>=<span class="summary-sig-default">None</span>)</span><br />
+      This method will re-inject data that was already injected to the bus 
+      as part of a Fuzzing method.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="mainDisplay-pysrc.html#DisplayApp.reInjectFuzzedControl">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="mainDisplay.DisplayApp-class.html#GenerationFuzz" class="summary-sig-name">GenerationFuzz</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      This method takes in the user inputs to perform generation fuzzing.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="mainDisplay-pysrc.html#DisplayApp.GenerationFuzz">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">None</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="mainDisplay.DisplayApp-class.html#GenerationFuzzControl" class="summary-sig-name">GenerationFuzzControl</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">freq</span>,
+        <span class="summary-sig-arg">sID</span>,
+        <span class="summary-sig-arg">dbInfo</span>,
+        <span class="summary-sig-arg">period</span>,
+        <span class="summary-sig-arg">writesPerFuzz</span>,
+        <span class="summary-sig-arg">Fuzzes</span>)</span><br />
+      This method will perform generation based fuzzing on the bus.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="mainDisplay-pysrc.html#DisplayApp.GenerationFuzzControl">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="mainDisplay.DisplayApp-class.html#RTRsweepID" class="summary-sig-name">RTRsweepID</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      This method takes in user inputs for a RTR sweep experiment.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="mainDisplay-pysrc.html#DisplayApp.RTRsweepID">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">None</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="mainDisplay.DisplayApp-class.html#RTRsweepIDControl" class="summary-sig-name">RTRsweepIDControl</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">freq</span>,
+        <span class="summary-sig-arg">lowI</span>,
+        <span class="summary-sig-arg">highI</span>,
+        <span class="summary-sig-arg">attemptsI</span>,
+        <span class="summary-sig-arg">sT</span>,
+        <span class="summary-sig-arg">verbose</span>)</span><br />
+      This method will sweep through the range of ids given by lowID to 
+      highID and send a remote transmissions request (RTR) to each id and 
+      then listen for a response.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="mainDisplay-pysrc.html#DisplayApp.RTRsweepIDControl">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="mainDisplay.DisplayApp-class.html#sweepID" class="summary-sig-name">sweepID</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      This method will gather user inputs for sweeping through standard ids
+      in the range of integers specified by the user inputs.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="mainDisplay-pysrc.html#DisplayApp.sweepID">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">list of numbers</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="mainDisplay.DisplayApp-class.html#sweeIDControl" class="summary-sig-name">sweeIDControl</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">freq</span>,
+        <span class="summary-sig-arg">lowI</span>,
+        <span class="summary-sig-arg">highI</span>,
+        <span class="summary-sig-arg">sT</span>)</span><br />
+      This method will sweep through the range of standard ids given from 
+      low to high.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="mainDisplay-pysrc.html#DisplayApp.sweeIDControl">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="main"></a><span class="summary-sig-name">main</span>(<span class="summary-sig-arg">self</span>)</span><br />
+      This method is the loop that runs the display.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="mainDisplay-pysrc.html#DisplayApp.main">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+</table>
+<!-- ==================== INSTANCE VARIABLES ==================== -->
+<a name="section-InstanceVariables"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Instance Variables</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-InstanceVariables"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="BOLDFONT"></a><span class="summary-name">BOLDFONT</span><br />
+      Bold font that all headers will use
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="SETTINGS_FILE"></a><span class="summary-name">SETTINGS_FILE</span><br />
+      This stores the location of the file where settings are saved
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="DATA_LOCATION"></a><span class="summary-name">DATA_LOCATION</span><br />
+      Stores the location where sniffing information and injection 
+      information will be stored
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="SQL_NAME"></a><span class="summary-name">SQL_NAME</span><br />
+      Holds SQL name
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="SQL_HOST"></a><span class="summary-name">SQL_HOST</span><br />
+      holds SQL host name
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="SQL_USERNAME"></a><span class="summary-name">SQL_USERNAME</span><br />
+      holds SQL username
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="SQL_PASSWORD"></a><span class="summary-name">SQL_PASSWORD</span><br />
+      holds SQL password
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="SQL_DATABASE"></a><span class="summary-name">SQL_DATABASE</span><br />
+      holds SQL database name
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="SQL_TABLE"></a><span class="summary-name">SQL_TABLE</span><br />
+      holds SQL table name
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="mainDisplay.DisplayApp-class.html#dm" class="summary-name">dm</a><br />
+      Data Manager class.
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="initDx"></a><span class="summary-name">initDx</span><br />
+      Total window width
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="initDy"></a><span class="summary-name">initDy</span><br />
+      Total window height
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="freq"></a><span class="summary-name">freq</span><br />
+      Bus frequency
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="mainDisplay.DisplayApp-class.html#packetInformationFile" class="summary-name">packetInformationFile</a><br />
+      This file stores the user's known information about the packets.
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="mainDisplay.DisplayApp-class.html#experimentFile" class="summary-name">experimentFile</a><br />
+      This is the experiment file that is car specific.
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="experimentGUIFile"></a><span class="summary-name">experimentGUIFile</span><br />
+      This is the GUI file that is needed to add the car specific module to
+      the CAN Reader
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="CarExtention"></a><span class="summary-name">CarExtention</span><br />
+      This is false when there is no car extension, true otherwise
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="root"></a><span class="summary-name">root</span><br />
+      Stores the tk object for the window
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="RightSideCanvas"></a><span class="summary-name">RightSideCanvas</span><br />
+      Canvas for the entire right side (all tabs are inside of this canvas,
+      in the grid format)
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="blankCanvas"></a><span class="summary-name">blankCanvas</span><br />
+      This is a blank canvas to cover hidden layers
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="running"></a><span class="summary-name">running</span><br />
+      This is a boolean value which when false tells you that there is a 
+      thread communicating with the bus at the moment
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="experimentFrame"></a><span class="summary-name">experimentFrame</span><br />
+      Experiment frame
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="mainDisplay.DisplayApp-class.html#generalFuzzData" class="summary-name">generalFuzzData</a><br />
+      This is a dictionary that will store all the information needed to 
+      run the general fuzz method.
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="mainDisplay.DisplayApp-class.html#fuzzData" class="summary-name">fuzzData</a><br />
+      This is a dictionary that will store all the information needed to 
+      run the generation fuzz method.
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="mainDisplay.DisplayApp-class.html#reInjectData" class="summary-name">reInjectData</a><br />
+      This is a dictionary that will store all the information needed to 
+      run the re-injecting of fuzzed data experiment.
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="mainDisplay.DisplayApp-class.html#packetResponseData" class="summary-name">packetResponseData</a><br />
+      This is a dictionary that will store all the information needed to 
+      run packet response experiment.
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="infoFrame"></a><span class="summary-name">infoFrame</span><br />
+      Frame the holds the display widgets for our packet information
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="options"></a><span class="summary-name">options</span><br />
+      These are the known arbitration ids
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="blankCanvasInfoFrame"></a><span class="summary-name">blankCanvasInfoFrame</span><br />
+      This is a blank canvas to hide frames when they are not on top
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="byteInfoFrame"></a><span class="summary-name">byteInfoFrame</span><br />
+      Byte info frame
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="packetInfoFrame"></a><span class="summary-name">packetInfoFrame</span><br />
+      Packet Info tab
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="packetInfoText"></a><span class="summary-name">packetInfoText</span><br />
+      This is the text widget where all the packets will be displayed to
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="packetHyperlink"></a><span class="summary-name">packetHyperlink</span><br />
+      This contains the links so that we can inject packets in this list by
+      clicking on the the provided description
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="generalInfoFrame"></a><span class="summary-name">generalInfoFrame</span><br />
+      general information tab
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="generalInfoVars"></a><span class="summary-name">generalInfoVars</span><br />
+      This will store all of the variables for resetting the General Info's
+      page
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="carFrame"></a><span class="summary-name">carFrame</span><br />
+      Car module frame
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="filterIDs"></a><span class="summary-name">filterIDs</span><br />
+      This contains a list of the Tkinter.StringVar's that hold the filters
+      that the user inputs
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="mainDisplay.DisplayApp-class.html#SniffChoice" class="summary-name">SniffChoice</a><br />
+      Type of sniff to display.
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="saveInfo"></a><span class="summary-name">saveInfo</span><br />
+      Boolean to let the user decide if they want to save the sniff data or
+      not
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="writeData"></a><span class="summary-name">writeData</span><br />
+      This is a dictionary containing all of the data for writing onto the 
+      bus
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="dataFrame"></a><span class="summary-name">dataFrame</span><br />
+      This is the frame that has all the data display on it
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="statusString"></a><span class="summary-name">statusString</span><br />
+      This is a status update to alert the user if the GOODTHOPTER 10 is 
+      connected, in use or ready.
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="statusLabel"></a><span class="summary-name">statusLabel</span><br />
+      The label that contains the status
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="msgCount"></a><span class="summary-name">msgCount</span><br />
+      This counts the number of messages received in a sniff run
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="msgPrev"></a><span class="summary-name">msgPrev</span><br />
+      This is the time received for the previous message so that we can 
+      compute the time between messaages
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="msgDelta"></a><span class="summary-name">msgDelta</span><br />
+      This Displays the time difference between the last 2 packets sniffed 
+      off the bus
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="topFrame"></a><span class="summary-name">topFrame</span><br />
+      This frame is just to provide a visual so the user knows what bytes 
+      are which in the stream of data
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="dataText"></a><span class="summary-name">dataText</span><br />
+      This is the actual textbox that all the packets are written to
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="comm"></a><span class="summary-name">comm</span><br />
+      Stores the communication with the CAN class methods
+    </td>
+  </tr>
+</table>
+<!-- ==================== METHOD DETAILS ==================== -->
+<a name="section-MethodDetails"></a>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Method Details</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-MethodDetails"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+</table>
+<a name="writeiniFile"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">writeiniFile</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">filename</span>,
+        <span class="sig-arg">section</span>,
+        <span class="sig-arg">option</span>,
+        <span class="sig-arg">value</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="mainDisplay-pysrc.html#DisplayApp.writeiniFile">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Writes the given settings to the given settings filename. If the 
+  section does not exist in the settings file then it will be created. The 
+  file is assumed to be a .ini file. This method is a modified version of 
+  the one found on the following website: <a 
+  href="http://bytes.com/topic/python/answers/627791-writing-file-using-configparser"
+  
+  target="_top">http://bytes.com/topic/python/answers/627791-writing-file-using-configparser</a></p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>filename</code></strong> (string) - path to the settings file</li>
+        <li><strong class="pname"><code>section</code></strong> (string) - section heading in the settings file</li>
+        <li><strong class="pname"><code>option</code></strong> - string</li>
+        <li><strong class="pname"><code>option</code></strong> - The option in the given section in the settings file that will be
+          set</li>
+        <li><strong class="pname"><code>value</code></strong> - The value of the option we are saving.</li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="ConfigSectionMap"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">ConfigSectionMap</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">Config</span>,
+        <span class="sig-arg">section</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="mainDisplay-pysrc.html#DisplayApp.ConfigSectionMap">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>This method has been implemented based on the following exmaple, <a 
+  href="http://wiki.python.org/moin/ConfigParserExamples" 
+  target="_top">http://wiki.python.org/moin/ConfigParserExamples</a>.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>Config</code></strong> - ConfigParser instance that has already read the given settings 
+          filename.</li>
+        <li><strong class="pname"><code>section</code></strong> (string) - Section that you want to get all of the elements of from the 
+          settings file that has been read by the Config parser and passed 
+          in as Config.</li>
+    </ul></dd>
+    <dt>Returns: Dictionary</dt>
+        <dd>Dictionary where they keys are the options in the given section 
+          and the values are the corresponding settings value.</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="buildExperimentCanvas"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">buildExperimentCanvas</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="mainDisplay-pysrc.html#DisplayApp.buildExperimentCanvas">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>This method will build out the experiment frame which will display to 
+  the user the various experiments that can be run. This will be a list of 
+  experiments with input values and is kept inside the <a 
+  href="mainDisplay.DisplayApp-class.html#RightSideCanvas" 
+  class="link">self.RightSideCanvas</a> and is one of the tabs that will be
+  created but buried from view until the user selects the experiments 
+  button</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="buildInfoFrame"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">buildInfoFrame</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="mainDisplay-pysrc.html#DisplayApp.buildInfoFrame">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>This builds the tab that displays our information about the 
+  arbitration ids and any known information about the packets at the 
+  moment. This will itself have 3 sub tabs: General Information, Bytes, 
+  Packets. These are rebuilt for each arbitration id chosen.</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="deleteArbID"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">deleteArbID</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="mainDisplay-pysrc.html#DisplayApp.deleteArbID">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>This method will delete an ID from the JSON file that stores packet 
+  information. The user will first be prompted to ask if they really want 
+  to. If they say yes then the another dialog box will open for the user to
+  input the id they want to delete. This will delete the ID, save the new 
+  JSON document, and update the ID drop down menu.</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="addArbID"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">addArbID</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="mainDisplay-pysrc.html#DisplayApp.addArbID">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>This method will add a new arbitration id to the json file. It will 
+  first prompt the user as to what id it wants to add. Then the new 
+  database entry will be created, added to the structure, saved and updated
+  on the GUI.</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="_reset_option_menu"></a>
+<div class="private">
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">_reset_option_menu</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">om</span>,
+        <span class="sig-arg">options</span>,
+        <span class="sig-arg">variable</span>,
+        <span class="sig-arg">index</span>=<span class="sig-default">None</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="mainDisplay-pysrc.html#DisplayApp._reset_option_menu">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>reset the values in the option menu</p>
+  <p>if index is given, set the value of the menu to the option at the 
+  given index. This code was modified from code found on stack overflow 
+  question: <a 
+  href="http://stackoverflow.com/questions/7393430/how-can-i-dynamic-populate-an-option-widget-in-tkinter-depending-on-a-choice-fro"
+  
+  target="_top">http://stackoverflow.com/questions/7393430/how-can-i-dynamic-populate-an-option-widget-in-tkinter-depending-on-a-choice-fro</a></p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>om</code></strong> (option menu widget) - Option menu to be edited</li>
+        <li><strong class="pname"><code>options</code></strong> (List) - List of the options that the option menu will have. This is 
+          expected to be a list of strings</li>
+        <li><strong class="pname"><code>variable</code></strong> (Tkinter.StringVar) - The string variable that is associated with the option menu</li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="buildByteInfoFrame"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">buildByteInfoFrame</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">i</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="mainDisplay-pysrc.html#DisplayApp.buildByteInfoFrame">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>This method will build the frame that will display our information 
+  about the specific bytes of an arbitration ID.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>i</code></strong> (Integer) - This is the row to add our Frame to. This is for the grid 
+          formation</li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="buildPacketInfoFrame"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">buildPacketInfoFrame</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">i</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="mainDisplay-pysrc.html#DisplayApp.buildPacketInfoFrame">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>This method will build the frame that will display our information 
+  about the specific packets of an arbitration ID. These are packets that 
+  we know what they are telling us or broadcasting to the bus. Each packet 
+  description will be click-able. This will fill the write options under 
+  the sniff tab and then change focus to this tab. This will allow for easy
+  injection of these packets.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>i</code></strong> (Integer) - This is the row to add our Frame to. This is for the grid 
+          formation</li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="buildGeneralInfoFrame"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">buildGeneralInfoFrame</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">i</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="mainDisplay-pysrc.html#DisplayApp.buildGeneralInfoFrame">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>This method will build the frame that will display our information 
+  about our general knowledge of an arbitration ID.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>i</code></strong> (Integer) - This is the row to add our Frame to. This is for the grid 
+          formation</li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="updateQueryInfo"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">updateQueryInfo</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">name</span>,
+        <span class="sig-arg">index</span>,
+        <span class="sig-arg">mode</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="mainDisplay-pysrc.html#DisplayApp.updateQueryInfo">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>This method will update the query tab so that it is correct and so 
+  that the user does not try to save a .pcap file to .csv or vice versa. It
+  will also update the beginning of the MYSQL command for the .pcap. This 
+  is because of how the write to .pcap method is written. See <a 
+  href="DataManage.DataManage-class.html#writetoPcapfromSQL" 
+  class="link">DataManage.writetoPcapfromSQL</a>.</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="saveJsonInfo"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">saveJsonInfo</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">event</span>=<span class="sig-default">None</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="mainDisplay-pysrc.html#DisplayApp.saveJsonInfo">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>This file will save all of the user's information to the json file 
+  specified in settings. The data will be saved to json data structure in 
+  memory and then dumped to the file via the DataManager method, <a 
+  href="DataManage.DataManage-class.html#saveJson" 
+  class="link">DataManage.saveJson</a>.</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="updateInfo"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">updateInfo</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">name</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">index</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">mode</span>=<span class="sig-default">None</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="mainDisplay-pysrc.html#DisplayApp.updateInfo">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>This method is called when the user changes the option menu for 
+  arbitration IDs under our packetInformation tab. This will update these 
+  packet information tabs with our knowledge of the new ID. If the set ID 
+  does not exist (was set when the user clicked on the id from sniffed 
+  data) then a warning dialog will appear.</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="injectPacket"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">injectPacket</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">data</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="mainDisplay-pysrc.html#DisplayApp.injectPacket">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>This method will take the data that is given and fill the write method
+  section in the sniff tab. It will also switch the view to this tab so 
+  that the user can easily inject this packet. This method does not inject 
+  the packet onto the CAN bus. It simple makes the entry ready for the user
+  to do so.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>data</code></strong> (List) - This is a list that contains the data packet that we want to 
+          inject. data[0] contains the arbitration id as a string. data[1] 
+          contains the data bytes as a string. The format of the data 
+          within the string is assumed to be in decimal form with spaces 
+          between the bytes.</li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="buildCarFrame"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">buildCarFrame</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="mainDisplay-pysrc.html#DisplayApp.buildCarFrame">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>This method will build the car module tab. It will build the frame but
+  will only build the module if one has been set in the settings file. This
+  allows users to create their own module that is car specific but can 
+  still be run from the GUI. See <a 
+  href="mainDisplay.DisplayApp-class.html#connectBus" 
+  class="link">connectBus</a> for information on the module connection.</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="buildCarModule"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">buildCarModule</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="mainDisplay-pysrc.html#DisplayApp.buildCarModule">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>This will build the car module. This is specific to a car and the 
+  class method to do this can be set by the user. The user's class should 
+  take in the frame where it will write all of it's components as well as a
+  reference to the experiment file that must also be specified in the 
+  settings file. This experiment file class is a sub class of experiments 
+  which is a sub class of GoodFETMCPCANCommunication.</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="buildSQLCanvas"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">buildSQLCanvas</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="mainDisplay-pysrc.html#DisplayApp.buildSQLCanvas">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>This method will build the SQL tab frame where some of the database 
+  information is stored. It will contain the upload to db method as well as
+  a way to download data from the database and convert to .pcap</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="buildCanvas"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">buildCanvas</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="mainDisplay-pysrc.html#DisplayApp.buildCanvas">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>This builds the Frame that controls the sniffing and writing with the 
+  CAN bus. It is contained within the <a 
+  href="mainDisplay.DisplayApp-class.html#RightSideCanvas" 
+  class="link">self.RightSideCanvas</a> and is in the same grid layout as 
+  the SQL, EXPERIMENTS tabs.</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="setBindings"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">setBindings</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="mainDisplay-pysrc.html#DisplayApp.setBindings">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>This method will set bindings on the window. This includes mouse 
+  clicks and key presses</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="handleQuit"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">handleQuit</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">event</span>=<span class="sig-default">None</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="mainDisplay-pysrc.html#DisplayApp.handleQuit">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>This method is called when the user quits the program. It terminates 
+  the display and exits</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="setCarModule"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">setCarModule</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">experimentFileLocation</span>,
+        <span class="sig-arg">experimentGUILocation</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="mainDisplay-pysrc.html#DisplayApp.setCarModule">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>This method will save the new car module file locations that can be 
+  set in the settings dialog box. They will be saved to the settings ini 
+  file but will not update the current window. The program must be 
+  restarted for changes to take effect. A warning will appear to indicate 
+  this.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>experimentFileLocation</code></strong> (String) - path to the experiment file that will be part of the car module. 
+          This should be a file that contains a class of the same name. The
+          class is assumed to be a sub class of the experiments class.</li>
+        <li><strong class="pname"><code>experimentGUILocation</code></strong> (String) - path to the experiment gui module addition. This will be a file 
+          that contains a class of the same name. This class will print the
+          module's addition to the GUI for the user to run the experiments 
+          included in the experimentFileLocation class.</li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="setDataManage"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">setDataManage</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">table</span>,
+        <span class="sig-arg">name</span>,
+        <span class="sig-arg">host</span>,
+        <span class="sig-arg">username</span>,
+        <span class="sig-arg">password</span>,
+        <span class="sig-arg">database</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="mainDisplay-pysrc.html#DisplayApp.setDataManage">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>This method will update the stored information for accessing the MYSQL
+  database. The settings will be saved to the settings file.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>table</code></strong> (string) - SQL table to add data to</li>
+        <li><strong class="pname"><code>name</code></strong> (string) - Name for SQL account</li>
+        <li><strong class="pname"><code>host</code></strong> (string) - Host for MYSQL table</li>
+        <li><strong class="pname"><code>username</code></strong> (string) - MYSQL username</li>
+        <li><strong class="pname"><code>password</code></strong> (string) - MYSQL username password</li>
+        <li><strong class="pname"><code>database</code></strong> (string)</li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="connectBus"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">connectBus</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="mainDisplay-pysrc.html#DisplayApp.connectBus">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>This method will try to reconnect with the GOODTHOPTER10. It will 
+  first check to make sure that no method is currently communicating with 
+  the bus.</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="checkComm"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">checkComm</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="mainDisplay-pysrc.html#DisplayApp.checkComm">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>This method check to see if the program is able to begin communication
+  with the GOODTHOPTER10 board. This method should be called before 
+  anything begins to try and communicate. It will check first to see if the
+  board is connected and will then check to see if the self.running boolean
+  is set or not.</p>
+  <dl class="fields">
+    <dt>Returns: Boolean</dt>
+        <dd>False if the board is either not connected or if there is 
+          currently a script communicating with the board. True otherwise</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="getDataLocation"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">getDataLocation</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="mainDisplay-pysrc.html#DisplayApp.getDataLocation">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Returns the path to the data location</p>
+  <dl class="fields">
+    <dt>Returns: string</dt>
+        <dd>Data location path</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="setDataLocation"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">setDataLocation</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">location</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="mainDisplay-pysrc.html#DisplayApp.setDataLocation">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Sets the data location path in the program as well as saved to the 
+  settings file.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>location</code></strong> (string) - path to new location to save data to</li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="setRate"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">setRate</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">freq</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="mainDisplay-pysrc.html#DisplayApp.setRate">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>This method will set the rate that the board communicates with  the 
+  CAN Bus on.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>freq</code></strong> (number) - Frequency of CAN communication</li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="clearFilters"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">clearFilters</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="mainDisplay-pysrc.html#DisplayApp.clearFilters">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>This method will clear the filters that the user has input into the 
+  dialog spots. It does not reset the chip and clear them on the board.</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="sniff"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">sniff</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="mainDisplay-pysrc.html#DisplayApp.sniff">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>This method will sniff the CAN bus. It will take in the input 
+  arguments from the GUI and pass them onto the sniff method in the <a 
+  href="GoodFETMCPCANCommunication.GoodFETMCPCANCommunication-class.html#sniff"
+  class="link">GoodFETMCPCANCommunication.sniff</a> file. The method will 
+  take in any filters that have been set on the GUI, as well as the sniff 
+  length and comment off the display. This method will call <a 
+  href="mainDisplay.DisplayApp-class.html#sniffControl" 
+  class="link">sniffControl</a> which will be run as a thread.</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="sniffControl"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">sniffControl</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">freq</span>,
+        <span class="sig-arg">duration</span>,
+        <span class="sig-arg">description</span>,
+        <span class="sig-arg">verbose</span>=<span class="sig-default">False</span>,
+        <span class="sig-arg">comment</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">filename</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">standardid</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">debug</span>=<span class="sig-default">False</span>,
+        <span class="sig-arg">faster</span>=<span class="sig-default">False</span>,
+        <span class="sig-arg">parsed</span>=<span class="sig-default">True</span>,
+        <span class="sig-arg">data</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">writeToFile</span>=<span class="sig-default">True</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="mainDisplay-pysrc.html#DisplayApp.sniffControl">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>This method will actively do the sniffing on the bus. It will call <a 
+  href="GoodFETMCPCANCommunication.GoodFETMCPCANCommunication-class.html#sniff"
+  class="link">GoodFETMCPCANCommunication.sniff</a>. This method will be 
+  called by the <a href="mainDisplay.DisplayApp-class.html#sniff" 
+  class="link">sniff</a> method when started by the user in the GUI. It 
+  will set up the display for the incoming sniffed data as well as reset 
+  the counters. The input parameters to this method are the same as to the 
+  sniff method in the GoodFETMCPCANCommunication class.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>freq</code></strong> (number) - Frequency of the CAN communication</li>
+        <li><strong class="pname"><code>description</code></strong> (string) - This is the description that will be put in the csv file. This 
+          gui will set this to be equal to the comments string</li>
+        <li><strong class="pname"><code>verbose</code></strong> (Boolean) - This will trigger the sniff method to print out to the terminal. 
+          This is false by default since information is printed to the GUI.</li>
+        <li><strong class="pname"><code>comment</code></strong> (string) - This is the comment tag for the observation. This will be saved 
+          with every sniffed packet and included in the data uploaded to 
+          the SQL database</li>
+        <li><strong class="pname"><code>filename</code></strong> (String) - filename with path to save the csv file to of the sniffed data. 
+          By default the sniff method in the GoodFETMCPCANCommunication 
+          file will automatically deal with the file management and this 
+          can be left as None.</li>
+        <li><strong class="pname"><code>standardid</code></strong> (List of integers) - This will be a list of the standard ids that the method will 
+          filter for. This can be a list of up to 6 ids.</li>
+        <li><strong class="pname"><code>debug</code></strong> (Boolean)</li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="updateStatus"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">updateStatus</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">name</span>,
+        <span class="sig-arg">index</span>,
+        <span class="sig-arg">mode</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="mainDisplay-pysrc.html#DisplayApp.updateStatus">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>This method will update the status indicator for the user in the 
+  bottom of of the data Frame. This will tell the user whether the bus is 
+  actively being communicated with, if the board is disconnected, or if it 
+  is ready to go. There is no checking for if somebody disconnects the 
+  board after it has been connected.</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="updateCanvas"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">updateCanvas</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="mainDisplay-pysrc.html#DisplayApp.updateCanvas">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>This method will update the data to be displayed on the screen (in the
+  text box) to the user. It will get the data form the queue that the <a 
+  href="GoodFETMCPCANCommunication.GoodFETMCPCANCommunication-class.html#sniff"
+  class="link">GoodFETMCPCANCommunication.sniff</a> method was passed. 
+  These packets are then printed to the screen in either a fixed or rolling
+  viewpoint. Rolling meaning that each packet is given it's own line while 
+  fixed means that each ID has it's own line and that line is updated with 
+  each new packet. These can be changed during a sniff run.</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="arbIDInfo"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">arbIDInfo</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">id</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="mainDisplay-pysrc.html#DisplayApp.arbIDInfo">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>This method is called when the user clicks on an arbID in the data 
+  textboxes. It will open up the data information frame (on the 
+  RightSideFrame) and display our knowledge of this arbitration ID to the 
+  user</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="write"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">write</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="mainDisplay-pysrc.html#DisplayApp.write">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>This method handles injecting packets onto the bus. It will load the 
+  user inputs with very basic error checking. It will then call 
+  writeControl in a thread. This method will call <a 
+  href="GoodFETMCPCANCommunication.GoodFETMCPCANCommunication-class.html#spit"
+  class="link">GoodFETMCPCANCommunication.spit</a> if not writing from a 
+  file and will call <a 
+  href="GoodFETMCPCANCommunication.GoodFETMCPCANCommunication-class.html#writeData"
+  class="link">GoodFETMCPCANCommunication.writeData</a> if we are reading 
+  in data from a file first.</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="writeControl"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">writeControl</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">freq</span>,
+        <span class="sig-arg">sID</span>,
+        <span class="sig-arg">repeat</span>,
+        <span class="sig-arg">writes</span>,
+        <span class="sig-arg">period</span>,
+        <span class="sig-arg">debug</span>=<span class="sig-default">False</span>,
+        <span class="sig-arg">packet</span>=<span class="sig-default">None</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="mainDisplay-pysrc.html#DisplayApp.writeControl">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>This method will spit a single message onto the bus. If there is no 
+  packet information provided then the message will be sent as a remote 
+  transmission request (RTR). The packet length is assumed to be 8 bytes 
+  The message can be repeated a given number of times with a gap of period 
+  (milliseconds) between each message. This will continue for the the 
+  number of times specified in the writes input. This method does not 
+  include bus setup, it must be done before the method call. This method 
+  will do this by calling <a 
+  href="GoodFETMCPCANCommunication.GoodFETMCPCANCommunication-class.html#spit"
+  class="link">GoodFETMCPCANCommunication.spit</a> to inject the message 
+  onto the bus.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>freq</code></strong> (number) - The frequency of the bus</li>
+        <li><strong class="pname"><code>sID</code></strong> (list of integer) - This is a single length list with one integer elment that 
+          corresponds to the standard id you wish to write to</li>
+        <li><strong class="pname"><code>repeat</code></strong> (Boolean) - If true the message will be repeatedly injected. if not the 
+          message will only be injected 1 time</li>
+        <li><strong class="pname"><code>writes</code></strong> (Integer) - Number of writes of the packet</li>
+        <li><strong class="pname"><code>period</code></strong> (Integer) - Time delay between injections of the packet in Milliseconds</li>
+        <li><strong class="pname"><code>debug</code></strong> (Boolean) - When true debug status messages will be printed to the terminal</li>
+        <li><strong class="pname"><code>packet</code></strong> (List) - Contains the data bytes for the packet which is assumed to be of 
+          length 8. Each byte is stored as an integer and can range from 0 
+          to 255 (8 bits). If packet == None then an RTR will be sent on 
+          the given standard id.</li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="uploaddb"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">uploaddb</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="mainDisplay-pysrc.html#DisplayApp.uploaddb">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>This method will upload all files that have been sniffed to the 
+  designated folder <a 
+  href="mainDisplay.DisplayApp-class.html#DATA_LOCATION" 
+  class="link">self.DATA_LOCATION</a> to the MYSQL data base that was 
+  specified in the settins. See <a 
+  href="DataManage.DataManage-class.html#uploadFiles" 
+  class="link">DataManage.uploadFiles</a> for more information.</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="infoFrameLift"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">infoFrameLift</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">event</span>=<span class="sig-default">None</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="mainDisplay-pysrc.html#DisplayApp.infoFrameLift">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>This method is used in the tabbing of the right side frames. This will
+  lift the arbitration id info frame to the top for the user to see. It 
+  will also move all the other frames form visability by moving the blank 
+  canvas up to the second to top frame.</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="sqlFrameLift"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">sqlFrameLift</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">event</span>=<span class="sig-default">None</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="mainDisplay-pysrc.html#DisplayApp.sqlFrameLift">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>This method is used in the tabbing of the right side frames. This will
+  lift the MYSQL frame to the top for the user to see. It will also move 
+  all the other frames form visability by moving the blank canvas up to the
+  second to top frame.</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="sniffFrameLift"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">sniffFrameLift</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">event</span>=<span class="sig-default">None</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="mainDisplay-pysrc.html#DisplayApp.sniffFrameLift">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>This method is used in the tabbing of the right side frames. This will
+  lift the SNIFF/WRITE frame to the top for the user to see. It will also 
+  move all the other frames form visability by moving the blank canvas up 
+  to the second to top frame.</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="experimentFrameLift"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">experimentFrameLift</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">event</span>=<span class="sig-default">None</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="mainDisplay-pysrc.html#DisplayApp.experimentFrameLift">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>This method is used in the tabbing of the right side frames. This will
+  lift the experiment frame to the top for the user to see. It will also 
+  move all the other frames form visability by moving the blank canvas up 
+  to the second to top frame.</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="sqlQuery"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">sqlQuery</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="mainDisplay-pysrc.html#DisplayApp.sqlQuery">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>This method will take in the user's inputed MYSQL query and query the 
+  database for it. When the user is saving to a .pcap the user must get the
+  full message and therefore can only specify the second half of the MYSQL 
+  query and the first part:</p>
+<pre class="literalblock">
+   SELECT msg FROM table where 
+</pre>
+  <p>will be added automatically. This does not happen with the csv option 
+  where the user can query whatever they want. BE CAREFUL there is no error
+  checking or prevention from querying something bad that could delete 
+  information. Data will be saved to the MYSQL location specified by the 
+  DataManage class, <a href="mainDisplay.DisplayApp-class.html#dm" 
+  class="link">self.dm</a>. This is self.DATA_LOCATION/SQLData/.</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="generalFuzz"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">generalFuzz</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="mainDisplay-pysrc.html#DisplayApp.generalFuzz">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>This method grabs user input to perform a general fuzz. Loose error 
+  checking is performed to ensure that the data is of the correct format 
+  but it is not exhaustive. See <a 
+  href="mainDisplay.DisplayApp-class.html#generalFuzzControl" 
+  class="link">generalFuzzControl</a> for more information on 
+  generalFuzz.</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="generalFuzzControl"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">generalFuzzControl</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">freq</span>,
+        <span class="sig-arg">Fuzzes</span>,
+        <span class="sig-arg">period</span>,
+        <span class="sig-arg">writesPerFuzz</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="mainDisplay-pysrc.html#DisplayApp.generalFuzzControl">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>The method will inject properly formatted, randomly generated messages
+  at a given period for a <i>writesPerFuzz</i> number of times. A new 
+  random standard id will be chosen with each newly generated packet. IDs 
+  will be chosen from the full range of potential ids ranging from 0 to 
+  4095. The packets that are injected into the bus will all be saved in the
+  following path DATALOCATION/InjectedData/(today's date 
+  (YYYYMMDD))_GenerationFuzzedPackets.csv. An example filename would be 
+  20130222_GenerationFuzzedPackets.csv Where DATALOCATION is provided when 
+  the class is initiated. The data will be saved as integers. This method 
+  will call <a href="experiments.experiments-class.html#generalFuzz" 
+  class="link">experiments.generalFuzz</a> to perform this Each row will be
+  formatted in the following form:</p>
+<pre class="literalblock">
+            row = [time of injection, standardID, 8, db0, db1, db2, db3, db4, db5, db6, db7]
+</pre>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>freq</code></strong> (number) - The frequency at which the bus is communicating</li>
+        <li><strong class="pname"><code>period</code></strong> (number) - The time gap between packet inejctions given in milliseconds</li>
+        <li><strong class="pname"><code>writesPerFuzz</code></strong> (integer) - This will be the number of times that each randomly generated 
+          packet will be injected onto the bus before a new packet is 
+          generated</li>
+        <li><strong class="pname"><code>Fuzzes</code></strong> (integer) - The number of packets to be generated and injected onto bus</li>
+    </ul></dd>
+    <dt>Returns: None</dt>
+        <dd>This method does not return anything</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="packetResponse"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">packetResponse</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="mainDisplay-pysrc.html#DisplayApp.packetResponse">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>This method compiles the user input for running the Packet Response 
+  method. This will perform loose error checking to ensure that the 
+  messages are the correct type, it will then pass all the information on 
+  as a thread to <a 
+  href="mainDisplay.DisplayApp-class.html#packetResponseControl" 
+  class="link">packetResponseControl</a>. See this method for more 
+  information.</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="packetResponseControl"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">packetResponseControl</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">freq</span>,
+        <span class="sig-arg">time</span>,
+        <span class="sig-arg">repeats</span>,
+        <span class="sig-arg">period</span>,
+        <span class="sig-arg">responseID</span>,
+        <span class="sig-arg">respondPacket</span>,
+        <span class="sig-arg">listenID</span>,
+        <span class="sig-arg">listenPacket</span>=<span class="sig-default">None</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="mainDisplay-pysrc.html#DisplayApp.packetResponseControl">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>This method will allow the user to listen for a specific packet and 
+  then respond with a given message. If no listening packet is included 
+  then the method will only listen for the id and respond with the 
+  specified packet when it receives a message from that id. This process 
+  will continue for the given amount of time (in seconds). and with each 
+  message received that matches the listenPacket and ID the transmit 
+  message will be sent the <i>repeats</i> number of times at the specified 
+  <i>period</i>. This message assumes a packet length of 8 for both 
+  messages, although the listenPacket can be None. This method will call <a
+  href="experiments.experiments-class.html#packetRespond" 
+  class="link">experiments.packetRespond</a> to perform this 
+  experiment.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>freq</code></strong> (number) - Frequency of the CAN bus</li>
+        <li><strong class="pname"><code>time</code></strong> (number) - Length of time to perform the packet listen/response in seconds.</li>
+        <li><strong class="pname"><code>repeats</code></strong> (Integer) - The number of times the response packet will be injected onto the
+          bus after the listening criteria has been met.</li>
+        <li><strong class="pname"><code>period</code></strong> (number) - The time interval between messages being injected onto the CAN 
+          bus. This will be specified in milliseconds</li>
+        <li><strong class="pname"><code>responseID</code></strong> (Integer) - The standard ID of the message that we want to inject</li>
+        <li><strong class="pname"><code>respondPacket</code></strong> (List of integers) - The data we wish to inject into the bus. In the format where 
+          respondPacket[0] = databyte 0 ... respondPacket[7] = databyte 7 
+          This assumes a packet length of 8.</li>
+        <li><strong class="pname"><code>listenID</code></strong> (Integer) - The standard ID of the messages that we are listening for. When 
+          we read the correct message from this ID off of the bus, the 
+          method will begin re-injecting the responsePacket on the 
+          responseID</li>
+        <li><strong class="pname"><code>listenPacket</code></strong> (List of Integers) - The data we wish to listen for before we inject packets. This 
+          will be a list of the databytes, stored as integers such that 
+          listenPacket[0] = data byte 0, ..., listenPacket[7] = databyte 7.
+          This assumes a packet length of 8. This input can be None and 
+          this will lead to the program only listening for the standardID 
+          and injecting the response as soon as any message from that ID is
+          given</li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="reInjectFuzzed"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">reInjectFuzzed</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="mainDisplay-pysrc.html#DisplayApp.reInjectFuzzed">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>This method compiles user input to be able to re-inject packets that 
+  were injected as part of the fuzzing methods. There is loose error 
+  checking to ensure that the data is of the correct type but is not very 
+  exhaustive. This method will then call <a 
+  href="mainDisplay.DisplayApp-class.html#reInjectFuzzed" 
+  class="link">reInjectFuzzed</a> as a thread to perform this action. See 
+  this method for more information on what it does.</p>
+  <p>The date is input in the form YYYYMMDD. This is used to find the name 
+  of the file that contains the fuzzed data that we are looking for.</p>
+  <p>The startTime and endTime are input in the form HHMM. These are then 
+  converted to timestamp form.</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="reInjectFuzzedControl"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">reInjectFuzzedControl</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">filename</span>,
+        <span class="sig-arg">startTime</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">endTime</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">id</span>=<span class="sig-default">None</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="mainDisplay-pysrc.html#DisplayApp.reInjectFuzzedControl">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>This method will re-inject data that was already injected to the bus 
+  as part of a Fuzzing method. This will load the data searching for the 
+  specified arbID that it was given. The reInjectFuzzed will take the 
+  user's input of the date to find the filename that will contain the 
+  packets. The other inputs are optional. If startTime is provided this 
+  will only re-inject messages that were written after the given time until
+  the endTime (if specified). If the endTime is not specified then it will 
+  re-inject all packets from the startTime (or start of file) to the end of
+  the file. Likewise the user could also specify the id to search for. if 
+  the id is specified then this method will only re-inject packets that had
+  this id.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>filename</code></strong> (String) - path to the inejction file that we are going to read our data 
+          from</li>
+        <li><strong class="pname"><code>startTime</code></strong> (timestamp) - Optional parameter that specifies an earliest injection time for 
+          packets to be re-injected</li>
+        <li><strong class="pname"><code>endTime</code></strong> (timestamp) - Optional parameter that specifies the lastest injection time for 
+          packets to be re-injected</li>
+        <li><strong class="pname"><code>id</code></strong> (Integer) - Optional parameter that specifies a specific arbitration id that 
+          we want to re-inject</li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="GenerationFuzz"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">GenerationFuzz</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="mainDisplay-pysrc.html#DisplayApp.GenerationFuzz">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>This method takes in the user inputs to perform generation fuzzing. 
+  There is loose error checking to ensure that data is of the right type 
+  but little else. This method then calls <a 
+  href="mainDisplay.DisplayApp-class.html#GenerationFuzzControl" 
+  class="link">GenerationFuzzControl</a> as a thread. See this method for 
+  more information on how it works.</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="GenerationFuzzControl"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">GenerationFuzzControl</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">freq</span>,
+        <span class="sig-arg">sID</span>,
+        <span class="sig-arg">dbInfo</span>,
+        <span class="sig-arg">period</span>,
+        <span class="sig-arg">writesPerFuzz</span>,
+        <span class="sig-arg">Fuzzes</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="mainDisplay-pysrc.html#DisplayApp.GenerationFuzzControl">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>This method will perform generation based fuzzing on the bus. The 
+  method will inject properly formatted, randomly generated messages at a 
+  given period for a <i>writesPerFuzz</i> number of times. This method will
+  call <a href="experiments.experiments-class.html#generationFuzzer" 
+  class="link">experiments.generationFuzzer</a> to perform this.</p>
+  <p>The packets that are injected into the bus will all be saved in the 
+  following path DATALOCATION/InjectedData/(today's date 
+  (YYYYMMDD))_GenerationFuzzedPackets.csv. An example filename would 
+  be:</p>
+<pre class="literalblock">
+           20130222_GenerationFuzzedPackets.csv 
+</pre>
+  <p>Where DATALOCATION is provided when the class is initiated. The data 
+  will be saved as integers. Each row will be formatted in the following 
+  form:</p>
+<pre class="literalblock">
+            row = [time of injection, standardID, 8, db0, db1, db2, db3, db4, db5, db6, db7]
+</pre>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>freq</code></strong> (number) - The frequency at which the bus is communicating</li>
+        <li><strong class="pname"><code>sID</code></strong> (list of integers) - List of standard IDs the user wishes to fuzz on. An ID will 
+          randomly be chosen with every new random packet generated. If 
+          only 1 ID is input in the list then it will only fuzz on that one
+          ID.</li>
+        <li><strong class="pname"><code>dbInfo</code></strong> (dictionary) - This is a dictionary that holds the limits of each bytes values. 
+          Each value in the dictionary will be a list containing the lowest
+          possible value for the byte and the highest possible value. The 
+          form is shown below:
+<pre class="literalblock">
+  dbInfo['db0'] = [low, high]
+  dbInfo['db1'] = [low, high]
+  ...
+  dbInfo['db7'] = [low, high] 
+</pre></li>
+        <li><strong class="pname"><code>period</code></strong> (number) - The time gap between packet inejctions given in milliseconds</li>
+        <li><strong class="pname"><code>writesPerFuzz</code></strong> (integer) - This will be the number of times that each randomly generated 
+          packet will be injected onto the bus before a new packet is 
+          generated</li>
+        <li><strong class="pname"><code>Fuzzes</code></strong> (integer) - The number of packets to be generated and injected onto bus</li>
+    </ul></dd>
+    <dt>Returns: None</dt>
+        <dd>This method does not return anything</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="RTRsweepID"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">RTRsweepID</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="mainDisplay-pysrc.html#DisplayApp.RTRsweepID">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>This method takes in user inputs for a RTR sweep experiment. There is 
+  loose error checking to ensure that the input data is of the right type 
+  but not very secure checking. This will perform the RTR experiment by 
+  calling <a href="mainDisplay.DisplayApp-class.html#RTRsweepIDControl" 
+  class="link">RTRsweepIDControl</a>. See this for more information on the 
+  method.</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="RTRsweepIDControl"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">RTRsweepIDControl</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">freq</span>,
+        <span class="sig-arg">lowI</span>,
+        <span class="sig-arg">highI</span>,
+        <span class="sig-arg">attemptsI</span>,
+        <span class="sig-arg">sT</span>,
+        <span class="sig-arg">verbose</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="mainDisplay-pysrc.html#DisplayApp.RTRsweepIDControl">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>This method will sweep through the range of ids given by lowID to 
+  highID and send a remote transmissions request (RTR) to each id and then 
+  listen for a response. The RTR will be repeated in the given number of 
+  attempts and will sniff for the given duration continuing to the next 
+  id.</p>
+  <p>This method will perform this by calling <a 
+  href="experiments.experiments-class.html#rtrSweep" 
+  class="link">experiments.rtrSweep</a>. The user can specify the range of 
+  ids to sweep in a continuous integer region. The options are the number 
+  of attempts to request a response and the sniff time post request.</p>
+  <p>Any messages that are sniffed will be saved to a csv file. The 
+  filename will be stored in the DATA_LOCATION folder with a filename that 
+  is the date (YYYYMMDD)_rtr.csv. If the file already exists it will append
+  to the end of the file The format will follow that of <a 
+  href="GoodFETMCPCANCommunication.GoodFETMCPCANCommunication-class.html#sniff"
+  class="link">GoodFETMCPCANCommunication.sniff</a> in that the columns 
+  will be as follows:</p>
+  <ol start="1">
+    <li>
+      timestamp:     as floating point number
+    </li>
+    <li>
+      error boolean: 1 if there was an error detected of packet formatting 
+      (not exhaustive check). 0 otherwise
+    </li>
+    <li>
+      comment tag:   comment about experiments as String
+    </li>
+    <li>
+      duration:      Length of overall sniff
+    </li>
+    <li>
+      filtering:     1 if there was filtering. 0 otherwise
+    </li>
+    <li>
+      db0:           Integer
+      <p>---</p>
+    </li>
+    <li>
+      db7:           Integer
+    </li>
+  </ol>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>freq</code></strong> (number) - The frequency at which the bus is communicating</li>
+        <li><strong class="pname"><code>lowI</code></strong> (integer) - The low end of the id sweep</li>
+        <li><strong class="pname"><code>highI</code></strong> (integer) - The high end of the id sweep</li>
+        <li><strong class="pname"><code>attemptsI</code></strong> (integer) - The number of times a RTR will be repeated for a given standard 
+          id</li>
+        <li><strong class="pname"><code>sT</code></strong> (integer) - The length of time that it will listen to the bus after sending 
+          an RTR</li>
+        <li><strong class="pname"><code>verbose</code></strong> (boolean) - When true, messages will be printed out to the terminal</li>
+    </ul></dd>
+    <dt>Returns: None</dt>
+        <dd>Does not return anything</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="sweepID"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">sweepID</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="mainDisplay-pysrc.html#DisplayApp.sweepID">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>This method will gather user inputs for sweeping through standard ids 
+  in the range of integers specified by the user inputs. The data will be 
+  gathered and loosely error checked to ensure that the data is of the 
+  correct type but the checking is not very exhaustive. This will then call
+  <a href="mainDisplay.DisplayApp-class.html#sweeIDControl" 
+  class="link">sweeIDControl</a> in a thread. See this method for more 
+  inforamtion on the method.</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="sweeIDControl"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">sweeIDControl</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">freq</span>,
+        <span class="sig-arg">lowI</span>,
+        <span class="sig-arg">highI</span>,
+        <span class="sig-arg">sT</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="mainDisplay-pysrc.html#DisplayApp.sweeIDControl">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>This method will sweep through the range of standard ids given from 
+  low to high. This will actively filter for 6 ids at a time and sniff for 
+  the given amount of time in seconds. If at least one message is read in 
+  then it will go individually through the 6 ids and sniff only for that id
+  for the given amount of time. All the data gathered will be saved.  This 
+  does not save any sniffed packets but the messages are printed out to the
+  terminal. This method will call <a 
+  href="experiments.experiments-class.html#filterStdSweep" 
+  class="link">experiments.filterStdSweep</a></p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>freq</code></strong> (number) - The frequency at which the bus is communicating</li>
+        <li><strong class="pname"><code>lowI</code></strong> (integer) - The low end of the id sweep</li>
+        <li><strong class="pname"><code>highI</code></strong> (integer) - The high end of the id sweep</li>
+        <li><strong class="pname"><code>sT</code></strong> (number) - Sniff time for each trial. Default is 5 seconds</li>
+    </ul></dd>
+    <dt>Returns: list of numbers</dt>
+        <dd>A list of all IDs found during the sweep.</dd>
+  </dl>
+</td></tr></table>
+</div>
+<br />
+<!-- ==================== INSTANCE VARIABLE DETAILS ==================== -->
+<a name="section-InstanceVariableDetails"></a>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Instance Variable Details</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-InstanceVariableDetails"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+</table>
+<a name="dm"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <h3 class="epydoc">dm</h3>
+  <p>Data Manager class. This can do all the data 
+  manipulation/storage/retrieval</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="packetInformationFile"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <h3 class="epydoc">packetInformationFile</h3>
+  <p>This file stores the user's known information about the packets. This 
+  is a json file</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="experimentFile"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <h3 class="epydoc">experimentFile</h3>
+  <p>This is the experiment file that is car specific. this is for adding a
+  car specific module</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="generalFuzzData"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <h3 class="epydoc">generalFuzzData</h3>
+  <p>This is a dictionary that will store all the information needed to run
+  the general fuzz method. keys: period, writesPerFuzz, Fuzzes. All the 
+  values are Tkinter.StringVar() and contained the information input by the
+  user</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="fuzzData"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <h3 class="epydoc">fuzzData</h3>
+  <p>This is a dictionary that will store all the information needed to run
+  the generation fuzz method. keys: sIDs (string of all sIDs to fuzz on), 
+  period, writes, writesPerFuzz, Fuzzes, dB0,db1,..,db7 (stores the limits 
+  as a list [low, high]. All the values are Tkinter.StringVar() and 
+  contained the information input by the user</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="reInjectData"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <h3 class="epydoc">reInjectData</h3>
+  <p>This is a dictionary that will store all the information needed to run
+  the re-injecting of fuzzed data experiment. keys: sID, date, startTime, 
+  endTime. All the values are Tkinter.StringVar() and contained the 
+  information input by the user</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="packetResponseData"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <h3 class="epydoc">packetResponseData</h3>
+  <p>This is a dictionary that will store all the information needed to run
+  packet response experiment.</p>
+  <p>keys: time, repeats, period, listenID, 
+  listen_db0,...,listen_db7,responseID, Response_db0,...,Response_db7. All 
+  the values are Tkinter.StringVar() and contained the information input by
+  the user</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="SniffChoice"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <h3 class="epydoc">SniffChoice</h3>
+  <p>Type of sniff to display. Rolling will print a new line for each 
+  packet. Fixed will keep each packet on it's own individual line</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<br />
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+      <th class="navbar" width="100%"></th>
+  </tr>
+</table>
+<table border="0" cellpadding="0" cellspacing="0" width="100%%">
+  <tr>
+    <td align="left" class="footer">
+    Generated by Epydoc 3.0.1 on Wed Mar  6 20:20:31 2013
+    </td>
+    <td align="right" class="footer">
+      <a target="mainFrame" href="http://epydoc.sourceforge.net"
+        >http://epydoc.sourceforge.net</a>
+    </td>
+  </tr>
+</table>
+
+<script type="text/javascript">
+  <!--
+  // Private objects are initially displayed (because if
+  // javascript is turned off then we want them to be
+  // visible); but by default, we want to hide them.  So hide
+  // them unless we have a cookie that says to show them.
+  checkCookie();
+  // -->
+</script>
+</body>
+</html>

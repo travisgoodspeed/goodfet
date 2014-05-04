@@ -1,0 +1,167 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1038\cocoasubrtf360
+{\fonttbl\f0\fswiss\fcharset0 Helvetica;\f1\fmodern\fcharset0 Courier;}
+{\colortbl;\red255\green255\blue255;\red104\green18\blue11;\red234\green234\blue234;\red84\green82\blue19;
+\red48\green113\blue23;\red33\green81\blue82;\red0\green17\blue112;}
+\margl1440\margr1440\vieww12240\viewh10520\viewkind0
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+
+\f0\b\fs34 \cf0 Database fields and explanation:\
+
+\b0\fs24 \
+
+\b TABLE:
+\b0  vue1\
+Fields:\
+
+\b id: 
+\b0 Type=int, primary, auto index\
+
+\b time: 
+\b0 Type=float\
+
+\b stdID: 
+\b0 Type=INT, length = 5\
+
+\b exID: 
+\b0 Type=INT, length=5, allowed to be null (only populated if message is extended)\
+
+\b remoteFrame:
+\b0  Type=bit, 1 if remote frame request\
+
+\b length: 
+\b0 Type=INT, length=1\
+
+\b error: 
+\b0 Type=bit, length = 1 (error flag, either set by the user or if parser finds an issue)\
+
+\b db0,db1...db7:
+\b0  Type: int, only populated with the number of bytes transmitted, based on DLC.\
+
+\b msg
+\b0 : Type=varchar (this will be the full message input)\
+
+\b comment:
+\b0  comment tag for experiment\
+\
+code needed to interact with the database. Since we will only need to add and remove data at the moment the code is very simple. Need the MySQLdb package installed (see other document).\
+\
+
+\b Use the below code to set up the connection to the database
+\b0 \
+\
+import MySQLdb\
+
+\b db
+\b0  = "thayersc_canbus"\
+
+\b host 
+\b0 = "thayerschool.org"\
+
+\b password 
+\b0 = "c3E4&$39"\
+
+\b username
+\b0  = "thayersc_canbus"\
+\
+\
+
+\b\fs34 Python Code
+\fs24 \
+
+\b0 \
+import MySQLdb\
+db_conn = MySQLdb.connect( host, username, password, db)\
+cursor = db.cursor()\
+\
+
+\b Then use the following code snippits as examples for inserting and reading data from the database
+\b0 \
+\
+
+\b INSERT
+\b0 \
+\pard\pardeftab720\ql\qnatural
+
+\f1 \cf2 \cb3 # Prepare SQL query to INSERT a record into the database.\cf0 \
+sql \cf4 =\cf0  \cf5 "INSERT INTO EMPLOYEE(FIRST_NAME, \\\
+       LAST_NAME, AGE, SEX, INCOME) \\\
+       VALUES ('%s', '%s', '%d', '%c', '%d' )"\cf0  \cf4 %\cf0  \\\
+       \cf4 (\cf5 'Mac'\cf4 ,\cf0  \cf5 'Mohan'\cf4 ,\cf0  \cf6 20\cf4 ,\cf0  \cf5 'M'\cf4 ,\cf0  \cf6 2000\cf4 )\cf0 \
+\pard\pardeftab720\ql\qnatural
+\cf7 try\cf4 :\cf0 \
+   \cf2 # Execute the SQL command\cf0 \
+   cursor\cf4 .\cf0 execute\cf4 (\cf0 sql\cf4 )\cf0 \
+   \cf2 # Commit your changes in the database\cf0 \
+   db_conn\cf4 .\cf0 commit\cf4 ()\cf0 \
+\cf7 except\cf4 :\cf0 \
+   \cf2 # Rollback in case there is any error\cf0 \
+   db_conn\cf4 .\cf0 rollback\cf4 ()\cf0 \
+\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+
+\f0 \cf0 \cb1 \
+
+\b READ
+\b0 \
+\pard\pardeftab720\ql\qnatural
+
+\f1 \cf2 \cb3 # Prepare SQL query to INSERT a record into the database.\cf0 \
+sql \cf4 =\cf0  \cf5 "SELECT * FROM EMPLOYEE \\\
+       WHERE INCOME > '%d'"\cf0  \cf4 %\cf0  \cf4 (\cf6 1000\cf4 )\cf0 \
+\pard\pardeftab720\ql\qnatural
+\cf7 try\cf4 :\cf0 \
+   \cf2 # Execute the SQL command\cf0 \
+   cursor\cf4 .\cf0 execute\cf4 (\cf0 sql\cf4 )\cf0 \
+   \cf2 # Fetch all the rows in a list of lists.\cf0 \
+   results \cf4 =\cf0  cursor\cf4 .\cf0 fetchall\cf4 ()\cf0 \
+   \cf7 for\cf0  row \cf7 in\cf0  results\cf4 :\cf0 \
+      fname \cf4 =\cf0  row\cf4 [\cf6 0\cf4 ]\cf0 \
+      lname \cf4 =\cf0  row\cf4 [\cf6 1\cf4 ]\cf0 \
+      age \cf4 =\cf0  row\cf4 [\cf6 2\cf4 ]\cf0 \
+      sex \cf4 =\cf0  row\cf4 [\cf6 3\cf4 ]\cf0 \
+      income \cf4 =\cf0  row\cf4 [\cf6 4\cf4 ]\cf0 \
+      \cf2 # Now print fetched result\cf0 \
+      \cf7 print\cf0  \cf5 "fname=%s,lname=%s,age=%d,sex=%s,income=%d"\cf0  \cf4 %\cf0  \\\
+             \cf4 (\cf0 fname\cf4 ,\cf0  lname\cf4 ,\cf0  age\cf4 ,\cf0  sex\cf4 ,\cf0  income \cf4 )\cf0 \
+\cf7 except\cf4 :\cf0 \
+   \cf7 print\cf0  \cf5 "Error: unable to fecth data"\cf0 \
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+
+\f0 \cf0 \cb1 \
+
+\b Don't forget to close the connection after work\
+\
+
+\b0 db_conn.close()\
+	\
+
+\b Code is taken from the following page: 
+\b0 \
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+{\field{\*\fldinst{HYPERLINK "http://www.tutorialspoint.com/python/python_database_access.htm"}}{\fldrslt \cf0 http://www.tutorialspoint.com/python/python_database_access.htm}}\
+\
+There is more information contained on this page for different interactions with the database but they should not be necessary for our project\
+\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+
+\b \cf0 simple SQL tutorial:
+\b0 \
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+{\field{\*\fldinst{HYPERLINK "http://www.w3schools.com/sql/default.asp"}}{\fldrslt \cf0 http://www.w3schools.com/sql/default.asp}}\
+\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+
+\b \cf0 Information on adding our Hex data to the database\
+
+\b0 \
+ We are going to store the values as integers so the hex notation must be converted to a really large integer. This can be done really easily in the sql command. to get the value as an integer just do the following --\
+\
+0xaa \
+\
+or simply put '0x' before your string of hex digits. THIS SHOULD BE VERIFIED USING THE PYTHON CODE...\
+\
+\
+
+\b MATLAB and SQL\
+
+\b0 Unfortunately there is no database toolbox on the student MATLAB versions. I have found a work around using some opensource code}

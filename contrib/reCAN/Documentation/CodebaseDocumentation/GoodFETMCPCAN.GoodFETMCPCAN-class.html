@@ -1,0 +1,1036 @@
+<?xml version="1.0" encoding="ascii"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>GoodFETMCPCAN.GoodFETMCPCAN</title>
+  <link rel="stylesheet" href="epydoc.css" type="text/css" />
+  <script type="text/javascript" src="epydoc.js"></script>
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="#204080"
+      alink="#204080">
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+      <th class="navbar" width="100%"></th>
+  </tr>
+</table>
+<table width="100%" cellpadding="0" cellspacing="0">
+  <tr valign="top">
+    <td width="100%">
+      <span class="breadcrumbs">
+        <a href="GoodFETMCPCAN-module.html">Module&nbsp;GoodFETMCPCAN</a> ::
+        Class&nbsp;GoodFETMCPCAN
+      </span>
+    </td>
+    <td>
+      <table cellpadding="0" cellspacing="0">
+        <!-- hide/show private -->
+        <tr><td align="right"><span class="options">[<a href="javascript:void(0);" class="privatelink"
+    onclick="toggle_private();">hide&nbsp;private</a>]</span></td></tr>
+        <tr><td align="right"><span class="options"
+            >[<a href="frames.html" target="_top">frames</a
+            >]&nbsp;|&nbsp;<a href="GoodFETMCPCAN.GoodFETMCPCAN-class.html"
+            target="_top">no&nbsp;frames</a>]</span></td></tr>
+      </table>
+    </td>
+  </tr>
+</table>
+<!-- ==================== CLASS DESCRIPTION ==================== -->
+<h1 class="epydoc">Class GoodFETMCPCAN</h1><p class="nomargin-top"><span class="codelink"><a href="GoodFETMCPCAN-pysrc.html#GoodFETMCPCAN">source&nbsp;code</a></span></p>
+<pre class="base-tree">
+  GoodFET.GoodFET --+    
+                    |    
+GoodFETSPI.GoodFETSPI --+
+                        |
+                       <strong class="uidshort">GoodFETMCPCAN</strong>
+</pre>
+
+<hr />
+<p>This class uses the regular SPI app to implement a CAN Bus adapter on 
+  the Goodthopter10 hardware.</p>
+
+<!-- ==================== INSTANCE METHODS ==================== -->
+<a name="section-InstanceMethods"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Instance Methods</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-InstanceMethods"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="MCPsetup"></a><span class="summary-sig-name">MCPsetup</span>(<span class="summary-sig-arg">self</span>)</span><br />
+      Sets up the ports.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="GoodFETMCPCAN-pysrc.html#GoodFETMCPCAN.MCPsetup">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="MCPreset"></a><span class="summary-sig-name">MCPreset</span>(<span class="summary-sig-arg">self</span>)</span><br />
+      Reset the MCP2515 chip.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="GoodFETMCPCAN-pysrc.html#GoodFETMCPCAN.MCPreset">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="MCPsetrate"></a><span class="summary-sig-name">MCPsetrate</span>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">rate</span>=<span class="summary-sig-default">125</span>)</span><br />
+      Sets the data rate in kHz.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="GoodFETMCPCAN-pysrc.html#GoodFETMCPCAN.MCPsetrate">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="MCPcanstat"></a><span class="summary-sig-name">MCPcanstat</span>(<span class="summary-sig-arg">self</span>)</span><br />
+      Get the CAN Status.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="GoodFETMCPCAN-pysrc.html#GoodFETMCPCAN.MCPcanstat">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="MCPcanstatstr"></a><span class="summary-sig-name">MCPcanstatstr</span>(<span class="summary-sig-arg">self</span>)</span><br />
+      Read the present status as a string.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="GoodFETMCPCAN-pysrc.html#GoodFETMCPCAN.MCPcanstatstr">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="MCPcanstatint"></a><span class="summary-sig-name">MCPcanstatint</span>(<span class="summary-sig-arg">self</span>)</span><br />
+      Read present status as an int.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="GoodFETMCPCAN-pysrc.html#GoodFETMCPCAN.MCPcanstatint">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="MCPreqstat"></a><span class="summary-sig-name">MCPreqstat</span>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">state</span>)</span><br />
+      Set the CAN state.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="GoodFETMCPCAN-pysrc.html#GoodFETMCPCAN.MCPreqstat">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="MCPreqstatNormal"></a><span class="summary-sig-name">MCPreqstatNormal</span>(<span class="summary-sig-arg">self</span>)</span><br />
+      Set the CAN state.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="GoodFETMCPCAN-pysrc.html#GoodFETMCPCAN.MCPreqstatNormal">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="MCPreqstatSleep"></a><span class="summary-sig-name">MCPreqstatSleep</span>(<span class="summary-sig-arg">self</span>)</span><br />
+      Set the CAN state.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="GoodFETMCPCAN-pysrc.html#GoodFETMCPCAN.MCPreqstatSleep">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="MCPreqstatLoopback"></a><span class="summary-sig-name">MCPreqstatLoopback</span>(<span class="summary-sig-arg">self</span>)</span><br />
+      Set the CAN state.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="GoodFETMCPCAN-pysrc.html#GoodFETMCPCAN.MCPreqstatLoopback">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="MCPreqstatListenOnly"></a><span class="summary-sig-name">MCPreqstatListenOnly</span>(<span class="summary-sig-arg">self</span>)</span><br />
+      Set the CAN state.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="GoodFETMCPCAN-pysrc.html#GoodFETMCPCAN.MCPreqstatListenOnly">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="MCPreqstatConfiguration"></a><span class="summary-sig-name">MCPreqstatConfiguration</span>(<span class="summary-sig-arg">self</span>)</span><br />
+      Set the CAN state.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="GoodFETMCPCAN-pysrc.html#GoodFETMCPCAN.MCPreqstatConfiguration">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="MCPrxstatus"></a><span class="summary-sig-name">MCPrxstatus</span>(<span class="summary-sig-arg">self</span>)</span><br />
+      Reads the RX Status by the SPI verb of the same name.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="GoodFETMCPCAN-pysrc.html#GoodFETMCPCAN.MCPrxstatus">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="MCPreadstatus"></a><span class="summary-sig-name">MCPreadstatus</span>(<span class="summary-sig-arg">self</span>)</span><br />
+      Reads the Read Status by the SPI verb of the same name.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="GoodFETMCPCAN-pysrc.html#GoodFETMCPCAN.MCPreadstatus">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="GoodFETMCPCAN.GoodFETMCPCAN-class.html#readrxbuffer" class="summary-sig-name">readrxbuffer</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">packbuf</span>=<span class="summary-sig-default">0</span>)</span><br />
+      Reads the RX buffer.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="GoodFETMCPCAN-pysrc.html#GoodFETMCPCAN.readrxbuffer">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="fastrxpacket"></a><span class="summary-sig-name">fastrxpacket</span>(<span class="summary-sig-arg">self</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="GoodFETMCPCAN-pysrc.html#GoodFETMCPCAN.fastrxpacket">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="GoodFETMCPCAN.GoodFETMCPCAN-class.html#rxpacket" class="summary-sig-name">rxpacket</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Reads the next incoming packet from either buffer.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="GoodFETMCPCAN-pysrc.html#GoodFETMCPCAN.rxpacket">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="MCPrts"></a><span class="summary-sig-name">MCPrts</span>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">TXB0</span>=<span class="summary-sig-default">False</span>,
+        <span class="summary-sig-arg">TXB1</span>=<span class="summary-sig-default">False</span>,
+        <span class="summary-sig-arg">TXB2</span>=<span class="summary-sig-default">False</span>)</span><br />
+      Requests to send one of the transmit buffers.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="GoodFETMCPCAN-pysrc.html#GoodFETMCPCAN.MCPrts">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="writetxbuffer"></a><span class="summary-sig-name">writetxbuffer</span>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">packet</span>,
+        <span class="summary-sig-arg">packbuf</span>=<span class="summary-sig-default">0</span>)</span><br />
+      Writes the transmit buffer.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="GoodFETMCPCAN-pysrc.html#GoodFETMCPCAN.writetxbuffer">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="GoodFETMCPCAN.GoodFETMCPCAN-class.html#txpacket" class="summary-sig-name">txpacket</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">packet</span>)</span><br />
+      Transmits a packet through one of the outbound buffers.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="GoodFETMCPCAN-pysrc.html#GoodFETMCPCAN.txpacket">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="simpleParse"></a><span class="summary-sig-name">simpleParse</span>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">packet</span>)</span><br />
+      This will print a simple parsing of the data with the standard Id and
+      the extended id parsed.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="GoodFETMCPCAN-pysrc.html#GoodFETMCPCAN.simpleParse">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="packet2str"></a><span class="summary-sig-name">packet2str</span>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">packet</span>)</span><br />
+      Converts a packet from the internal format to a string.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="GoodFETMCPCAN-pysrc.html#GoodFETMCPCAN.packet2str">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">Dictionary</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="GoodFETMCPCAN.GoodFETMCPCAN-class.html#packet2parsed" class="summary-sig-name">packet2parsed</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">data</span>)</span><br />
+      This method will parse the packet that was received via <a 
+      href="GoodFETMCPCAN.GoodFETMCPCAN-class.html#rxpacket" 
+      class="link">rxpacket</a>.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="GoodFETMCPCAN-pysrc.html#GoodFETMCPCAN.packet2parsed">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">String</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="GoodFETMCPCAN.GoodFETMCPCAN-class.html#packet2parsedstr" class="summary-sig-name">packet2parsedstr</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">data</span>)</span><br />
+      This will return a string that is the parsed CAN message.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="GoodFETMCPCAN-pysrc.html#GoodFETMCPCAN.packet2parsedstr">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="GoodFETMCPCAN.GoodFETMCPCAN-class.html#peek8" class="summary-sig-name">peek8</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">adr</span>)</span><br />
+      Read a byte from the given address.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="GoodFETMCPCAN-pysrc.html#GoodFETMCPCAN.peek8">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="GoodFETMCPCAN.GoodFETMCPCAN-class.html#poke8" class="summary-sig-name">poke8</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">adr</span>,
+        <span class="summary-sig-arg">val</span>)</span><br />
+      Poke a value into RAM.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="GoodFETMCPCAN-pysrc.html#GoodFETMCPCAN.poke8">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="GoodFETMCPCAN.GoodFETMCPCAN-class.html#MCPbitmodify" class="summary-sig-name">MCPbitmodify</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">adr</span>,
+        <span class="summary-sig-arg">mask</span>,
+        <span class="summary-sig-arg">data</span>)</span><br />
+      Writes a byte with a mask.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="GoodFETMCPCAN-pysrc.html#GoodFETMCPCAN.MCPbitmodify">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2" class="summary">
+    <p class="indent-wrapped-lines"><b>Inherited from <code>GoodFETSPI.GoodFETSPI</code></b>:
+      <code>SPIsetup</code>,
+      <code>SPItrans</code>,
+      <code>SPItrans8</code>
+      </p>
+    <p class="indent-wrapped-lines"><b>Inherited from <code>GoodFET.GoodFET</code></b>:
+      <code>MONpeek16</code>,
+      <code>MONpeek8</code>,
+      <code>MONpoke16</code>,
+      <code>__init__</code>,
+      <code>bslResetZ1</code>,
+      <code>btInit</code>,
+      <code>call</code>,
+      <code>dir</code>,
+      <code>dump</code>,
+      <code>dumpmem</code>,
+      <code>eeprompeek</code>,
+      <code>erase</code>,
+      <code>execute</code>,
+      <code>findbaud</code>,
+      <code>flash</code>,
+      <code>getConsole</code>,
+      <code>getbuffer</code>,
+      <code>getpc</code>,
+      <code>getsecret</code>,
+      <code>glitchApp</code>,
+      <code>glitchRate</code>,
+      <code>glitchTime</code>,
+      <code>glitchVerb</code>,
+      <code>glitchVoltages</code>,
+      <code>glitchstart</code>,
+      <code>glitchstarttime</code>,
+      <code>halt</code>,
+      <code>infostring</code>,
+      <code>loadsymbols</code>,
+      <code>lock</code>,
+      <code>mon_connected</code>,
+      <code>monitor_info</code>,
+      <code>monitor_list_apps</code>,
+      <code>monitor_ram_depth</code>,
+      <code>monitor_ram_pattern</code>,
+      <code>monitorclocking</code>,
+      <code>monitorecho</code>,
+      <code>monitorgetclock</code>,
+      <code>monitorsetclock</code>,
+      <code>monitortest</code>,
+      <code>name2adr</code>,
+      <code>out</code>,
+      <code>peek</code>,
+      <code>peek16</code>,
+      <code>peek32</code>,
+      <code>peekblock</code>,
+      <code>peekbysym</code>,
+      <code>picROMclock</code>,
+      <code>picROMfastclock</code>,
+      <code>poke16</code>,
+      <code>pokeblock</code>,
+      <code>pokebysym</code>,
+      <code>pokebyte</code>,
+      <code>pyserInit</code>,
+      <code>readbyte</code>,
+      <code>readcmd</code>,
+      <code>readpicROM</code>,
+      <code>resume</code>,
+      <code>serClose</code>,
+      <code>serInit</code>,
+      <code>setBaud</code>,
+      <code>setsecret</code>,
+      <code>setup</code>,
+      <code>silent</code>,
+      <code>start</code>,
+      <code>status</code>,
+      <code>telosBReset</code>,
+      <code>telosI2CStart</code>,
+      <code>telosI2CStop</code>,
+      <code>telosI2CWriteBit</code>,
+      <code>telosI2CWriteByte</code>,
+      <code>telosI2CWriteCmd</code>,
+      <code>telosSetSCL</code>,
+      <code>telosSetSDA</code>,
+      <code>test</code>,
+      <code>testleds</code>,
+      <code>timeout</code>,
+      <code>writecmd</code>,
+      <code>writepicROM</code>
+      </p>
+    </td>
+  </tr>
+</table>
+<!-- ==================== CLASS VARIABLES ==================== -->
+<a name="section-ClassVariables"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Class Variables</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-ClassVariables"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="GoodFETMCPCAN.GoodFETMCPCAN-class.html#MCPMODES" class="summary-name">MCPMODES</a> = <code title="['Normal',
+ 'Sleep',
+ 'Loopback',
+ 'Listen-only',
+ 'Configuration',
+ 'UNKNOWN',
+ 'UNKNOWN',
+ 'PowerUp']"><code class="variable-group">[</code><code class="variable-quote">'</code><code class="variable-string">Normal</code><code class="variable-quote">'</code><code class="variable-op">, </code><code class="variable-quote">'</code><code class="variable-string">Sleep</code><code class="variable-quote">'</code><code class="variable-op">, </code><code class="variable-quote">'</code><code class="variable-string">Loopback</code><code class="variable-quote">'</code><code class="variable-op">, </code><code class="variable-quote">'</code><code class="variable-string">Listen-only</code><code class="variable-quote">'</code><code class="variable-op">, </code><code class="variable-quote">'</code><code class="variable-string">Con</code><code class="variable-ellipsis">...</code></code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="MCPrates"></a><span class="summary-name">MCPrates</span> = <code title="[10.4, 41.6, 83.3, 100, 125, 250, 500, 1000]"><code class="variable-group">[</code>10.4<code class="variable-op">, </code>41.6<code class="variable-op">, </code>83.3<code class="variable-op">, </code>100<code class="variable-op">, </code>125<code class="variable-op">, </code>250<code class="variable-op">, </code>500<code class="variable-op">, </code>1000<code class="variable-group">]</code></code>
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2" class="summary">
+    <p class="indent-wrapped-lines"><b>Inherited from <code>GoodFETSPI.GoodFETSPI</code></b>:
+      <code>APP</code>
+      </p>
+    <p class="indent-wrapped-lines"><b>Inherited from <code>GoodFET.GoodFET</code></b>:
+      <code>GLITCHAPP</code>,
+      <code>MONITORAPP</code>,
+      <code>app</code>,
+      <code>baudrates</code>,
+      <code>besilent</code>,
+      <code>connected</code>,
+      <code>count</code>,
+      <code>data</code>,
+      <code>symbols</code>,
+      <code>verb</code>,
+      <code>verbose</code>
+      </p>
+    </td>
+  </tr>
+</table>
+<!-- ==================== METHOD DETAILS ==================== -->
+<a name="section-MethodDetails"></a>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Method Details</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-MethodDetails"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+</table>
+<a name="readrxbuffer"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">readrxbuffer</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">packbuf</span>=<span class="sig-default">0</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="GoodFETMCPCAN-pysrc.html#GoodFETMCPCAN.readrxbuffer">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Reads the RX buffer.  Might have old data.</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="rxpacket"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">rxpacket</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="GoodFETMCPCAN-pysrc.html#GoodFETMCPCAN.rxpacket">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Reads the next incoming packet from either buffer. Returns None 
+  immediately if no packet is waiting.</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="txpacket"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">txpacket</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">packet</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="GoodFETMCPCAN-pysrc.html#GoodFETMCPCAN.txpacket">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Transmits a packet through one of the outbound buffers. As usual, the 
+  packet should begin with SIDH. For now, only TXB0 is supported.</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="packet2parsed"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">packet2parsed</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">data</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="GoodFETMCPCAN-pysrc.html#GoodFETMCPCAN.packet2parsed">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>This method will parse the packet that was received via <a 
+  href="GoodFETMCPCAN.GoodFETMCPCAN-class.html#rxpacket" 
+  class="link">rxpacket</a>.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>data</code></strong> (List) - data packet read off of the MCP2515 from the CAN bus. format will
+          be 14 bytes where each element is a character whose unicode 
+          integer value corresponds to the hex value of the byte (use the 
+          ord() method).</li>
+    </ul></dd>
+    <dt>Returns: Dictionary</dt>
+        <dd>Dictionary of the packet parsed into various components. The key 
+          values will be as follows
+          <ol start="1">
+            <li>
+              ide : 1 if the message is an extended frame. 0 otherwise
+            </li>
+            <li>
+              eID : extended ID. Not included if not an extended frame
+            </li>
+            <li>
+              rtr : 1 if the message is a remote transmission request (RTR)
+            </li>
+            <li>
+              sID : Standard ID.
+            </li>
+            <li>
+              length: packet length (between 0 and 8)
+            </li>
+            <li>
+              db0 : Data byte 0 (not included if RTR message)
+              <p>---</p>
+            </li>
+            <li>
+              db7 : Data byte 7 (not included if RTR message)
+            </li>
+          </ol></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="packet2parsedstr"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">packet2parsedstr</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">data</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="GoodFETMCPCAN-pysrc.html#GoodFETMCPCAN.packet2parsedstr">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>This will return a string that is the parsed CAN message. The bytes 
+  will be parsed for the standard ID, extended ID (if one is present), rtr,
+  length and databytes (if present). The message will be placed into a 
+  string as decimal integers not hex values. This method calls <a 
+  href="GoodFETMCPCAN.GoodFETMCPCAN-class.html#packet2parsed" 
+  class="link">packet2parsed</a> to do the packet parsing.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>data</code></strong> (List) - Data packet as returned by the <a 
+          href="GoodFETMCPCAN.GoodFETMCPCAN-class.html#rxpacket" 
+          class="link">rxpacket</a></li>
+    </ul></dd>
+    <dt>Returns: String</dt>
+        <dd>String that shows the data message in decimal format, parsed.</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="peek8"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">peek8</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">adr</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="GoodFETMCPCAN-pysrc.html#GoodFETMCPCAN.peek8">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Read a byte from the given address.  Untested.</p>
+  <dl class="fields">
+    <dt>Overrides:
+        GoodFET.GoodFET.peek8
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="poke8"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">poke8</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">adr</span>,
+        <span class="sig-arg">val</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="GoodFETMCPCAN-pysrc.html#GoodFETMCPCAN.poke8">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Poke a value into RAM.  Untested</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="MCPbitmodify"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">MCPbitmodify</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">adr</span>,
+        <span class="sig-arg">mask</span>,
+        <span class="sig-arg">data</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="GoodFETMCPCAN-pysrc.html#GoodFETMCPCAN.MCPbitmodify">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Writes a byte with a mask.  Doesn't work for many registers.</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<br />
+<!-- ==================== CLASS VARIABLE DETAILS ==================== -->
+<a name="section-ClassVariableDetails"></a>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Class Variable Details</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-ClassVariableDetails"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+</table>
+<a name="MCPMODES"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <h3 class="epydoc">MCPMODES</h3>
+  
+  <dl class="fields">
+  </dl>
+  <dl class="fields">
+    <dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+<code class="variable-group">[</code><code class="variable-quote">'</code><code class="variable-string">Normal</code><code class="variable-quote">'</code><code class="variable-op">,</code>
+ <code class="variable-quote">'</code><code class="variable-string">Sleep</code><code class="variable-quote">'</code><code class="variable-op">,</code>
+ <code class="variable-quote">'</code><code class="variable-string">Loopback</code><code class="variable-quote">'</code><code class="variable-op">,</code>
+ <code class="variable-quote">'</code><code class="variable-string">Listen-only</code><code class="variable-quote">'</code><code class="variable-op">,</code>
+ <code class="variable-quote">'</code><code class="variable-string">Configuration</code><code class="variable-quote">'</code><code class="variable-op">,</code>
+ <code class="variable-quote">'</code><code class="variable-string">UNKNOWN</code><code class="variable-quote">'</code><code class="variable-op">,</code>
+ <code class="variable-quote">'</code><code class="variable-string">UNKNOWN</code><code class="variable-quote">'</code><code class="variable-op">,</code>
+ <code class="variable-quote">'</code><code class="variable-string">PowerUp</code><code class="variable-quote">'</code><code class="variable-group">]</code>
+</pre></td></tr></table>
+</dd>
+  </dl>
+</td></tr></table>
+</div>
+<br />
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+      <th class="navbar" width="100%"></th>
+  </tr>
+</table>
+<table border="0" cellpadding="0" cellspacing="0" width="100%%">
+  <tr>
+    <td align="left" class="footer">
+    Generated by Epydoc 3.0.1 on Wed Mar  6 20:20:31 2013
+    </td>
+    <td align="right" class="footer">
+      <a target="mainFrame" href="http://epydoc.sourceforge.net"
+        >http://epydoc.sourceforge.net</a>
+    </td>
+  </tr>
+</table>
+
+<script type="text/javascript">
+  <!--
+  // Private objects are initially displayed (because if
+  // javascript is turned off then we want them to be
+  // visible); but by default, we want to hide them.  So hide
+  // them unless we have a cookie that says to show them.
+  checkCookie();
+  // -->
+</script>
+</body>
+</html>

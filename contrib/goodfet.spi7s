@@ -1,0 +1,70 @@
+#!/usr/bin/env python
+
+"""
+Simple SPI driver for the SFE-0012-DS 7 segment serial
+display available from Sparkfun
+
+http://www.sparkfun.com/commerce/product_info.php?products_id=9230
+
+Decimal points are arranged as:
+
+     4  6
+     5
+ 0  1  2  3  
+
+and listed as which to turn on, ie to enabe the colon,
+send:
+
+goodfet.s7sd dot 45
+"""
+
+import sys;
+import binascii;
+
+from GoodFETSPI import GoodFETSPI;
+
+if(len(sys.argv)==1):
+    print "Usage: %s verb [objects]\n" % sys.argv[0];
+    print "%s start" % sys.argv[0];
+    print "%s set <1> <2> <3> <4>" % sys.argv[0]
+    print "%s brightness <1-255>" % sys.argv[0]
+    print "%s dot [0][1]..[6]" % sys.argv[0]
+    sys.exit();
+
+#Initialize FET and set baud rate
+client=GoodFETSPI();
+client.serInit()
+
+#Connect to target
+#if(sys.argv[1]=="start"):
+client.SPIsetup();
+
+if(sys.argv[1]=="set"):
+    if len(sys.argv) > 3:
+        [a, b, c, d] = sys.argv[2:6]
+    else:
+        a = sys.argv[2][0]
+        b = sys.argv[2][1]
+        c = sys.argv[2][2]
+        d = sys.argv[2][3]
+
+    print a, b, c, d
+    client.SPItrans8(ord(a))
+    client.SPItrans8(ord(b))
+    client.SPItrans8(ord(c))
+    client.SPItrans8(ord(d))
+
+if(sys.argv[1]=="brightness"):
+    b = int(sys.argv[2])
+    client.SPItrans8(0x7A)
+    client.SPItrans8(b)
+
+if(sys.argv[1]=="dot"):
+    db = 0
+    for d in sys.argv[2]:
+        db |= (1 << int(d))
+
+    client.SPItrans8(0x77)
+    client.SPItrans8(db)
+
+

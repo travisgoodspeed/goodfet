@@ -1,0 +1,87 @@
+raspdancer11 is a variant of facedancer11 for Raspberry Pi
+raspdancer21 is a variant of facedancer21 for Raspberry Pi
+
+More info & contact:
+====================
+    Philippe Teuwen <phil teuwen.org>
+    http://wiki.yobi.be/wiki/Raspdancer
+
+Status:
+=======
+    Code tested successfully with the Raspdancer11. 
+Raspdancer11 PCB not tested yet. Raspdancer11 prototype successfully tested. 
+Raspdancer21 PCB not tested yet, design not tested.
+
+Rationale:
+==========
+    Facedancer11 and Facedancer21 are one-purpose versions of the flexible
+GoodFET board. It was well designed to move all the intelligence into the host
+controller, not in the embedded uC. Therefore GoodFET part of the Facedancer
+designs can be seen as "just" a SPI over UART over USB bridge.
+But Raspberry Pi has a native SPI support so let's make dedicated versions.
+It's cheaper (you save FT232RL & MSP430F2618TPM).
+It's faster (SPI communication with MAX3420E/MAX3421E gets boosted to 26MHz!).
+It still uses the same GoodFETMAXUSB.py library.
+
+Construction & components:
+==========================
+    See pcb/ for Eagle files.
+Many thanks to Jean-Christophe Nicaise for the initial Eagle design
+and Zac Franken for his many good advices.
+
+Name   Package    Description
+------ -------    -----------
+U1     LQFP32-08  MAX3420E*                    (* for facedancer11)
+U1     TQPF32-5MM MAX3421E**                   (**for facedancer21)
+R1     0603       33R USB Serie Resistor
+R2     0603       33R USB Serie Resistor
+C1     0603       1.0µF Capacitor
+C2     0603       0.1µF Decoupling Capacitor
+C3     0603       18pF Capacitor
+C4     0603       18pF Capacitor
+C5     0603       1.0µF Capacitor
+Q1     5x3.2      12MHz SMD Crystal, 18pF      (see notes)
+USB    USB Mini   Receptacle e.g. UX60-MB-5ST
+USB2   USB A      USB-A SMT CONN Receptacle**  (**for facedancer21)
+J_RASP 2x13       Receptacle, 2.54mm, 26way    (see notes)
+
+Differences with original Facedancer11/21 (besides removal of GoodFET parts):
+* smaller crystal package
+* 2x13 connector towards RPi, e.g. a SAMTEC BCS-113-L-D-TE, or even a smaller
+  one as 2x6 is enough, but then be the sure to plug the board correctly
+  into the larger RPi connector!
+* pads on the USB line, in case you want to solder directly a USB cable on it.
+* Jumper to allow powering the RPi over this USB but beware:
+  You're fuzzing the one which is powering you,
+  don't cry if you experience power losses...
+  RPi polyfuse is bypassed but power from a *real* USB port should be fine.
+* Jumper to allow connecting INT to GPIO24 in case it gets used in the future
+* Jumper to allow connecting GPX to GPIO23 in case it gets used in the future
+
+Software:
+=========
+    Things have been done to be able to reuse the MAXUSB python libraries
+written for facedancer. All you need is to replace the original GoodFET.py
+by the version provided here. It relies on SPI and GPIO libraries, see below.
+Code has to be run as root or user with enough rights on SPI & GPIO.
+
+Activating SPI on Raspberry PI
+------------------------------
+Edit /etc/modprobe.d/raspi-blacklist.conf and comment this line then reboot:
+ #blacklist spi-bcm2708
+
+Python SPI library for Raspberry Pi
+-----------------------------------
+We're using this one:
+https://github.com/lthiery/SPI-Py (tested with commit b2c7854c, 2013-04-15)
+ wget https://raw.github.com/lthiery/SPI-Py/master/spi.c
+ wget https://raw.github.com/lthiery/SPI-Py/master/setup.py
+ apt-get install python2.7-dev
+ python setup.py build
+ Result spi.so is in build/lib.linux-armv6l-2.7/, to be dropped in python path
+
+Python GPIO library for Raspberry Pi
+------------------------------------
+We're using this one:
+https://code.google.com/p/raspberry-gpio-python/
+We tested the version v0.4.1a-1 which is pre-installed on Raspbian

@@ -1,0 +1,28 @@
+#!/usr/bin/env python
+
+
+
+from DataManage import DataManage
+
+dm = DataManage(host="thayerschool.org", db="thayersc_canbus",username="thayersc_canbus",password="c3E4&$39",table="ford_2004");
+#dm.createTable("ford_2004")
+
+folder = "./data/"
+
+dm.uploadData(folder+"data20130116.csv")
+dm.uploadData(folder+"backgroundTest2.csv")
+#dm.uploadData(folder+"data.csv")
+#dm.uploadData(folder+"data2.csv")
+#dm.uploadData(folder+"ignition.csv")
+#dm.uploadData(folder+"ford_gearShiftALL1.csv")
+#dm.uploadData(folder+"ford_gearShift1.csv")
+#dm.uploadData(folder+"ford_ignitiona.csv")
+#dm.uploadData(folder+"ford_wipersOn1.csv")
+#dm.uploadData(folder+"ford_rev2.csv")
+#dm.uploadData(folder+"ford_rev1.csv")
+#dm.uploadData(folder+"ford_lightsOnOff2.csv")
+#dm.uploadData(folder+"ford_lightsOnOff1.csv")
+#dm.uploadData(folder+"ford_background3.csv")
+#dm.uploadData(folder+"ford_background2.csv")
+#dm.uploadData(folder+"ford_background1.csv")
+print"complete"

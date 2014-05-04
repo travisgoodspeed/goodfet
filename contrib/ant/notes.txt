@@ -1,0 +1,131 @@
+Howdy Y'all,
+
+I'm sharing this to crowd-source the reverse engineering of the ANT protocol, and to let
+my neighbors share in some extra neighborly fun. Please update this with your own notes,
+then tweet the new URL tagged with #antrev for the rest of us to follow.  If there's enough
+interest, I'll do a play-by-play at the end.  As ANT is partially documented, there's a lot
+to work with, and the packet captures below will let you play along even if you haven't
+got hardware.
+
+You can follow the action at http://twitter.com/#!/search/%23antrev
+
+For those that could use some background, ANT is a proprietary wireless networking protocol
+used in a number of sports and medical devices.  The upper layers of ANT are documented,
+but in the form of API 
+
+The following are packets captured from a Garmin ForeRunner 405CX, which for the time being
+is transmitting on 55,3ba36c3001,32,00.  This packet sniffer does not know the MAC of the host,
+so you are only seeing might be one side of the conversation.  (The packets come from the watch
+when the dongle is unplugged, but no packets are seen when the data log is synchronized.
+Presumably the data is exchanged on another channel or MAC.)  Also, it doesn't know length, so
+every packet is followed by noise.  My access point is Garmin ANT Agent 2.1.6 for OS X.
+Any data sent on an alternate channel has been lost, and some packets will have bit errors.
+
+All packets were sniffed using a badge from the Next Hope conference, running the latest GoodFET
+firmware.  'goodfet.nrf sniffant' will find the most popular destination address while
+'goodfer.nrf sniffant 55,3ba36c3001,32,00' will sniff for a particular address.  Replace mine
+with your own.  As of this writing, MAC discovery takes forever and a day, so be patient.
+Keeping the watch active will increase the transmission rate and speed up discovery.
+You should also be able to use a standard GoodFET with the nRF24L01+ module from Sparkfun.
+
+I will buy drinks for the first neighbors to perform the following:
+1. A GoodFETNRF patch that sniffs two MAC addresses at once.  (Device and host.)
+2. The method of calculating MAC addresses, particularly for syncing and for dongles.
+3. A patch that acts as an access point for a watch.
+4. Patches for the ANT+ heart monitor, food pod, or other ANT gear.
+
+Drinks are presently owed to:
+@tmanning for deciphering the first packet.
+@fbz for offering hardware in Kšln.
+
+Thank you kindly,
+--@travisgoodspeed
+
+Handy URLs:
+http://tinyurl.com/antdocco [pdf]
+http://goodfet.sourceforge.net/clients/goodfet.nrf/
+http://goodfet.sourceforge.net/hardware/nhb12/
+http://travisgoodspeed.blogspot.com/2010/07/reversing-rf-clicker.html
+http://travisgoodspeed.blogspot.com/2010/06/hacking-next-hope-badge.html
+http://www.remote-exploit.org/?page_id=602
+
+Addresses:
+
+The address of these recordings is 55,3ba36c3001,32,00, which is to say that the
+MAC/SYNC field is 3ba36c3001, the frequency is 2400+0x32=2450 MHz, and that the
+data rate is 1Mbps with no checksums.  In the MAC, 01 comes from the Garmin
+Manufacturer ID and 6c30 comes from the low bytes of my Device ID, 3815321708
+or 0xe369306c.
+
+Packets:
+
+When idle, a burst of packets like the following is observed every 30 seconds.
+ 05 0a 43 04 00 03 01 00 02 00 ca 56 7b fb b7 ff bf bb df fa 2e f9 96 f5 aa 8c 55 85 65 0c 68 8d
+ [REPEATED]
+
+Active, where both the time and date are shown.  The rate is roughly one packet per second.
+ 05 0a 43 09 00 03 01 00 02 00 20 5c 6f 8c 97 15 81 69 55 26 95 54 92 aa ab 2a d0 ea 92 bd e5 50
+ 05 0a 43 09 00 03 01 00 02 00 20 5c 7f ff ff f3 df ff 6f f7 ff ff 7f f7 eb ff fe f7 f7 f4 f7 fc
+ 05 0a 43 09 00 03 01 00 02 00 20 5c 7f 5f eb d7 be fe af fb f6 fd ff df ff fd bb bf ae 7b 5f ff
+ 05 0a 43 09 00 03 01 00 02 00 20 5c 7f ff ff ff ff ff fe df ff ef b7 ed dd ef ff ff f5 ff ff ff
+ 05 0a 43 09 01 03 aa 00 00 00 f7 f7 7e db fd fd ff df b3 ea 12 94 d0 85 2a 5a 48 64 52 c8 00 92
+ 05 0a 43 09 00 03 01 00 02 00 20 5c 7e b7 af de f7 55 dd ff bf f7 3f ff af ff df f7 fb ff fa fd
+ 05 0a 43 09 00 03 01 00 02 00 20 5c 7d 7f de ff ff be aa aa ba 71 b8 8a aa 2a 2a f5 b5 4a ad f6
+ 05 0a 43 09 00 03 01 00 02 00 20 5c 7f ff fb 73 bb ff 7f 3f ff ea c0 40 92 a2 e5 2a 22 b8 f5 da
+ 05 0a 43 09 00 03 01 00 02 00 20 5c 79 f5 ff bf 6b fe 77 b7 f4 ac 24 a1 23 12 b1 14 55 65 55 41
+ 05 0a 43 09 00 13 01 00 02 00 21 5c 7f ff ff fb f7 ff ff ff df ff df f7 fd ff ff e8 5e 9a 4b 57
+ 05 0a 43 09 00 03 01 00 02 00 20 5c 77 ef ef df fd ff bf d7 d7 de fe e6 5d 7f ff df fb ef bf ff
+ 05 0a 43 09 00 03 01 00 02 00 20 5c 7f ed f7 af f7 fd bd df ff ff b1 64 af 52 99 52 c2 76 d6 dc
+ 05 0a 43 09 00 03 01 00 02 00 20 5c 56 bb ef 96 d7 7f fd 9e bb d6 ff f7 7f ff 7f ff df ff be fe
+ 05 0a 43 09 00 03 01 00 02 00 20 5c 7f ff ff ef f9 df f5 90 aa ea a8 90 a1 a2 45 81 29 66 a6 56
+ 05 0a 43 09 00 03 01 00 02 00 20 5c 7f 7c f7 f7 af bf 76 ff ff ff 7f fd ff 66 ff ee ff ff fe f7
+ 05 0a 43 09 00 03 01 00 02 00 20 5c 7f 7d 7d fe bf 7f f6 ed 74 95 a8 94 98 95 12 62 24 94 94 a1
+ 05 0a 43 09 00 03 01 00 02 00 20 5c 7f 6e fd bd 7f ed fa db ff ff db cf de fd bd 6f dc ff 7f ff
+ 05 0a 43 09 00 03 01 00 02 00 20 5c 7e f7 7e 36 49 a9 47 a8 88 52 96 b6 6c fa ab 26 b5 44 b4 d9
+ 05 0a 43 09 00 03 01 00 02 00 20 5c 77 ff fb ff 08 38 d4 4b 88 c4 08 b2 a4 40 d4 c1 0a 68 c7 54
+ 05 0a 43 09 00 03 01 00 02 00 20 5c 7f 5e ff fb fe fd f7 9b ff df 96 aa 4a 21 32 52 50 44 c0 54
+ 05 0a 43 09 00 03 01 00 02 00 20 5c 7f bf fd cf 1f ff ff ff ff ff ff fd ff eb ff ef e2 ff ff 7b
+[broken here, where multiple recordings are combined]
+ 05 a2 44 02 31 04 aa 00 00 00 02 29 3f ff 5e ef bb bf ff f7 ff 5d df b5 fd ff f5 fb fe ef 7a ae
+ 05 0a 43 09 00 03 01 00 02 00 20 5c 7d fb fe df ef 7f fe bf bf aa ed 29 25 54 8e a1 22 54 89 4a
+ 05 0a 43 09 01 03 aa 00 00 00 f7 f7 7f fe fb 7f f7 ee ff ff ef ff ff 7e ff 7f 7b df ab fe 7f ff
+ 05 0a 43 09 00 03 01 00 02 00 20 5c 7e ff fb df fd ef ff fe df bf f5 ff ff 7f ff fb f5 d7 af df
+ 05 0a 43 09 00 03 01 00 02 00 20 5c 7f ff 75 ff ff bf fe ff f7 ff e7 f9 bf be ab dd ff ff fb d7
+ 05 0a 43 09 00 03 01 00 02 00 20 5c 76 f6 8d 55 d5 c2 da b2 aa 58 ab d6 a6 72 a8 bb 14 ca b2 dd
+ 05 a2 44 02 31 04 aa 00 00 00 02 29 3f ff 5f f7 ff 7d df ff af fe fa ff 76 77 da bd fd 55 27 4c
+ 05 0a 43 09 00 03 01 00 02 00 20 5c 7e be ff fe ff eb fe ef 5f fb fa f7 fd fd ff ff fb 7f ff 7e
+ 05 0a 43 09 00 03 01 00 02 00 20 5c 5e be fe a6 62 18 99 6b 42 ab 25 28 d5 86 c2 55 48 4a b7 a8
+ 05 0a 43 09 00 03 01 00 02 00 20 5c 7b ff fb 7e 80 49 a2 04 84 d5 49 50 84 a0 80 54 85 40 c0 06
+ 05 0a 43 09 00 03 01 00 02 00 20 5c 7f f7 fe ff bf d5 76 a7 25 2c e3 f2 f7 35 68 b6 77 b9 6a 48
+ 05 a2 44 02 31 04 aa 00 00 00 02 29 3f ff fd ee df 7b fe fd ed df bf d4 c0 fb 4d bd d3 d6 df 9d
+ 05 1a 43 09 01 03 aa 00 00 00 f7 f7 7e bf f6 9d 7f 7e ff ff 7f ff ff ff fe ff ff ff 5f ff be 7f
+ 05 0a 43 09 00 03 01 00 02 00 20 5c 6e bf f7 fb fe bf ff ff ff fd fd ff f7 fd ff ff df fb 77 f6
+ 05 0a 43 09 00 03 01 00 02 00 20 5c 7f db de df fe fd ef fe d5 ff ff ff ff ef 5f ef ff fe ff b6
+
+A data sync looks like the following, though there isn't much data to be synced.
+ 05 0a 43 29 00 03 01 00 02 00 4e aa 4f bf 3e ff ff 75 bb 39 1a ca eb 57 b5 99 5a ed b6 99 77 73
+ [Active pattern is interrupted here as the forced sync begins.]
+ 05 0a 43 29 01 03 aa 00 00 00 99 01 7e fe de ff f7 7d 7f 9f ff ff cb ff bf d7 ff bf f7 ed d6 c5
+ [Long delay while sync happens, the normal active pattern resumes.]
+ [Presumably something is missing here.]
+ 05 0a 43 09 00 03 01 00 02 00 20 5c 7d 7f fe fb ff fd fd df ff bf bf ff fd ff ff dd ff ff ff ef
+ 05 0a 43 09 00 03 01 00 02 00 20 5c 7f ff f6 ef ef ff f7 bf ff ff ef bf fe b5 a5 ad 0e aa 6a ad
+ 05 0a 43 09 00 03 01 00 02 00 20 5c 7f 7f 7e f7 ff fd ff 77 fd ff ff fd ff ff ff ff df ff ff ff
+
+Specific packets:
+
+05 0a 43 09 01 03 aa 00 00 00 f7 f7
+@tmanning says this is a legacy extended data packet, but can't figure out how to know that from
+          the packet field.  He's guessing by the length of the packet.
+sync       -  0x05 (the doc says this should be hard-coded as 0xa4 or 0xa5; why not?)
+msg len    -  0x0a
+msg id     -  0x43 (packet format on page 40 ANT_SetChannelPeriod(), 3 data bytes)
+channel    -  0x09
+dev num    -  0x0301
+dev type   -  0xaa
+trans type -  0x00
+data
+	data.channel_number - 0x00
+	data.messaging_period - 0xf700 (just under max of 2 seconds)
+chksum      -  0xf7 (correct)
+
