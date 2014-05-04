@@ -1,0 +1,505 @@
+#!/usr/bin/env python
+
+#GoodFET Chipcon SPI Client
+# (C) 2011 Travis Goodspeed
+# Additions 2011-2012 Ryan Speers ryan@rmspeers.com
+
+#N.B.,
+#Very CC2420 Specific
+
+import sys;
+import binascii;
+import array, time;
+import os
+
+from GoodFETCCSPI import GoodFETCCSPI;
+
+#PORTNAME=None
+PORTNAME = os.environ.get('GOODFET') or "/dev/ttyUSB0"
+print "ON:", PORTNAME
+
+#Some quick functions for yanking values out of a packet.
+def srcadr(packet):
+    """Returns the source address of a packet as an integer."""
+    return ord(packet[4])+(ord(packet[5])<<8);
+def isencrypted(packet):
+    """Returns true if the packet is encrypted.""";
+    try:
+        return ord(packet[1])&0x08;
+    except:
+        return False;
+def pktnonceseq(packet):
+    """Returns the nonce sequence of a packet."""
+    nonce=0;
+    for byte in [0xa,9,8,7]:
+        nonce=(nonce<<8)|ord(packet[byte]);
+    return nonce;
+
+if(len(sys.argv)==1):
+    print "Usage: %s verb [objects]\n" % sys.argv[0];
+    print "%s info" % sys.argv[0];
+    print "%s regs" % sys.argv[0];
+    print "%s ram" % sys.argv[0];
+    print "%s ramtest" % sys.argv[0];
+    print "%s test" % sys.argv[0];
+    print "%s peek 0x$start [0x$stop]" % sys.argv[0];
+    print "%s poke 0x$adr 0x$val" % sys.argv[0];
+    print "%s txtest" % sys.argv[0];
+    
+    print "\n%s rssi" % sys.argv[0];
+    print "%s spectrum" % sys.argv[0];
+    print "%s spectrumcsv" % sys.argv[0];
+    
+    print "\n%s surf" % sys.argv[0];
+    print "%s sniff [chan]" % sys.argv[0];
+    print "%s fastsniff [chan]" % sys.argv[0];
+    print "%s sniffstrings [chan]" % sys.argv[0];
+    print "%s bsniff [chan]" % sys.argv[0];
+    print "%s sniffcrypt 0x$key [chan]" % sys.argv[0];
+    print "%s sniffdissect" % sys.argv[0];
+    print "%s sniffnonce" % sys.argv[0];
+    
+    print "\n%s txtoscount [-i|-r]   TinyOS BlinkToLED" % sys.argv[0];
+    print "%s reflexjam [channel=11] [delay=0]" % sys.argv[0];
+    
+    print "\n%s txpiptest" % sys.argv[0];
+    print "%s txpipscapy" % sys.argv[0];
+
+    sys.exit();
+
+#Initialize FET and set baud rate
+client=GoodFETCCSPI();
+client.serInit(port=PORTNAME)
+
+client.setup();
+
+#Dummy read.
+#Might read as all ones if chip has a startup delay.
+
+if(sys.argv[1]=="carrier"):
+    if len(sys.argv)>2:
+        freq=eval(sys.argv[2]);
+        if freq>100:
+            client.RF_setfreq(freq);
+        else:
+            client.RF_setchan(freq);
+            print "Channel set to:", freq
+    while 1:
+        client.RF_carrier();
+    while(1):
+        time.sleep(1);
+
+if(sys.argv[1]=="modulated_spectrum"):
+    if len(sys.argv)>2:
+        client.RF_setfreq(eval(sys.argv[2]));
+    while 1:
+        client.RF_modulated_spectrum();
+    while(1):
+        time.sleep(1);
+
+if(sys.argv[1]=="reflexjam" or sys.argv[1]=="reflexjamack"):
+    #Setup the radio to listen promiscously on a frequency
+    client.RF_promiscuity(1);
+    client.RF_autocrc(0);
+    if len(sys.argv)>2:
+        freq=eval(sys.argv[2]);
+        if freq>100:
+            client.RF_setfreq(freq);
+        else:
+            client.RF_setchan(freq);
+    duration=0;
+    if len(sys.argv)>3:
+        duration=eval(sys.argv[3]);
+    client.CC_RFST_RX();
+    print "Reflexively jamming on %i MHz" % (client.RF_getfreq()/10**6);
+    #Now we let the firmware take over, watching for packets and jamming them.
+    #Standard reflexive jam is done with duration=0.
+    #To selectively jam packets that are above a certain length, set duration
+    # to the number of milliseconds needed to jam frames of that length.
+    # Api-Do project has script available to tune/test this duration.
+    #  code.google.com/p/zigbeesecurity (rmspeers)
+    if sys.argv[1]=="reflexjam":
+        client.RF_reflexjam(duration);
+    elif sys.argv[1]=="reflexjamack":
+        client.RF_reflexjam_autoack();
+
+if(sys.argv[1]=="info"):
+    print "Found   %s" % client.identstr();
+    print "Freq:   %05f MHz" % (client.RF_getfreq()/(10**6));
+    print "Status: %s" % client.status();
+if(sys.argv[1]=="regs"):
+    for adr in range(0x10,0x40): #*1024):
+        val=client.peek(adr);
+        print "%04x:=0x%04x" % (adr,val);
+if(sys.argv[1]=="ram"):
+    for adr in range(0x0,0x16D,16):
+        row=client.peekram(adr,32);
+        s="";
+        for foo in row:
+            s=s+(" %02x" % ord(foo))
+        print "%04x: %s" % (adr,s);
+if(sys.argv[1]=="ramtest"):
+    client.pokeram(0x00,[0xde,0xad,0xbe,0xef,
+                         0xde,0xad,0xbe,0xef,
+                         0xde,0xad,0xbe,0xef,
+                         0xde,0xad,0xbe,0xef,
+                         0xde,0xad,0xbe,0xef,
+                         0xde,0xad,0xbe,0xef,
+                         0xde,0xad,0xbe,0xef,
+                         0xde,0xad,0xbe,0xef,
+                         0xde,0xad,0xbe,0xef,
+                         0xde,0xad,0xbe,0xef,
+                         0xde,0xad,0xbe,0xef]);
+    
+    for adr in range(0x0,0x16D,16):
+        row=client.peekram(adr,32);
+        s="";
+        for foo in row:
+            s=s+(" %02x" % ord(foo))
+        print "%04x: %s" % (adr,s);
+if(sys.argv[1]=="test"):
+    data=client.trans([0x20, 0xde, 0xad]);
+    print "%02x %02x" % (ord(data[1]), ord(data[2]));
+    data=client.trans([0x40|0x20, 0xde, 0xad]);
+    print "%02x %02x" % (ord(data[1]), ord(data[2]));
+if(sys.argv[1]=="rssi"):
+    if len(sys.argv)>2:
+        freq=eval(sys.argv[2]);
+        if freq>100:
+            client.RF_setfreq(freq);
+        else:
+            client.RF_setchan(freq);
+    print "Listening on %f MHz." % (client.RF_getfreq()/10.0**6);
+        
+    client.strobe(0x02); #Calibrate
+    time.sleep(1);
+    
+    while 1:
+        client.CC_RFST_RX();
+        #client.strobe(0x03); #SRXON
+        rssi=client.RF_getrssi();
+        #client.CC_RFST_IDLE(); #idle
+        time.sleep(0.01);
+        string="";
+        for foo in range(0,rssi>>2):
+            string=("%s."%string);
+        print "%02x %04i %s" % (rssi,rssi, string); 
+if(sys.argv[1]=="spectrum"):
+    for chan in range(2400000000,2480000000,5000000):
+        client.RF_setfreq(chan);
+        #print "Listening on %f MHz." % (client.RF_getfreq()/10.0**6);
+        
+        client.strobe(0x02); #Calibrate
+        #time.sleep(0.01);
+        
+        maxrssi=0;
+        for foo in range(1,10):
+            client.CC_RFST_RX();
+            rssi=client.RF_getrssi();
+            maxrssi=max(rssi,maxrssi);
+        string="";
+        for foo in range(50,rssi):
+            string=("%s."%string);
+        print "%04i %i %s" % (client.RF_getfreq()/10.0**6,rssi, string); 
+if(sys.argv[1]=="spectrumcsv"):
+    start=time.time();
+    while 1:
+        for freq in range(2400000000,2480000000,1000000):
+            client.RF_setfreq(freq);
+            
+            client.strobe(0x02); #Calibrate
+            client.CC_RFST_RX();
+            rssi=client.RF_getrssi();
+        
+            print "%f %i %3i" % (
+                time.time()-start,
+                client.RF_getfreq()/10.0**6,
+                rssi); 
+        sys.stdout.flush();
+
+if sys.argv[1]=="surf":
+    print "Scanning channels [11,26].";
+    
+    #Promiscuous mode.
+    client.RF_promiscuity(1);
+    client.RF_autocrc(1);
+    
+    chan=11;
+    if len(sys.argv)>2:
+        chan=eval(sys.argv[2]);
+        
+    client.CC_RFST_RX();
+    
+    #Now we're ready to get packets.
+    while 1:
+        if chan>26: chan=11;
+        
+        client.setup(); #Really oughtn't be necessary, but can't hurt.
+        client.RF_setchan(chan);
+        
+        packet=None;
+        lasttime=time.time();
+        while packet==None and time.time()-lasttime<0.5:
+            packet=client.RF_rxpacket();
+        if packet!=None:
+            client.printpacket(packet=packet,
+                           prefix=("%02d: "%chan));
+        sys.stdout.flush();
+        chan=chan+1;
+
+if(sys.argv[1]=="sniff" or sys.argv[1]=="sniffdissect" or sys.argv[1]=="sniffstrings" or
+   sys.argv[1]=="sniffnonce" or sys.argv[1]=="fastsniff"):
+    #Promiscuous mode.
+    client.RF_promiscuity(1);
+    client.RF_autocrc(1);
+    
+    if len(sys.argv)>2:
+        freq=eval(sys.argv[2]);
+        if freq>3000:
+            client.RF_setfreq(freq);
+        elif freq>100:
+            client.RF_setfreq(freq*1000000);
+        else:
+            client.RF_setchan(freq);
+    client.CC_RFST_RX();
+    print "Listening as %010x on %i MHz" % (client.RF_getsmac(),
+                                            client.RF_getfreq()/10**6);
+    #If fastsniffing, then send that command.
+    if sys.argv[1]=="fastsniff":
+        client.RF_rxpacketrepeat();
+    
+    #Now we're ready to get packets.
+    while 1:
+        #client.CC_RFST_RX(); # Cop-out that confuses reception!
+        
+        packet=None;
+        while packet==None:
+            packet=client.RF_rxpacket();
+        if sys.argv[1]=="sniffdissect":
+            client.printdissect(packet);
+        elif sys.argv[1]=="sniffstrings":
+            print packet;
+        elif sys.argv[1]=="sniffnonce":
+            if isencrypted(packet):
+                try:
+                    print "%04x: %08x -- %s" % (srcadr(packet),
+                                            pktnonceseq(packet),
+                                            client.packet2str(packet)
+                                            );
+                except:
+                    pass;
+        else:
+            client.printpacket(packet);
+        sys.stdout.flush();
+
+if(sys.argv[1]=="bsniff"):
+    #Just broadcast.
+    client.RF_promiscuity(0);
+    client.RF_setsmac(0xFFFFFFFF);
+    client.RF_autocrc(1);
+    
+    if len(sys.argv)>2:
+        freq=eval(sys.argv[2]);
+        if freq>100:
+            client.RF_setfreq(freq);
+        else:
+            client.RF_setchan(freq);
+    client.CC_RFST_RX();
+    print "Listening as %010x on %i MHz" % (client.RF_getsmac(),
+                                            client.RF_getfreq()/10**6);
+    #Now we're ready to get packets.
+    while 1:
+        packet=None;
+        while packet==None:
+            packet=client.RF_rxpacket();
+        client.printpacket(packet);
+        sys.stdout.flush();
+
+if(sys.argv[1]=="sniffcrypt"):
+    print "Zigbee crypto is pretty damned complicated, and this doesn't work yet.";
+    #Just broadcast.
+    client.RF_promiscuity(1);
+    client.RF_setsmac(0xFFFFFFFF);
+    client.RF_autocrc(1);
+    #client.poke(0x19, 0x03C7); #SECCTRL0, enabling CCM crypto w/ KEY0
+    client.poke(0x19, 0x03C6); #SECCTRL0, enabling CTRL crypto w/ KEY0
+    
+    #What follows is the nonce.
+    client.poke(0x20, 0x000a); #SECCTRL1, skipping 10 bytes of header
+    
+    if len(sys.argv)>2:
+        key=int(sys.argv[2],16);
+        nonce=int(sys.argv[3],16);
+        
+        print "Setting KEY0 to %x" % key;
+        print "Setting NONCE to %x" % nonce;
+        client.RF_setkey(key);
+        client.RF_setnonce(nonce);
+    if len(sys.argv)>3:
+        freq=eval(sys.argv[3]);
+        if freq>100:
+            client.RF_setfreq(freq);
+        else:
+            client.RF_setchan(freq);
+    client.CC_RFST_RX();
+    print "Listening as %010x on %i MHz" % (client.RF_getsmac(),
+                                            client.RF_getfreq()/10**6);
+    #Now we're ready to get packets.
+    while 1:
+        packet=None;
+        while packet==None:
+            packet=client.RF_rxpacketdec();
+        client.printpacket(packet);
+        sys.stdout.flush();
+
+if(sys.argv[1]=="txtest"):
+    if len(sys.argv)>2:
+        freq=eval(sys.argv[2]);
+        if freq>100:
+            client.RF_setfreq(freq);
+        else:
+            client.RF_setchan(freq);
+    print "Transmitting DEADBEEF as %010x on %i MHz" % (
+        client.RF_getsmac(),
+        client.RF_getfreq()/10**6);
+    
+    while 1:
+        client.RF_txpacket([0x0f, 0x01, 0x08, 0x82,
+                            0xff, 0xff, 0xff, 0xff,
+                            0xde, 0xad, 0xbe, 0xef,
+                            0xba, 0xbe, 0xc0]);
+
+if(sys.argv[1]=="txtoscount"):
+    '''
+    Clone of what TinyOS's RadioCountToLeds demo code does.  Specify a
+    channel a TinyOS mote programmed with RadioCountToLeds is on, and
+    this will act as the second device. (ryan@rmspeers.com)
+    '''
+    if (len(sys.argv)<=3):
+        print "Provide -r to work via replays or -i to work via incrementing itself.";
+        sys.exit(1);
+    if (sys.argv[3]=="-r"):
+        client.RF_promiscuity(1);
+    client.RF_autocrc(1);
+    if len(sys.argv)>2:
+        freq=eval(sys.argv[2]);
+        if freq>100:
+            client.RF_setfreq(freq);
+        else:
+            client.RF_setchan(freq);
+    if (sys.argv[3]=="-r"):
+        client.CC_RFST_RX();
+        print "Listening as %010x on %i MHz" % (client.RF_getsmac(), client.RF_getfreq()/10**6);
+    print "Transmitting like the TinyOS CountToRadio program on %i MHz" % (client.RF_getfreq()/10**6);
+    if (sys.argv[3]=="-i"):
+        i = 0;
+        countpkt = [0x0f, 0x41, 0x88, 0xFF, 0x22, 0x00, 0xff, 0xff, 0x01, 0x00, 0x3f, 0x06, 0x00, 0xFF];
+    while 1:
+        if (sys.argv[3]=="-r"): #give -r to do via replays from the other device
+            packet=None;
+            while packet==None:
+                packet=client.RF_rxpacket();
+            pkt = packet[:14];
+            client.RF_txpacket(pkt);
+        elif (sys.argv[3]=="-i"): #give -i to have it increment and send
+            #Use this code for it to actually do increments itself:
+            pkt = countpkt[:];
+            pkt[3] = i;
+            pkt[13] = i+1;
+            client.RF_txpacket(pkt);
+            if i >= 31: i = 0;
+            else:       i += 1;
+            time.sleep(0.5);
+
+if(sys.argv[1]=="txpiptest" or sys.argv[1]=="txpipscapy"):
+    if len(sys.argv)>2:
+        freq=eval(sys.argv[2]);
+        if freq>100:
+            client.RF_setfreq(freq);
+        else:
+            client.RF_setchan(freq);
+    print "Transmitting on PIP injection as %010x on %i MHz" % (
+        client.RF_getsmac(),
+        client.RF_getfreq()/10**6);
+    
+    client.RF_setsync(0xFFFF);
+    
+    while 1:
+        if(sys.argv[1]=="txpiptest"):
+            client.RF_txpacket([
+                    0x7f, 
+                    #Real header, must begin with SFD.
+                    0x00, 0x00, 0x00,
+                    0x00, 0xA7,
+                    
+                    #Length
+                    0x1f, 0x01, 0x08, 0x82,
+                    0xDF, 0xff, 0xff, 0xff,
+                    0xde, 0xad, 0xbe, 0xef,
+                    0xba, 0xbe, 0xc0,
+                    
+                    #Preamble
+                    0x00, 0x00, 0x00,
+                    #SFD
+                    0x00, 0xA7,  #CC2420 SFD
+                    #Packet In Packet
+                    0x0f, 0x01, 0x08, 0x82,
+                    0xff, 0xff, 0xff, 0xff,
+                    0xde, 0xad, 0xbe, 0xef,
+                    0xba, 0xbe, 0xc0,
+                    
+                    0xff, 0xff, 0xff, 0xff,
+                    0xff, 0xff, 0xff, 0xff,
+                    0xff, 0xff, 0xff, 0xff,
+                    0xff, 0xff, 0xff, 0xff,
+                    0xff, 0xff, 0xff, 0xff,
+                    0xff, 0xff, 0xff, 0xff,
+                    0xff, 0xff, 0xff, 0xff,
+                    ]);
+        elif(sys.argv[1]=="txpipscapy"):
+            # NB: Requires Scapy with dot15d4.py layer. (rmspeers)
+            try:
+                from scapy.all import Dot15d4, Dot15d4FCS, Dot15d4Data, Raw
+                import struct
+            except ImportError:
+                print "To use packet building, Scapy must be installed and have the dot15d4 layer present."
+                print "try: hg clone http://hg.secdev.org/scapy-com";
+                print "     sudo ./setup.py install";
+            #Overall method is to build from the inner packet outwards in the pkt string
+            # Make inner packet
+            scapyinner = Dot15d4FCS(seqnum=130)/Dot15d4Data()/Raw('\xde\xad\xbe\xef');
+            pkt = str(scapyinner);                  #build inner pkt to bytes, adding FCS automatically
+            pkt = struct.pack('b', len(pkt)) + pkt  #prepend with its length
+            pkt = "\x00\x00\x00\x00\xA7" + pkt      #add preamble and SFD to inner packet
+            # Make outer (wrapping) packet
+            scapyouter = Dot15d4(seqnum=130)/Dot15d4Data(dest_panid=0xffdf)/Raw('\xde\xad\xbe\xef\xba\xbe\xc0') #TODO why need these last 3 bytes?
+            pkt = str(scapyouter) + pkt
+            pkt = struct.pack('b', len(pkt)) + pkt  #prepend with its length
+            pkt = '\x00\x00\x00\x00\xA7' + pkt + ('\xff'*28) #start with preamble/SFD and add 0xff fill at end
+            pkt = struct.pack('b', len(pkt)) + pkt  #prepend with its length (originally used \x7f)
+            client.printpacket(pkt)
+            client.RF_autocrc(1);
+            client.RF_txpacket(pkt)
+
+if(sys.argv[1]=="peek"):
+    start=0x0000;
+    if(len(sys.argv)>2):
+        start=int(sys.argv[2],16);
+    stop=start;
+    if(len(sys.argv)>3):
+        stop=int(sys.argv[3],16);
+    print "Peeking from %04x to %04x." % (start,stop);
+    while start<=stop:
+        print "%04x: 0x%04x" % (start,client.peek(start));
+        start=start+1;
+if(sys.argv[1]=="poke"):
+    start=0x0000;
+    val=0x00;
+    if(len(sys.argv)>2):
+        start=int(sys.argv[2],16);
+    if(len(sys.argv)>3):
+        val=int(sys.argv[3],16);
+    print "Poking r%02x to become 0x%04x." % (start,val);
+    
+    client.poke(start,val);
+

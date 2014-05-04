@@ -1,0 +1,57 @@
+#!/usr/bin/env python
+# GoodFET Basic JTAG
+# 
+# (C) 2009 Travis Goodspeed <travis at radiantmachines.com>
+# (C) 2011 Dave Huseby <dave at linuxprogrammer.org>
+#
+# This code is being rewritten and refactored.  You've been warned!
+
+import sys;
+import binascii;
+
+from GoodFETJTAG import GoodFETJTAG
+from intelhex import IntelHex
+
+if len(sys.argv) == 1:
+    print "Usage: %s verb [objects]\n" % sys.argv[0]
+    print "%s reset -- resets the target device" % sys.argv[0]
+    print "%s chain -- detects JTAG chain length" % sys.argv[0]
+    print "%s chipid <chip #> -- gets the chip ID of the chip specified" % sys.argv[0]
+    print "%s ir -- detects the total bits in the IR register" % sys.argv[0]
+    print "%s detect -- detects chain length and gets chip IDs" % sys.argv[0]
+    sys.exit();
+
+#Initailize FET and set baud rate
+client = GoodFETJTAG()
+client.serInit()
+
+#Connect to target
+client.setup()
+
+
+if sys.argv[1] == "reset":
+    client.reset_target()
+
+elif sys.argv[1] == "chain":
+    length = client.detect_chain_length()
+    print "\tChain length: %d" % length
+
+elif sys.argv[1] == "chipid":
+    if len(sys.argv) < 3:
+        print "missing argument"
+        sys.exit()
+    idx = int(sys.argv[2])
+    id = client.get_device_id(idx)
+    print "\tDevice %d ID: 0x%s" % (idx, hex(id)[2:].zfill(8).upper())
+
+elif sys.argv[1] == "ir":
+    width = client.detect_ir_width()
+    print "\tIR width: %d" % width
+
+elif sys.argv[1] == "detect":
+    length = client.detect_chain_length()
+    print "\tChain length: %d" % length
+    for i in range(0, length):
+        id = client.get_device_id(i)
+        print "\tDevice %d ID: 0x%s" % (i, hex(id)[2:].zfill(8).upper())
+

@@ -1,0 +1,54 @@
+#!/usr/bin/env python
+
+# GoodFET - Atmel 2-wire EEPROM
+
+import sys;
+import binascii;
+import array;
+
+from GoodFETtwe import GoodFETtwe;
+from intelhex import IntelHex;
+
+if(len(sys.argv)==1):
+    print "Usage: %s verb [objects]\n" % sys.argv[0];
+    print "%s info" % sys.argv[0];
+    print "%s dump $foo.rom [0x$start 0x$stop]" % sys.argv[0];
+    sys.exit();
+
+#Initialize FET and set baud rate
+client=GoodFETtwe();
+client.serInit()
+
+client.setup();
+
+#~ if(sys.argv[1]=="info"):
+    #~ data=client.SPIjedec();
+    #~ print "Ident as %s\nManufacturer: %02x %s\nType: %02x\nCapacity: %02x (%i bytes)" % (
+        #~ client.SPIjedecstr(),
+        #~ ord(data[1]),client.SPIjedecmanstr(),
+        #~ ord(data[2]),
+        #~ ord(data[3]),
+        #~ client.JEDECsize);
+
+if(sys.argv[1]=="dump"):
+    f = sys.argv[2];
+    
+    start=0;
+    stop=0;
+    if(len(sys.argv)>3):
+        start=int(sys.argv[3],16);
+    if(len(sys.argv)>4):
+        stop=int(sys.argv[4],16);
+    
+    print "Dumping code from %06x to %06x as %s." % (start,stop,f);
+    file = open(f, mode='wb')
+    
+    i=start;
+    while i<=stop:
+        data=client.peekblock(i);
+        
+        print "Dumped %06x."%i;
+        for j in data:
+            if i<stop: file.write(j);
+            i+=1;
+    file.close()

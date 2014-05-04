@@ -1,0 +1,326 @@
+#!/usr/bin/env python
+
+#DFU USB Device Emulator
+#by Travis Goodspeed
+
+import sys;
+import binascii;
+import array;
+import time;
+
+from GoodFETMAXUSB import *;
+
+class GoodFETMAXUSBDFU(GoodFETMAXUSBDevice):
+    usbverbose=False;
+    """This emulates the DFU USB to Serial chips."""
+    def dfuinit(self,vid=0xFFFF,pid=0x0004):
+        """Initialize a USB DFU device."""
+        self.usb_disconnect();
+        time.sleep(1);
+	self.usb_connect();
+        self.dfurun(vid,pid);
+    def dfurun(self,vid,pid):
+        """Main loop of the USB DFU emulator."""
+        print "Starting a DFU device as %04X:%04X" % (vid,pid);
+        sys.stdout.flush();
+        #Set the VID and PID.
+        self.DD[8]=vid&0xFF;
+        self.DD[9]=(vid>>8)&0xFF;
+        self.DD[10]=pid&0xFF;
+        self.DD[11]=(pid>>8)&0xFF;
+        
+        #Run the service loop.
+        while 1:
+            self.service_irqs();
+    def do_SETUP(self):
+        """Handle USB Enumeration"""
+        #Grab the SETUP packet from the buffer.
+        SUD=self.readbytes(rSUDFIFO,8);
+        
+        #Parse the SETUP packet
+        #print "Handling a setup packet of %s" % self.setup2str(SUD);
+        setuptype=(ord(SUD[bmRequestType])&0x60);
+        if setuptype==0x00:
+            self.std_request(SUD);
+        elif setuptype==0x20:
+            self.class_request(SUD);
+        elif setuptype==0x40:
+            self.vendor_request(SUD);
+        else:
+            print "Unknown request type 0x%02x." % ord(SUD[bmRequestType])
+            self.STALL_EP0(SUD);
+    def printblock(self,block,data):
+        """Prints a block, perhaps inserting it into the dump file."""
+        s="";
+        for foo in data:
+            s=s+("%02x "%ord(foo));
+        print "BLOCK %04x : %s" % (block,s);
+        sys.stdout.flush(); #Needed for the tee command.
+        return;
+    def handle_dfu_download(self,SUD):
+        """Sometimes this comes from a Class request, sometimes a Vendor."""
+        #Compute the total length, though we'll be accepting 64-byte chunks.
+        l=(
+            ord(SUD[wLengthL])+
+            (ord(SUD[wLengthH])<<8)
+            );
+        block=ord(SUD[wValueL])+ (ord(SUD[wValueH])<<8);
+        b="";
+        while len(b)<l:
+            while not(self.rreg(rEPIRQ)&bmOUT0DAVIRQ): pass;
+            b=b+self.readbytes(rEP0FIFO,min(l,64));
+            self.wreg(rEPIRQ,bmOUT0DAVIRQ); #Clear the bit
+            if self.usbverbose: print "Got %i/%i bytes." % (len(b),l);
+        
+        self.printblock(block,b);
+        
+        
+        #Signify that we got everything.
+        self.wregAS(rEP0BC,0);
+        
+        if self.usbverbose: print "Completed data block.";
+        return;
+    DFUIDLE=0x02;
+    DFUDNIDLE=0x05;
+    DFUUPIDLE=0x09;
+    DFUDNBUSY=0x04
+    dfustate=DFUIDLE; #Some clients get picky about this.
+    def class_request(self,SUD):
+        """Handle a class request."""
+        
+        request=ord(SUD[bRequest]);
+        
+        if request==0: #DETACH
+            print "DFU DETACH; this probably means the download is complete.";
+            self.wregAS(rEP0BC,0);
+            return;
+        elif request==1: #Download
+            self.handle_dfu_download(SUD);
+            self.dfustate=self.DFUDNIDLE;
+            return;
+        elif request==2: #Upload
+            print "TODO Implement uploads.";
+            pass;
+        elif request==3: #GetStatus
+            self.writebytes(rEP0FIFO,
+                            [0,0,0,0,0,0]);
+            self.wregAS(rEP0BC,6);
+            return;
+        elif request==4: #ClearStatus
+            pass;
+        elif request==5: #GetState
+            print "Returning state of %02x." % self.dfustate
+            #Send some sort of reply.
+            #self.wreg(rEP0FIFO,0x02); #DFU IDLE
+            self.wreg(rEP0FIFO,self.dfustate);
+            self.wregAS(rEP0BC,1);
+            #Don't send reply twice.
+            return;
+        elif request==6: #Abort
+            print "DFU ABORT.";
+            self.dfustate=self.DFUDNIDLE;
+            self.wregAS(rEP0BC,0);
+            return;
+        
+        print "Blindly accepting unhandled class request %02x" % request;
+        self.wregAS(rEP0BC,0);
+    def vendor_request(self,SUD):
+        """Handle an DFU vendor request."""
+        request=ord(SUD[bRequest]);
+        
+        print "Blindly accepting unhandled vendor request %02x" % request;
+        self.wregAS(rEP0BC,0);
+    def std_request(self,SUD):
+        """Handles a standard setup request."""
+        setuptype=ord(SUD[bRequest]);
+        if setuptype==SR_GET_DESCRIPTOR: self.send_descriptor(SUD);
+        #elif setuptype==SR_SET_FEATURE: self.feature(1);
+        elif setuptype==SR_SET_CONFIGURATION: self.set_configuration(SUD);
+        elif setuptype==SR_GET_STATUS: self.get_status(SUD);
+        elif setuptype==SR_SET_ADDRESS: self.rregAS(rFNADDR);
+        elif setuptype==SR_GET_INTERFACE: self.get_interface(SUD);
+        else:
+            print "Stalling Unknown standard setup request type %02x" % setuptype;
+            self.STALL_EP0(SUD);
+    
+    def get_interface(self,SUD):
+        """Handles a setup request for SR_GET_INTERFACE."""
+        if ord(SUD[wIndexL]==0):
+            self.wreg(rEP0FIFO,0);
+            self.wregAS(rEP0BC,1);
+        else:
+            self.STALL_EP0(SUD);
+    
+
+
+
+#Device Descriptor; be sure to overwrite VID and PID.
+    DD=[0x12,	       		# bLength = 18d
+        0x01,			# bDescriptorType = Device (1)
+        0x10,0x01,		# bcdUSB(L/H) USB spec rev (BCD)
+	0x00,0x00,0x00, 	# bDeviceClass, bDeviceSubClass, bDeviceProtocol
+	0x40,			# bMaxPacketSize0 EP0 is 64 bytes
+	0x03,0x04,		# idVendor(L/H)--  Offset 8,9
+	0x72,0x83,		# idProduct(L/H)-- Offset 10,11
+	0x01,0x00,		# bcdDevice--1234
+	1,2,3,			# iManufacturer, iProduct, iSerialNumber
+	1                       # One configuration.
+        ];
+#Configuration Descriptor
+    CD=[0x09,			# bLength
+	0x02,			# bDescriptorType = Config
+	0x20,0x00,		# wTotalLength(L/H) = 34 bytes (0x22)
+	0x01,			# bNumInterfaces
+	0x01,			# bConfigValue
+	0x00,			# iConfiguration
+	0xE0,			# bmAttributes. b7=1 b6=self-powered b5=RWU supported
+	0x01,			# MaxPower is 2 ma
+# INTERFACE Descriptor
+	0x09,			# length = 9
+	0x04,			# type = IF
+	0x00,			# IF #0
+	0x00,			# bAlternate Setting
+	0x02,			# bNum Endpoints
+	0xFE,			# bInterfaceClass = FF=vendor
+	0x01,0x02,		# bInterfaceSubClass, bInterfaceProtocol
+	0x00,			# iInterface
+# IN Endpoint Descriptor, unused.
+	0x07,			# bLength
+	0x05,			# bDescriptorType (Endpoint)
+	0x83,			# bEndpointAddress (EP3-IN)		
+        0x02,			# bmAttributes	(bulk)
+	64,0,                   # wMaxPacketSize (64)
+	00,
+# OUT Endpoint Descriptor, unused.
+	0x07,			# bLength
+	0x05,			# bDescriptorType (Endpoint)
+	0x01,			# bEndpointAddress (EP1-OUT)		
+        0x02,			# bmAttributes	(bulk)
+	64,0,                   # wMaxPacketSize (64)
+	00];
+    strDesc=[
+# STRING descriptor 0--Language string
+"\x04\x03\x09\x04",
+# [
+#         0x04,			# bLength
+# 	0x03,			# bDescriptorType = string
+# 	0x09,0x04		# wLANGID(L/H) = English-United Sates
+# ],
+# STRING descriptor 1--Manufacturer ID
+"\x10\x03G\x00o\x00o\x00d\x00F\x00E\x00T\x00",
+# STRING descriptor 2 - Product ID
+"\x18\x03D\x00F\x00U\x00 \x00 \x00E\x00m\x00u\x00l\x00a\x00t\x00o\x00r\x00 \x00 \x00 \x00 \x00 \x00",
+# STRING descriptor 3 - Serial Number ID
+"\x14\x03S\x00/\x00N\x00 \x003\x004\x002\x000\x00E\x00"
+];
+
+
+    def set_configuration(self,SUD):
+        """Set the configuration."""
+        bmSUSPIE=0x10;
+        configval=ord(SUD[wValueL]);
+        if(configval>0):
+            self.SETBIT(rUSBIEN,bmSUSPIE);
+        self.rregAS(rFNADDR);
+    def get_status(self,SUD):
+        """Get the USB Setup Status."""
+        testbyte=ord(SUD[bmRequestType])
+        
+        #Toward Device
+        if testbyte==0x80:
+            self.wreg(rEP0FIFO,0x03); #Enable RWU and self-powered
+            self.wreg(rEP0FIFO,0x00); #Second byte is always zero.
+            self.wregAS(rEP0BC,2);    #Load byte count, arm transfer, and ack CTL.
+        #Toward Interface
+        elif testbyte==0x81:
+            self.wreg(rEP0FIFO,0x00);
+            self.wreg(rEP0FIFO,0x00); #Second byte is always zero.
+            self.wregAS(rEP0BC,2);
+        #Toward Endpoint
+        elif testbyte==0x82:
+            if(ord(SUD[wIndexL])==0x83):
+                self.wreg(rEP0FIFO,0x01); #Stall EP3
+                self.wreg(rEP0FIFO,0x00); #Second byte is always zero.
+                self.wregAS(rEP0BC,2);
+            else:
+                self.STALL_EP0(SUD);
+        else:
+            self.STALL_EP0(SUD);
+    def service_irqs(self):
+        """Handle USB interrupt events."""
+        
+        epirq=self.rreg(rEPIRQ);
+        usbirq=self.rreg(rUSBIRQ);
+        
+        #Are we being asked for setup data?
+        if(epirq&bmSUDAVIRQ): #Setup Data Requested
+            self.wreg(rEPIRQ,bmSUDAVIRQ); #Clear the bit
+            self.do_SETUP();
+        elif(epirq&bmIN3BAVIRQ): #EN3-IN packet
+            #print "IN3 event.";
+            #self.do_IN3();
+            self.wreg(rEPIRQ,bmIN3BAVIRQ); #Clear the bit
+        elif(epirq&bmOUT1DAVIRQ): #OUT1-OUT packet
+            print "OUT1 event.";
+            self.do_OUT1();
+            self.wregAS(rEPIRQ,bmOUT1DAVIRQ); #Clear the bit *AFTER* servicing.
+        #else:
+        #    self.do_IN3();
+    
+    typestring="GoodFET emulates DFU properly, if you can read this!\n";
+    typepos=0;
+    
+    def typeletter(self,key):
+        """Type a letter on IN3.  Zero for keyup."""
+        if type(key)==str: key=ord(key);
+        
+        self.wreg(rEP3INFIFO,0x01);      #Modem Status
+        self.wreg(rEP3INFIFO,0x00);      #Line Status
+        self.wreg(rEP3INFIFO,key);
+        self.wregAS(rEP3INBC,3);
+    def do_IN3(self):
+        """Handle IN3 input event."""
+        #Don't bother clearing interrupt flag, that's done by sending the reply.
+        
+    def do_OUT1(self):
+        """Handle an OUT1 output event."""
+        print """
+Got an output event, but it's not part of the DFU standard so this
+client can't know what to do with it.  Usually, this needs some sort
+of acknowledgment to tell the host that you are switching into.
+""";
+        
+        l=self.rreg(rEP1OUTBC);
+        frame=self.readbytesAS(rEP1OUTFIFO,l);
+        print "DFU OUT1: %s" % frame[1:len(frame)];
+        
+
+
+if(len(sys.argv)<3):
+    print "Usage: %s VID PID" % sys.argv[0];
+    print "";
+    print """Example VID/PID pairs:
+\tFFFF 0004 -- Ubertooth               ( Works  )
+\t0483 DF11 -- STM32                   (Untested)
+\t03EB 2F.. -- Atmel DFU               (Untested)
+\t05AC 1227 -- Apple iBoot             (Untested)
+"""
+    sys.exit();
+
+
+#Initialize FET and set baud rate
+client=GoodFETMAXUSBDFU();
+client.serInit()
+
+vid=int(sys.argv[1],16);
+pid=int(sys.argv[2],16);
+
+client.MAXUSBsetup();
+
+print """
+The DFU emulator is now running.  Any firmware which is downloaded to
+the virtual device will be locked to this console, beginning with the
+block device."""
+
+client.dfuinit(vid,pid);
+

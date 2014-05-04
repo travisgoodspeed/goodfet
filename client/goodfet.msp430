@@ -1,0 +1,221 @@
+#!/usr/bin/env python
+
+import sys;
+import binascii;
+
+from GoodFETMSP430 import GoodFETMSP430;
+from intelhex import IntelHex16bit, IntelHex;
+
+
+if(len(sys.argv)==1):
+    print "Usage: %s verb [objects]\n" % sys.argv[0];
+    print "%s test" % sys.argv[0];
+    print "%s selftest" % sys.argv[0];
+    print "%s dump $foo.hex [0x$start 0x$stop]" % sys.argv[0];
+    print "%s erase" % sys.argv[0];
+    print "%s eraseinfo" % sys.argv[0];
+    print "%s flash $foo.hex [0x$start 0x$stop]" % sys.argv[0];
+    print "%s verify $foo.hex [0x$start 0x$stop]" % sys.argv[0];
+    print "%s poke 0x$adr 0x$val" % sys.argv[0];
+    print "%s serial [$val]" % sys.argv[0];
+    print "%s peek 0x$start [0x$stop]" % sys.argv[0];
+    print "%s run" % sys.argv[0];
+    sys.exit();
+
+#Initialize FET and set baud rate
+client=GoodFETMSP430();
+client.serInit()
+
+client.setup();
+client.start();
+
+if(sys.argv[1]=="starttest"):
+    for foo in range(1,10):
+        client.start();
+if(sys.argv[1]=="info"):
+    #print "Model    %08x " % client.MSP430deviceid();
+    #print "Core     %04x " % client.MSP430coreid();
+    #print "Identity %04x" % client.MSP430ident();
+    print "Identifies as %s (%04x)" % (
+        client.MSP430identstr(),
+        client.MSP430ident());
+if(sys.argv[1]=="test"):
+    print "This test is dangerous and will erase the target device.\nDo 'goodfet.msp430 dangeroustest' instead."
+if(sys.argv[1]=="dangeroustest"):
+    print "Running an erase/program test."
+    client.MSP430test();
+if(sys.argv[1]=="glitch"):
+    for foo in range(0,100):
+        print "Identifies as %04x" % client.MSP430ident();
+if(sys.argv[1]=="dump"):
+    f = sys.argv[2];
+    start=0x0200;
+    stop=0xFFFF;
+    if(len(sys.argv)>3):
+        start=int(sys.argv[3],16);
+    if(len(sys.argv)>4):
+        stop=int(sys.argv[4],16);
+    
+    print "Dumping from %04x to %04x as %s." % (start,stop,f);
+    #h = IntelHex16bit(None);
+    h = IntelHex(None);
+    i=start;
+    while i<=stop:
+        data=client.MSP430peekblock(i);
+        print "Dumped %06x."%i;
+        for j in data:
+            if i<=stop: h[i]=ord(j);
+            i+=1;
+    h.write_hex_file(f);
+if(sys.argv[1]=="erase"):
+    print "Erasing main flash memory."
+    client.MSP430masserase();
+if(sys.argv[1]=="eraseinfo"):
+    print "Erasing info memory."
+    client.MSP430infoerase();
+
+if(sys.argv[1]=="selftest"):
+    import time;
+    
+    entry=client.peek16(0xFFC0);
+    print "Calling self-test at 0x%04x." %entry;
+    print "Memory from 0x3020 to 0x3030 should be zeroed.";
+    
+    for i in range(0x3020,0x3030):
+        client.MSP430poke(i,0xFFFF);
+    client.MSP430setPC(entry);
+    time.sleep(5);
+    errors=0;
+    
+    if(client.peek8(0x302F)==0xFF):
+        print "Test not run.  Try again.";
+        exit(0);
+    
+    for i in range(0x3020,0x3030,2):
+        ret=client.peek16(i);
+        if ret!=0:
+            errors=errors+1;
+            print "Failure at 0x%04x, returned %02xh." % (i,ret);
+        
+    if errors==0:
+        print "Test succeeded.  Board is ready to ship."
+    else:
+        print "Test failed.  Is it soldered correctly?"
+    #client.MSP430dumpmem(0x3020,0x3030);
+    
+if(sys.argv[1]=="ivt"):
+    client.MSP430dumpmem(0xFFC0,0xFFFF);
+if(sys.argv[1]=="regs"):
+    for i in range(0,16):
+        print "r%i=%04x" % (i,client.MSP430getreg(i));
+
+if(sys.argv[1]=="flash"):
+    f=sys.argv[2];
+    start=0;
+    stop=0x10000;
+    if(len(sys.argv)>3):
+        start=int(sys.argv[3],16);
+    if(len(sys.argv)>4):
+        stop=int(sys.argv[4],16);
+    
+    h = IntelHex16bit(f);
+    
+    #Should this be default?
+    #Makes flashing multiple images inconvenient.
+    #client.MSP430masserase();
+    
+    count=0; #Bytes in commit.
+    first=0;
+    vals=[];
+    last=0;  #Last address committed.
+    for i in h._buf.keys():
+        if((count>0x40 or last+2!=i) and count>0 and i&1==0):
+            #print "%i, %x, %x" % (len(vals), last, i);
+            client.MSP430pokeflashblock(first,vals);
+            count=0;
+            first=0;
+            last=0;
+            vals=[];
+        if(i>=start and i<stop  and i&1==0):
+            val=h[i>>1];
+            if(count==0):
+                first=i;
+            last=i;
+            count+=2;
+            vals+=[val&0xff,(val&0xff00)>>8];
+            if(i%0x100==0):
+                print "%04x" % i;
+    if count>0: #last commit, ivt
+        client.MSP430pokeflashblock(first,vals);
+if(sys.argv[1]=="verify"):
+    f=sys.argv[2];
+    start=0;
+    stop=0xFFFF;
+    if(len(sys.argv)>3):
+        start=int(sys.argv[3],16);
+    if(len(sys.argv)>4):
+        stop=int(sys.argv[4],16);
+    
+    h = IntelHex16bit(f);
+    for i in h._buf.keys():
+        if(i>=start and i<stop and i&1==0):
+            peek=client.MSP430peek(i)
+            if(h[i>>1]!=peek):
+                print "ERROR at %04x, found %04x not %04x"%(i,peek,h[i>>1]);
+            if(i%0x100==0):
+                print "%04x" % i;
+if(sys.argv[1]=="peek"):
+    start=0x0000;
+    if(len(sys.argv)>2):
+        start=int(sys.argv[2],16);
+    stop=start;
+    if(len(sys.argv)>3):
+        stop=int(sys.argv[3],16);
+    print "Peeking from %04x to %04x." % (start,stop);
+    while start<=stop:
+        print "%04x: %04x" % (start,client.MSP430peek(start));
+        start=start+2;
+
+if(sys.argv[1]=="poke"):
+    start=0x0000;
+    val=0x00;
+    if(len(sys.argv)>2):
+        start=int(sys.argv[2],16);
+    if(len(sys.argv)>3):
+        val=int(sys.argv[3],16);
+    print "Poking %06x to become %04x." % (start,val);
+    
+    while client.MSP430peek(start)&(~val)>0:
+        client.MSP430pokeflash(start,val);
+        print "Poked to %04x" % client.MSP430peek(start);
+if(sys.argv[1]=="serial"):
+    oid=0xdeadbeef;
+    if(len(sys.argv)>2):
+        oid=eval(sys.argv[2]);
+    else:
+        #Crashes Windows.
+        #simpchin=u=unichr(24207)+unichr(21015)+unichr(21495);  #Chinese for "Serial Number".
+        #print simpchin;
+        
+        oid=input(u"Serial Number? ");
+    adr=0xFFB0;
+    if(len(sys.argv)>2):
+        start=int(sys.argv[2],16);
+    if(len(sys.argv)>3):
+        val=int(sys.argv[3],16);
+    print "Poking 32-bit OID to 0x%04x as %08x." % (adr,oid);
+    client.MSP430pokeflash(adr,oid&0xFFFF);
+    client.MSP430pokeflash(adr+2,(oid>>16)&0xFFFF);
+
+if(sys.argv[1]=="run"):
+    #Set PC to RESET vector's value.
+    #client.MSP430setPC(client.MSP430peek(0xfffe));
+    #client.MSP430releasecpu();
+    client.MSP430run();
+
+if(sys.argv[1]=="whatever"):
+    for i in [0x24FF, 0x2500, 0x2502, 0x2504]:
+        print "%04x" % client.MSP430peek(i);
+
+#client.MSP430releasecpu();
+#client.MSP430stop();

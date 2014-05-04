@@ -1,0 +1,213 @@
+#!/usr/bin/env python
+# GoodFET SPI Flash Client
+#
+# (C) 2012 Travis Goodspeed <travis at radiantmachines.com>
+#
+# This code is being rewritten and refactored.  You've been warned!
+
+import sys;
+import binascii;
+import array;
+
+from GoodFETMCPCAN import GoodFETMCPCAN;
+from intelhex import IntelHex;
+
+if(len(sys.argv)==1):
+    print "Usage: %s verb [objects]\n" % sys.argv[0];
+    print "%s info" % sys.argv[0];
+    print "%s test" % sys.argv[0];
+    print "%s peek 0x$start [0x$stop]" % sys.argv[0];
+    #print "%s poke 0x$adr 0x$val" % sys.argv[0];
+
+    print "\n%s sniff [kHz]" % sys.argv[0];
+    print "\n%s isniff [kHz]" % sys.argv[0];
+    print "\n%s spit [kHz]" % sys.argv[0];
+
+    print "\nSupported rates: 83.3, 100, 125, 250, 500, 1000 kHz.";
+    sys.exit();
+
+#Initialize FET and set baud rate
+client=GoodFETMCPCAN();
+client.serInit()
+
+
+client.MCPsetup();
+
+#Dummy read.
+#Might read as all ones if chip has a startup delay.
+
+if(sys.argv[1]=="info"):
+    print "MCP2515 Info:\n\n";
+    
+    print "Mode: %s" % client.MCPcanstatstr();
+    print "Read Status: %02x" % client.MCPreadstatus();
+    print "Rx Status:   %02x" % client.MCPrxstatus();
+    print "Tx Errors:  %3d" % client.peek8(0x1c);
+    print "Rx Errors:  %3d\n" % client.peek8(0x1d);
+    
+    print "Timing Info:";
+    print "CNF1: %02x" %client.peek8(0x2a);
+    print "CNF2: %02x" %client.peek8(0x29);
+    print "CNF3: %02x\n" %client.peek8(0x28);
+    print "RXB0 CTRL: %02x" %client.peek8(0x60);
+    print "RXB1 CTRL: %02x" %client.peek8(0x70);
+    print "RX Buffers:"
+    packet0=client.readrxbuffer(0);
+    packet1=client.readrxbuffer(1);
+    for foo in [packet0, packet1]:
+        print client.packet2str(foo);
+
+if(sys.argv[1]=="sniff"):
+    if len(sys.argv)>2:
+        rate=float(sys.argv[2]);
+        print "Calling MCPsetrate for %i." %rate;
+        client.MCPsetrate(rate);
+    client.MCPreqstatListenOnly();
+    
+    print "Mode: %s" % client.MCPcanstatstr();
+
+    print "CNF1: %02x" %client.peek8(0x2a);
+    print "CNF2: %02x" %client.peek8(0x29);
+    print "CNF3: %02x\n" %client.peek8(0x28);
+    
+    while(1):
+        packet=client.rxpacket();
+        if packet!=None:
+            print client.packet2str(packet);
+                
+            if (client.peek8(0x2C) & 0x80):
+                client.MCPbitmodify(0x2C,0x80,0x00);
+                print"...malformed packet recieved";
+    
+if(sys.argv[1]=="snifftest"):
+
+    freqrange=[10.4, 41.6, 83.3, 100, 125, 250, 500, 1000];
+    
+    for rate in freqrange:
+
+        print "CAN Freq Test: %3d kHz" %rate;
+        client.MCPsetrate(rate);
+        #print "CNF1/2/3: %02x %02x %02x" %(client.peek8(0x2a), client.peek8(0x29),client.peek8(0x28));
+        client.MCPreqstatListenOnly();
+        print "Mode: %s" % client.MCPcanstatstr();
+        x = 0;
+        errors = 0;
+
+        for n in range(0,400):
+            packet=client.rxpacket();
+            if packet!=None:
+                print client.packet2str(packet);
+                x+=1;
+                
+                if (client.peek8(0x2C) & 0x80):
+                    errors+=1;
+                    client.MCPbitmodify(0x2C,0x80,0x00);
+
+        if x==0:
+            print "No packets sniffed for %3d kHz" %rate;
+        else:
+            percenterror = float(errors/x);
+        
+            print "Results for %3.1 kHz: recieved %3d packets, registered %3d RX errors, for a %3.3f percent error rate." %(rate, x, errors, percenterrors);
+            
+        client.MCPreset();
+
+if(sys.argv[1]=="isniff"):
+    """ An intelligent sniffer, decodes message format """
+    """ More features to be added soon """
+    if len(sys.argv)>2:
+        rate=float(sys.argv[2]);
+        client.MCPsetrate(rate);
+    client.MCPreqstatListenOnly();
+    while 1:
+        packet=client.rxpacket();
+        if packet!=None:
+            plist=[];
+            for byte in packet:
+                plist.append(byte);
+            arbid=plist[0:2];
+            eid=plist[2:4];
+            dlc=plist[4:5];
+            data=plist[5:13];         
+            print "\nArbID: " + client.packet2str(arbid);
+            print "EID: " + client.packet2str(eid);
+            print "DLC: " + client.packet2str(dlc);
+            print "Data: " + client.packet2str(data);
+
+if(sys.argv[1]=="test"):
+    print "\nMCP2515 Self Test:";
+    
+    #Switch to config mode and try to rewrite TEC.
+    client.MCPreqstatConfiguration();
+    client.poke8(0x00,0xde);
+    if client.peek8(0x00)!=0xde:
+        print "ERROR: Poke to TEC failed.";
+    else:
+        print "SUCCESS: Register read/write.";
+    
+    #Switch to Loopback mode and try to catch our own packet.
+    client.MCPreqstatLoopback();
+
+    packet1 = [0x00, 
+               0x08, # LOWER nibble must be 8 or greater to set EXTENDED ID 
+               0x00, 0x00,
+               0x08, # UPPER nibble must be 0 to set RTR bit for DATA FRAME
+                  # LOWER nibble is DLC
+               0x01,0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0xFF]
+    client.txpacket(packet1);
+    client.txpacket(packet1);
+    print "Waiting on loopback packets.";
+    packet=None;
+    while(1):
+        packet=client.rxpacket();
+        if packet!=None:
+            print "Message recieved: %s" % client.packet2str(packet);
+
+    
+    
+if(sys.argv[1]=="peek"):
+    start=0x0000;
+    if(len(sys.argv)>2):
+        start=int(sys.argv[2],16);
+    stop=start;
+    if(len(sys.argv)>3):
+        stop=int(sys.argv[3],16);
+    print "Peeking from %04x to %04x." % (start,stop);
+    while start<=stop:
+        print "%04x: %02x" % (start,client.peek8(start));
+        start=start+1;
+
+if(sys.argv[1]=="spit"):
+
+    if len(sys.argv)>2:
+        rate=float(sys.argv[2]);
+        print "Calling MCPsetrate for %i." %rate;
+        client.MCPsetrate(rate);
+
+    client.MCPreqstatNormal();
+    
+    packet = [0x00, 
+               0x08, # LOWER nibble must be 8 or greater to set EXTENDED ID 
+               0x00, 0x00,
+               0x08, # UPPER nibble must be 0 to set RTR bit for DATA FRAME
+                  # LOWER nibble is DLC
+               0x01,0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0xFF]    
+    
+    client.txpacket(packet);
+    data = client.peek8(0x30);
+    while (data&0x08)==0:
+        print "waiting...";
+        data=client.peek8(0x30);
+    print "message successfully sent!";
+
+if(sys.argv[1]=="setbitrate"):
+    if len(sys.argv)>2:
+        rate=float(sys.argv[2]);
+        print "Calling MCPsetrate for %i." %rate;
+        client.MCPsetrate(rate);
+
+
+
+
+    
+    

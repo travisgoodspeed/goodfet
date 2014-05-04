@@ -1,0 +1,77 @@
+#!/usr/bin/env python
+#GoodFET zigduino client
+#forked from code by neighbor Travis Goodspeed by bx
+
+import sys, binascii, os, array, time, glob, argparse
+
+from GoodFETatmel128 import GoodFETatmel128rfa1
+from intelhex import IntelHex;
+
+
+def printpacket(packet):
+    s="";
+    i=0;
+    for foo in packet:
+        i=i+1;
+        if i>client.packetlen: break;
+        s="%s %02x" % (s,ord(foo));
+    print "%s" % s;
+
+
+commands=["sniff", "beaconreq"]
+parser = argparse.ArgumentParser(description="Simple GoodFET running on Zigduino tools.")
+subparsers = parser.add_subparsers(help='sub-command help')
+p_sniff = subparsers.add_parser('sniff', help='Sniff for packets')
+p_sniff.add_argument("-f", action="store", dest="channel", help="channel")
+p_sniff.add_argument("-i", action="store", dest="interface", 
+                    default="/dev/ttyUSB0", help="interface (ie. /dev/ttyUSB0")
+p_sniff.set_defaults(name="sniff")
+p_br = subparsers.add_parser('beaconreq', help= 'Send out beacon requests')
+p_br.add_argument("-f", action="store", dest="channel", help="channel")
+p_br.add_argument("-c", action="store_true", dest="autocrc", help="Sends beacon requests with autocrc enabled.")
+p_br.add_argument("-i", action="store", dest="interface", 
+                    default="/dev/ttyUSB0", help="interface (ie. /dev/ttyUSB0")
+
+p_br.set_defaults(name="beaconreq")
+
+args = parser.parse_args()
+
+#Initialize FET and set baud rate
+client=GoodFETatmel128rfa1()
+#client.verbose = True
+client.serInit(args.interface)
+
+#if(sys.argv[1ce]=="info"):
+#    printconfig();
+
+if(args.name=="sniff"):
+    client.RF_setup()
+    if args.channel:
+        print "Set channel to %s" % args.channel
+        client.RF_setchannel(int(args.channel))
+    #Now we're ready to get packets.
+    while 1:
+        packet=None;
+        while packet==None:
+            packet=client.RF_rxpacket();
+            time.sleep(.5)
+        printpacket(packet);
+        sys.stdout.flush();
+
+if (args.name=="beaconreq"):
+    if (args.autocrc):
+        autocrc = 1
+    else:
+        autocrc = 0
+    client.RF_setup()
+    if args.channel:
+        print "Set channel to %s" % args.channel
+        client.RF_setchannel(int(args.channel))
+    client.RF_autocrc(autocrc)
+    if autocrc:
+        packet="\x03\x08\x46\xff\xff\xff\xff\x07\x00\x00"        
+    else:
+        packet="\x03\x08\x46\xff\xff\xff\xff\x07\x13\x33"
+    while 1:
+        client.RF_txpacket(chr(len(packet))+packet)
+        time.sleep(1)

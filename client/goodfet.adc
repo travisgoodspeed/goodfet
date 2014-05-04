@@ -1,0 +1,142 @@
+#!/usr/bin/env python
+"""
+ADC10 client (currently only supports x2274 chip, on the GoodFET31
+board, where pin 5 of JTAG header is sampled.)
+
+Scott Livingston  <slivingston@caltech.edu>
+Sep 2010.
+"""
+
+import matplotlib as mpl
+import matplotlib.pyplot as plt
+import time
+
+import sys
+from GoodFET import GoodFET
+
+#############
+# Some constants (not really immutable...)
+#############
+ADC10APP = 0x74
+ADC10_INIT = 0x81
+ADC10_UNINIT = 0x82
+MONITORAPP = 0x00
+NOK = 0x7E
+
+
+def man_sample(count=1):
+    """Obtain a single, instantaneous ADC10 sample
+of channel A5 (pin 5 of JTAG header on the GoodFET31 board).
+
+This may be repeated count times (default is 1).
+Result is returned as a list.
+Failed samples are indicated by -1.
+"""
+    if count < 1:
+        return [-1,]
+    result = []
+    client.writecmd( ADC10APP, ADC10_INIT, 0 ) # Initialize ADC10 module
+    while count > 0:
+        data = client.writecmd( ADC10APP, 0x83, 0 ) # Get a sample
+        if len(data) > 0:
+            samp = ord(data[0]) + (ord(data[1]) << 8)
+        else:
+            samp = -1
+        result.append(samp)
+        count -= 1
+    return result
+
+def nsample(count=10, t_sample=3, clock_div=8):
+    """Obtain a sequence of count samples, at constant rate.
+
+(Copied from firmware/include/adc.h)
+
+t_sample is ``sample-and-hold time''; this is written directly to
+ADC10SHTx field of ADC10CTL0 register; possible values in binary are
+00  =>  4 ADC10CLK ticks,
+01  =>  8 ADC10CLK ticks,
+10  => 16 ADC10CLK ticks,
+11  => 64 ADC10CLK ticks.
+
+clock_div is the value by which to divide SMCLK (which is assumed to
+be 16 MHz), then giving ADC10CLK.  Possible values are 1..8
+Cf. Fig. 20-1 (on page 585?) of the msp430x2xxx family manual.
+
+To estimate the sampling rate, use
+(SMCLK/clock_div)/(13+t_sample_ticks), where ``t_sample_ticks'' is the
+number of ticks corresponding to t_sample (see above).  E.g., 16 MHz
+SMCLK (as on the GoodFET31, and others?), t_sample := 11 (binary) and
+clock_div := 8 gives a sampling rate of approx. 25.97 kSps.
+Similarly, e.g., 16 MHz, t_sample=00, clock_div=5 yields approx. 188 kSps.
+
+Returns a list.
+Failure is indicated by -1 (within the list).
+"""
+    if count < 0:
+        return [-1,]
+    client.writecmd( ADC10APP, ADC10_INIT, 0 ) # Initialize ADC10 module
+    data = client.writecmd( ADC10APP, 0x84, 3, # ADC10_NSAMPLE
+                            [count & 0xff,
+                             t_sample & 0x03,
+                             clock_div & 0x0f] )
+    result = []
+    for k in range(client.count/2):
+        result.append( ord(data[k*2]) + (ord(data[k*2+1]) << 8) )
+    return result
+
+#############
+# Main entry: 
+#############
+#if __name__ == "__main__":
+if len(sys.argv) == 1:
+    print "Usage: %s verb [objects]\n" % sys.argv[0]
+    print "%s sample [N]" % sys.argv[0]
+    print "%s sequence [N]" % sys.argv[0]
+    print """
+Warning: only known to work for x2274 chip, on GoodFET31 board.
+"""
+    sys.exit()
+
+# Initialize and open connection to GoodFET
+client = GoodFET()
+client.verbose = False # Dump activity to terminal
+client.serInit( timeout=10 ) # UART comm timeout (in seconds)
+
+
+# Handle each possible ADC10 verb in turn
+
+if sys.argv[1] == "sample": #0x83
+    if len(sys.argv) == 2:
+        count = 1
+        print "Requesting a single sample..."
+    else:
+        count = int(sys.argv[2])
+        if count < 1:
+            print "Error: number of requested samples must be at least 1."
+            exit(-1)
+        print "Requesting %d samples..." % count
+    result = man_sample(count)
+    print result
+
+elif sys.argv[1] == "sequence":
+    if len(sys.argv) == 2:
+        count = 0
+        print "Requesting max sampling sequence length..."
+    else:
+        count = int(sys.argv[2])
+        if count < 1:
+            print "Error: number of requested samples must be at least 1."
+            exit(-1)
+            print "Requesting sampling sequence of length %d..." % count
+    #result = nsample(count, 0, 5)
+    #print result
+    while True:
+        result = nsample(count, 0, 5)
+        plt.clf()
+        plt.plot(result,'.-')
+        plt.ylim([0, 1023])
+        plt.draw()
+        time.sleep(.3)
+        
+    #plt.savefig('figs/test-' + str(int(time.time())) + '.png')
+    

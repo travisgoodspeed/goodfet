@@ -1,0 +1,26 @@
+#!/usr/bin/env python
+
+#GoodFET MAXIM MAX3421 and MAX3420 Client
+#by Travis Goodspeed
+
+import sys;
+import binascii;
+import array;
+import warnings
+
+from GoodFETMAXUSB import GoodFETMAXUSBHID;
+
+warnings.warn(
+"""The libraries upon which this program depends will soon be deprecated in
+favor of the USB*.py libraries.  See facedancer-keyboard.py for an example of
+this program written using the new libraries."""
+)
+
+#Initialize FET and set baud rate
+client=GoodFETMAXUSBHID();
+client.serInit()
+
+
+client.MAXUSBsetup();
+client.hidinit();
+

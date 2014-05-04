@@ -1,0 +1,50 @@
+#!/usr/bin/env python
+
+#GoodFET MAXIM MAX3421 Host
+#by Travis Goodspeed
+
+import sys;
+import binascii;
+import array;
+import time;
+import warnings
+
+from GoodFETMAXUSB import GoodFETMAXUSBHost;
+
+warnings.warn(
+"""The libraries upon which this program depends will soon be deprecated in
+favor of the USB*.py libraries.  The new libraries do not yet support host
+mode, but an example will be written and documented when they do."""
+)
+
+if(len(sys.argv)==1):
+    print "Usage: %s verb [objects]\n" % sys.argv[0];
+    print "%s info" % sys.argv[0];
+    print "%s allstrings" % sys.argv[0];
+    sys.exit();
+
+
+#Initialize FET and set baud rate
+client=GoodFETMAXUSBHost();
+client.serInit()
+
+
+client.MAXUSBsetup();
+
+client.hostinit();
+client.usbverbose=False;
+
+if(sys.argv[1]=="info"):
+    client.hostrun();
+
+if(sys.argv[1]=="allstrings"):
+    print "This will try to print all strings from the target device.";
+    client.detect_device();
+    time.sleep(0.2);
+    client.enumerate_device();
+    for foo in range(1,255):
+        print "Grabbing string at index=%i" % foo;
+        string=client.getDescriptorString(foo);
+        if string!=None:
+            print "Strings[%i]=%s" % (foo,string);
+        sys.stdout.flush();

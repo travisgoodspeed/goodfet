@@ -1,0 +1,117 @@
+#!/usr/bin/env python
+
+#GoodFET Chipcon CC2500 SPI Client
+#by Jean-Michel Picod <jean-michel.picod at cassidan.com>
+
+import sys
+
+from GoodFETCC2500 import GoodFETCC2500
+
+if len(sys.argv) == 1:
+    print "Usage: %s verb [objects]\n" % sys.argv[0]
+    print "%s info" % sys.argv[0]
+#    print "%s test" % sys.argv[0]
+    print "%s regs" % sys.argv[0]
+    print "%s pyregs" % sys.argv[0]
+    print ""
+    print "%s tunelelo\n\tTunes to Lelo vibrator configuration." % sys.argv[0]
+    print "%s snifflelo\n\tSniffs Lelo vibrator packets" % sys.argv[0]
+    print "%s setlelo [0-128]\n\tSet Lelo vibrator strength to a given value" % sys.argv[0]
+    print ""
+    sys.exit()
+
+#Initialize FET and set baud rate
+client = GoodFETCC2500()
+client.serInit()
+client.setup()
+
+def printconfig(client):
+    print "Encoding     %s (with%s Manchester)" % (client.RF_get_modulation(), "out" if client.peek_by_name("MDMCFG2") & 0x8 else "")
+    print "Base Freq    %.3f MHz" % (client.RF_get_frequency() / 10**6)
+    print "IF Freq      %.3f kHz" % (client.RF_get_IF_freq() / 1000)
+    print "Channel      %d" % client.RF_get_channel()
+    print "Chan spacing %.3f kHz" % (client.RF_get_chan_spacing() / 1000)
+    print "Eff Freq     %.3f MHz" % (((client.RF_get_channel() * client.RF_get_chan_spacing()) + client.RF_get_frequency()) / 10**6)
+    print "Bandwith     %i kHz" % client.RF_getbandwith()
+    print "Rate         %d kbps" % round(client.RF_get_datarate() / 1000)
+    l = client.RF_get_pkt_len()
+    if l > 0:
+        print "PacketLen    %i bytes (fixed)" % l
+    elif l < 0:
+        print "PacketLen    %i bytes (variable)" % -l
+    elif l == None:
+        print "PacketLen    Infinite"
+    print "Preamble     %d bytes" % client.RF_get_preamble_len()
+    print "Sync         0x%04x" % client.RF_get_syncword()
+    print "CRC          %s" % ("Enabled" if client.peek_by_name("PKTCTRL0") & 0x4 else "Disabled")
+    print "Whitening    %s" % ("Enabled" if client.peek_by_name("PKTCTRL0") & 0x40 else "Disabled")
+    print "Address      %d" % client.RF_get_addr()
+
+if sys.argv[1] == "info":
+    printconfig(client)
+
+if sys.argv[1] == "regs":
+    regs = client.regs()
+    for k,v in regs:
+        print "%-8s = 0x%02x" % (k, v)
+
+if sys.argv[1] == "pyregs":
+    regs = client.regs()
+    for k,v in regs:
+        print "client.poke_by_name('%s', 0x%02x)" % (k, v)
+
+def leloremote_setup(client):
+    """Based on scanlime blog post: scanlime.org/2012/11/hacking-my-vagina/"""
+    client.CC_strobe_RES()
+    client.poke(0x0B, [0x0A, 0x00]) # FSCTRL
+    client.poke(0x0D, [0x5D, 0x13, 0xB1]) # FREQ
+    client.poke(0x10, [0x2D, 0x3B, 0x73, 0x22, 0xF8]) # MDMCFG
+    client.poke(0x0A, 0x01) # CHANNR
+    client.poke(0x15, 0x00) # DEVIATN
+    client.poke(0x21, [0xB6, 0x10]) # FREND
+    client.poke(0x18, 0x18) # MCSM0
+    client.poke(0x19, 0x1D) # FOCCFG
+    client.poke(0x1A, 0x1C) # BSCFG
+    client.poke(0x1B, [0xC7, 0x00, 0xB0]) # AGCTRL
+    client.poke(0x23, [0xEA, 0x0A, 0x00, 0x11]) # FSCAL3
+    client.poke(0x29, 0x59) # FSTEST
+    client.poke(0x2C, [0x88, 0x31, 0x0B]) # TEST
+    client.poke(0x00, 0x29) # IOCFG2
+    client.poke(0x02, 0x06) # IOCFG0
+    client.poke(0x07, [0x0A, 0x04]) # PKTCTRL
+    client.poke(0x09, 0x01) # ADDR
+    client.poke(0x06, 0x09) # PKTLEN
+    client.poke(0x7E, [0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF]) # PATABLE
+    client.CC_strobe_FRX()
+    client.CC_strobe_FTX()
+    client.CC_strobe_IDLE()
+
+if sys.argv[1] == "tunelelo":
+    leloremote_setup(client)
+
+if sys.argv[1] == "snifflelo":
+    leloremote_setup(client)
+    ## Always receive
+    client.RF_set_rxoff_mode("IDLE")
+    client.CC_strobe_FRX() ## Flush FIFO
+    print "Entering receive mode..."
+    while True:
+        data = client.RF_rxpacket(bytes=9)
+        if data is None or data == "":
+            continue
+        if isinstance(data, str):
+            data = [ord(x) for x in data]
+        if data[0:2] == [ 0x01, 0x00, 0xA5 ] and data[5:9] == [ 0x00, 0x00, 0x00, 0x05 ]:
+            print "Motor1: %d (0x%02x)" % (data[2], data[2])
+            print "Motor2: %d (0x%02x)" % (data[3], data[3])
+        else:
+            print "Invalid Lelo packet: %s" % " ".join(["%02X" % x for x in data])
+
+if sys.argv[1] == "setlelo":
+    if len(sys.argv) > 2:
+        strength = min(128, max(0, int(sys.argv[2])))
+        print "Setting Lelo vibrator strengh to %d out of 128" % strength
+        client.RF_txpacket([0x01, 0x00, 0xA5, strength, strength, 0x00, 0x00, 0x00, 0x05])
+    else:
+        print "ERROR: missing motor strength"
+

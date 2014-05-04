@@ -1,0 +1,384 @@
+#!/usr/bin/env python
+
+import hidapi
+import struct
+import time
+import os.path
+
+
+BSL_VID = 0x2047
+BSL_PID = 0x0200
+
+def _fmt_addr(addr, count=3):
+    return "".join([chr((addr >> (n*8)) & 0xff) for n in range(count)])
+
+RAM_BSL = """
+@2400
+E2 43 04 02 E2 43 02 02 80 00 04 25
+@2500
+00 05 04 34 31 40 90 33 B0 13 5E 2E 0C 93 00 24
+B0 13 F4 2D FF 3F 12 01 00 02 00 00 00 08 47 20
+00 02 04 01 00 00 00 01 06 00 FF 09 01 A1 01 85
+3F 95 3F 75 08 25 01 15 01 09 01 81 02 85 3F 95
+3F 75 08 25 01 15 01 09 01 91 02 C0 09 02 29 00
+01 01 00 80 32 09 04 00 00 02 03 00 00 00 09 21
+01 01 00 01 22 24 00 07 05 81 03 40 00 01 07 05
+01 03 40 00 01
+@2576
+F2 D2 20 09 F2 D2 22 09 10 01 5E 42 02 24 7E 93
+25 24 7E 90 09 00 04 28 7D 42 7E 82 5F 43 0C 3C
+7E 92 02 2C 4D 4E 06 3C 7D 42 D2 93 0E 24 02 20
+4E 43 F4 3F 7E 43 4F 43 C2 4F 10 24 C2 4E 02 24
+4F 43 07 3C 1E 42 06 24 EF 4E 78 23 92 53 06 24
+5F 53 4F 9D F7 2B C2 4D 21 09 10 01 C2 43 10 24
+10 01 82 4C 06 24 5E 42 86 23 C2 9E 02 24 04 28
+C2 4E 02 24 4E 43 01 3C 5E 43 C2 4E 0E 24 80 00
+80 25 F2 B0 0F 00 84 23 14 20 C2 93 84 23 03 34
+5E 42 20 09 02 3C 5E 42 22 09 7E F2 C2 4E 60 24
+5E 42 60 24 42 19 4E 10 C2 4E 60 24 B0 13 C4 27
+09 3C C2 93 84 23 03 34 5E 42 C8 23 EE 3F 5E 42
+88 23 EB 3F 3C 40 60 24 80 00 D8 25 F2 43 02 24
+C2 43 10 24 C2 43 21 09 10 01 C2 93 82 23 12 20
+5E 42 84 23 7E F0 0F 00 02 20 80 00 42 26 5E 93
+0B 20 C2 93 84 23 03 34 F2 D2 C8 23 F6 3F F2 D2
+88 23 F3 3F B0 13 76 25 10 01 C2 93 80 23 04 34
+1F 43 D2 D3 3C 09 03 3C 0F 43 D2 C3 3C 09 5E 42
+80 23 7E B0 60 00 90 20 5D 42 81 23 4D 83 81 24
+5D 83 6B 24 6D 83 67 24 6D 83 45 24 5D 83 09 24
+6D 83 52 24 5D 83 46 24 5D 83 33 24 5D 83 54 24
+7B 3C 0F 93 79 24 5E 42 83 23 5E 83 08 24 5E 83
+0F 24 7E 80 1F 00 1C 24 5E 83 13 24 6D 3C C2 43
+23 09 F2 40 12 00 02 24 3C 40 16 25 80 00 D8 25
+C2 43 23 09 F2 40 29 00 02 24 3C 40 4C 25 80 00
+D8 25 F2 40 24 00 02 24 3C 40 28 25 80 00 D8 25
+C2 43 23 09 F2 40 09 00 02 24 3C 40 5E 25 80 00
+D8 25 0F 93 49 24 B0 13 C4 27 C2 43 60 24 D2 42
+01 24 61 24 3B 3C B0 13 CE 27 D2 42 82 23 3F 09
+80 00 42 26 B0 13 CE 27 D2 42 82 23 00 24 B0 13
+42 26 D2 43 12 24 10 01 C2 43 23 09 D2 43 02 24
+3C 40 00 24 80 00 D8 25 B0 13 CE 27 D2 42 84 23
+01 24 80 00 42 26 80 00 50 26 5E 42 84 23 7E F0
+0F 00 02 20 80 00 42 26 5E 93 18 20 C2 93 84 23
+04 34 F2 F0 D7 00 C8 23 F5 3F F2 F0 D7 00 88 23
+F1 3F 7E 90 80 00 03 20 B0 13 C4 27 43 3F 7E 90
+82 00 02 20 80 00 F8 25 B0 13 76 25 10 01 C2 43
+23 09 E2 43 02 24 10 01 D5 3E 1B 15 1F 42 5A 24
+5B 4F 03 00 5E 4F 01 00 5C 4F 02 00 8C 10 0C DE
+0D 4B 0E 4F 2E 52 6A 4F 7A 80 10 00 29 24 5A 83
+14 24 5A 83 2A 24 5A 83 2E 24 6A 83 23 24 5A 83
+3A 24 5A 83 15 24 5A 83 3B 24 5A 83 3E 24 6A 83
+41 20 5F 43 B0 13 E2 2B 41 3C 1F 53 0C 4F B0 13
+38 2C 4C 93 02 20 4C 43 37 3C 7C 40 05 00 34 3C
+B0 13 66 2E 03 20 B0 13 6E 2E F5 3F 6C 42 2C 3C
+4F 43 E8 3F B0 13 D4 2D 27 3C 0E 4C 0F 4B 4C 43
+B0 13 D4 2C 21 3C B0 13 66 2E F0 23 4C 43 1F 42
+58 24 3F 50 40 00 1B 42 44 01 3B F0 10 00 0F 5B
+82 4F 44 01 11 3C B0 13 3C 2E B0 13 12 2B 0E 3C
+B0 13 3C 2E B0 13 66 29 09 3C 2E 42 3C 40 00 25
+0D 43 F8 3F 7C 40 07 00 B0 13 12 2E 1A 17 10 01
+E2 B2 3E 09 14 28 F2 40 80 00 23 09 03 3C F2 F0
+FA 00 3E 09 C2 43 10 24 C2 43 60 24 C2 43 61 24
+B0 13 80 26 D2 B3 3E 09 F2 2F E2 C2 3E 09 1F 42
+32 09 7F 90 0A 00 0C 20 B0 13 4A 2E B0 13 86 2C
+B0 13 08 2A B2 F0 F9 FF 08 09 A2 D3 02 09 10 01
+7F 90 0C 00 06 20 B0 13 4A 2E B2 40 04 A5 20 01
+10 01 7F 90 12 00 0A 20 C2 43 23 09 D2 93 10 24
+02 20 80 00 80 25 F2 D2 20 09 10 01 7F 90 16 00
+02 20 80 00 08 2A 7F 90 18 00 0C 20 D2 43 11 24
+F2 C0 40 00 3E 09 B2 40 80 00 10 09 F2 40 20 00
+3D 09 10 01 7F 90 1A 00 0A 20 B0 13 86 2C F2 F0
+9F 00 3E 09 F2 40 C0 00 3D 09 C2 43 11 24 10 01
+7B 15 0A 4C 0B 4D 0F 4E 3F E3 0F 5F 0F 7F 08 4C
+09 4D 08 5E 09 6F 47 43 0B 3C 1F 42 5C 24 FF 40
+3A 00 00 00 0C 46 1C 53 B0 13 2A 2E 0A 56 0B 63
+0B 99 03 28 34 20 0A 98 32 2C 47 93 30 20 0E 48
+0F 49 0E 8A 0F 7B 03 20 3E 90 3E 00 03 28 36 40
+3D 00 02 3C 06 48 06 8A 14 42 5C 24 14 53 0E 46
+0F 46 3F E3 0F 5F 0F 7F 0E 5A 0F 6B 09 3C 1F 15
+0D 16 6C 4D 0D 4E 0D 8A 05 44 05 5D C5 4C 00 00
+3E 53 3F 63 0F 9B C9 2B 02 20 0E 9A C6 2B B0 13
+66 2E ED 27 67 42 6C 42 B0 13 12 2E C7 3F 74 17
+10 01 F2 40 10 00 3C 09 C2 43 12 24 C2 43 11 24
+C2 43 00 24 C2 43 01 24 C2 43 3C 09 F2 43 02 24
+F2 43 04 24 C2 43 10 24 7E 40 80 00 C2 4E 21 09
+C2 4E 23 09 F2 40 8C 00 20 09 F2 40 8C 00 22 09
+F2 40 03 00 2F 09 F2 40 03 00 2E 09 C2 4E C8 23
+F2 40 10 00 C9 23 C2 4E CA 23 C2 4E CE 23 F2 40
+40 00 CF 23 C2 4E 88 23 C2 43 89 23 C2 43 8A 23
+F2 40 40 00 8F 23 F2 40 40 00 3C 09 C2 43 3E 09
+F2 40 C0 00 3D 09 10 01 7B 15 08 4C 07 4D 04 4F
+4C 43 0A 48 0B 4D 0F 4E 3F E3 0F 5F 0F 7F 06 48
+06 5E 07 6F 02 3C 1A 53 0B 63 0B 97 03 28 2C 20
+0A 96 2A 2C 18 B3 08 2C 0E 46 0F 47 3E 53 3F 63
+0A 9E 19 20 0B 9F 17 20 6E 44 B0 13 66 2E 10 20
+4C 43 B0 13 56 2E 1B 15 0F 16 CF 4E 00 00 B0 13
+56 2E 1B 15 0F 16 6D 4F 4E 9D 03 24 5C 43 01 3C
+6C 42 14 53 07 3C 3E 44 0C 4A 0D 4B B0 13 64 2D
+1A 53 0B 63 4C 93 CF 27 74 17 10 01 3B 15 0A 4E
+B2 43 54 01 08 4C 09 4D 07 3C 19 15 0E 16 6F 4E
+C2 4F 52 01 18 53 09 63 0E 4C 0F 4D 0E 5A 0F 63
+09 9F 03 28 09 20 08 9E 07 2C B0 13 66 2E ED 27
+6C 42 B0 13 12 2E 15 3C 1E 42 54 01 1F 42 5C 24
+FF 40 3A 00 00 00 1B 42 5C 24 CB 4E 01 00 47 18
+0E 11 1F 42 5C 24 CF 4E 02 00 3C 40 03 00 B0 13
+2A 2E 38 17 10 01 32 C2 03 43 B2 40 02 1C 5A 24
+B2 40 17 24 5C 24 B2 40 28 96 00 09 82 43 02 09
+82 43 60 01 B2 40 F3 10 64 01 B2 40 40 00 62 01
+B2 40 44 02 68 01 C2 43 0E 24 C2 43 11 24 B2 40
+28 96 00 09 B2 40 40 1E 08 09 B2 40 80 00 04 09
+B0 13 4A 2E C2 43 12 24 B2 B2 08 09 06 28 B0 13
+86 2C B0 13 08 2A A2 D3 02 09 10 01 3B 15 4A 4F
+6F 42 3B 40 58 24 B0 13 66 2E 08 20 4F 43 A2 4B
+44 01 28 4B 38 50 40 00 82 48 40 01 4F 93 0B 20
+B2 90 05 00 5E 24 07 38 0F 4E 1E 42 5E 24 2E 82
+B0 13 8E 2A 4F 4C 4A 93 03 20 4C 4F B0 13 12 2E
+A2 4B 40 01 2F 4B 3F 50 10 00 82 4F 44 01 38 17
+10 01 1B 15 21 83 0D 43 3A 40 E0 FF 0B 43 7E 4A
+0F 4C 0F 5B 6F 4F 0E EF 0D DE 1B 53 3B 90 20 00
+F6 2B 0D 93 0E 20 B1 40 FF 7F 00 00 02 3C B1 53
+00 00 91 93 00 00 FB 37 B2 40 A5 A5 56 24 4C 43
+04 3C B0 13 D4 2D 7C 40 05 00 21 53 1A 17 10 01
+21 82 81 43 02 00 B2 40 28 96 00 09 92 D3 02 09
+92 42 14 24 12 09 B2 40 00 13 10 09 82 43 14 09
+81 43 00 00 02 3C 91 53 00 00 B1 90 64 00 00 00
+FA 2B 1F 41 02 00 0E 4F 1E 53 81 4E 02 00 3F 90
+E9 03 03 2C 82 93 14 09 E9 23 21 52 10 01 B0 13
+66 2E 0E 20 4C 43 B0 13 FA 2C 1D 42 58 24 2D 53
+82 4D 40 01 1F 15 0D 16 CD 43 00 00 80 00 08 2D
+6C 42 10 01 92 B3 44 01 FD 2F 92 42 58 24 44 01
+10 01 92 B3 44 01 FD 2F 1F 42 58 24 3F 50 10 00
+82 4F 44 01 10 01 82 43 5E 24 C2 43 8A 23 B0 13
+A6 28 D2 93 12 24 0D 20 C2 93 11 24 0A 20 4F 43
+C2 93 8A 23 04 34 5F 42 8A 23 7F F0 7F 00 82 4F
+5E 24 82 93 5E 24 EB 27 92 93 5E 24 06 38 5F 42
+01 1C 82 4F 5E 24 5C 43 10 01 4C 43 10 01 1B 15
+B0 13 66 2E 15 20 4F 43 B0 13 56 2E 1D 15 0A 16
+8A 4E 00 00 B0 13 56 2E 1D 15 0A 16 2B 4A 0E 9B
+01 24 5F 43 92 B3 46 01 04 28 7F 40 03 00 01 3C
+6F 42 4C 4F 1A 17 10 01 0A 12 7E 40 3F 00 C2 93
+CA 23 11 34 C2 4E 80 1C 3D 40 81 1C 4F 43 0A 4C
+0A 5F ED 4A 00 00 1D 53 5F 53 4F 9E F8 2B F2 40
+40 00 CA 23 01 3C 4E 43 4C 4E 3A 41 10 01 B0 13
+FA 2C B0 13 56 2E 1F 42 58 24 3F 50 06 00 82 4F
+40 01 C2 43 E0 FF B0 13 08 2D 4C 43 10 01 B2 40
+A5 A5 56 24 B2 40 00 A5 58 24 B0 13 7C 2B B0 13
+1C 2D 5C B3 FC 2B B0 13 D0 27 F9 3F 1F 42 5C 24
+FF 40 3B 00 00 00 1F 42 5C 24 CF 4C 01 00 2C 43
+80 00 2A 2E C2 4C 16 24 3C 40 16 24 B0 13 9E 2D
+4C 93 FA 27 10 01 6E 4E 5F 4F 05 00 47 18 0F 5F
+0E DF 10 01 03 43 3F 40 DE 2E 3F 53 FE 2F 10 01
+92 B3 44 01 FD 2F 10 01 B2 40 80 5A 5C 01 10 01
+B2 90 A5 A5 56 24 10 01 1D 15 10 01
+@FFFE
+04 25
+q"""
+
+BLINK_BSL = """@8000
+31 40 00 34 B0 13 0C 80 B0 13 32 80 21 83 D2 43
+04 02 D2 43 02 02 B2 40 80 5A 5C 01 07 3C 91 53
+00 00 B1 93 00 00 FB 23 D2 E3 02 02 81 43 00 00
+F8 3F 80 00 36 80 80 00 3A 80 FF 3F
+@FFE0
+12 34 56 78 99 10 11 12 13 14 15 16 17 18 19 20
+12 34 56 78 99 10 11 12 13 14 15 16 17 18 00 80
+q"""
+
+# reta: 10 01; jmp .: ff3f; ret: 3041
+BLINK_BSL3 = """@2400
+B2 40 80 5A 5C 01 E2 43 04 02 E2 43 02 02 2C 43
+3D 40 AD DE 3E 40 EF BE 80 00 02 10
+q"""
+
+RET_BSL = """@2400
+2C 43 3D 40 AD DE 3E 40 EF BE B0 13 02 10
+q"""
+
+BLINK_BSL2 = """@2400
+31 40 00 34 B0 13 0C 20 B0 13 32 20 21 83 D2 43
+04 02 D2 43 02 02 B2 40 80 5A 5C 01 07 3C 91 53
+00 00 B1 93 00 00 FB 23 D2 E3 02 02 81 43 00 00
+F8 3F 80 00 36 20 80 00 3A 20 FF 3F
+@FFE0
+12 34 56 78 99 10 11 12 13 14 15 16 17 18 19 20
+12 34 56 78 99 10 11 12 13 14 15 16 17 18 00 20
+q"""
+def hexline(pkt):
+    return " ".join(c.encode("hex") for c in pkt)
+
+class TiHex(object):
+    def __init__(self, string):
+        self.content = content = []
+        addr = 0
+        for line in string.split("\n"):
+            if line.startswith("@"):
+                addr = int(line[1:],16)
+            elif line.startswith("q"):
+                return
+            elif len(line) == 0:
+                continue
+            else:
+                data = line.replace(" ", "").decode("hex")
+                if len(data) > 0:
+                    content.append((addr, data))
+                    addr += len(data)
+    def __iter__(self):
+        for x in self.content:
+            yield x
+
+
+
+def segment_flash(iterator):
+    flash = {}
+    def insert(base, off, data):
+        assert off + len(data) <= 512
+        orig = flash.get(base, "\0" * 512)
+        new = orig[0:off] + data + orig[off+len(data):]
+        flash[base] = new
+    for addr, data in iterator:
+        while len(data) > 0:
+            base = addr >> 9
+            off = addr % 512
+
+            sub, data = data[0:512-off], data[512-off:]
+            addr += len(sub)
+
+            insert(base, off, sub)
+
+    for addr in sorted(flash):
+        yield (addr << 9), flash[addr]
+
+class BSL(object):
+    MSGS = ["SUCCESS",
+            "Flash write check failed",
+            "Flash Fail Bit Set",
+            "Voltage Change During Program",
+            "BSL Locked",
+            "BSL Password Error",
+            "Byte Write Forbidden",
+            "Unknown Command",
+            "Packet Length Exceeds Buffer Size"]
+
+    def __init__(self, vid = BSL_VID, pid = BSL_PID):
+        self.vid = vid
+        self.pid = pid
+        self.device = hidapi.HidDevice(vid, pid)
+
+    def _send_command(self, num, data, expect_response = True):
+        if len(data) >= 255:
+            raise Exception("Data too long")
+        packet = '\x3f' + chr(len(data) + 1) + chr(num) + data
+        #print " ".join(c.encode("hex") for c in packet)
+        r = self.device.write(packet)
+        #print r
+        if expect_response:
+            rdata = self.device.read(64)
+            if len(rdata) < 2:
+                raise Exception("Short response")
+            if rdata[0] != '\x3f':
+                raise Exception("Malformed packet")
+            print repr(rdata)
+            resp = rdata[2: 2+ord(rdata[1])]
+            if resp[0] == '\x3a':
+                return resp[1:]
+            elif resp[0] == '\x3b' and len(resp) == 2:
+                if resp[1] == '\0':
+                    return True
+                else:
+                    raise Exception(self.MSGS[ord(resp[1])])
+            else:
+                raise Exception("Slightly malformed response")
+
+    def RxPassword(self, passwd):
+        return self._send_command(0x11, passwd)
+
+
+    def RxDataBlock(self, addr, data):
+        return self._send_command(0x10, _fmt_addr(addr) + data)
+
+    def RxDataBlockFast(self, addr, data):
+        return self._send_command(0x1b, _fmt_addr(addr) + data, False)
+
+    def EraseSegment(self, addr):
+        return self._send_command(0x12, _fmt_addr(addr))
+
+    def ToggleInfoLock(self):
+        return self._send_command(0x13, "")
+    def MassErase(self):
+        return self._send_command(0x15, "")
+    def CrcCheck(self, addr, length):
+        return self._send_command(0x16, _fmt_addr(addr) + _fmt_addr(length, 2))
+    def LoadPc(self, addr, expect_response=False):
+        return self._send_command(0x17, _fmt_addr(addr), expect_response)
+    def TxDataBlock(self, addr, length):
+        return self._send_command(0x18, _fmt_addr(addr) + _fmt_addr(length, 2))
+    def TxBslVersion(self):
+        return self._send_command(0x19, "")
+    def TxBufferSize(self):
+        return self._send_command(0x1a, "")
+
+    # Helpers
+    def RxLargeDatablock(self, addr, data):
+        # We can send at most 64 bytes at once, due to HID limitations.
+        while len(data) > 0:
+            sub, data = data[:64], data[64:]
+            self.RxDataBlockFast(addr, sub)
+            addr += len(sub)
+
+    def RxTIHexFast(self, hexstring):
+        tihex = TiHex(hexstring)
+        for addr, value in tihex:
+            self.RxDataBlockFast(addr, value)
+
+    def FlashTIHex(self, hexstring):
+        flash = segment_flash(TiHex(hexstring))
+        sled_path = os.path.join(os.path.dirname(__file__), "shellcode", "bslv2-flasher", "flasher.bin")
+        sled = open(sled_path, "rb").read()
+        for addr, data in flash:
+            # Maybe flash more than one block at a time? We do have 4K of ram
+            payload = struct.pack("<H", addr >> 8) + data
+            cksum = 256 - ((sum(ord(x) for x in "\001" + payload) + 1) % 256)
+            payload = "\001" + chr(cksum) + payload
+
+            assert (sum(ord(x) for x in payload) % 256) == 255
+
+            self.RxLargeDatablock(0x2400, sled + payload)
+            print repr(self.LoadPc(0x2400, True))
+
+
+    def bounce_hid(self):
+        "Reconnect to the target"
+        self.device.close()
+        time.sleep(0.250)
+        self.device = hidapi.HidDevice(self.vid, self.pid)
+        print self.device._device
+
+def main():
+    bsl = BSL()
+    #print BLINK_BSL
+    #return
+    try:
+        print repr(bsl.RxPassword('\xff' * 32))
+        #print repr(bsl.FlashTIHex(BLINK_BSL))
+        print repr(bsl.RxTIHexFast(BLINK_BSL2))
+        #print repr(bsl.LoadPc(0x2000))
+        #raise SystemExit(0)
+        #print repr(bsl.RxTIHexFast(file("blinky.tihex","r").read()))
+        print repr(bsl.LoadPc(0x2400, True))
+        #bsl.device.close()
+        print repr("Bouncing...")
+        time.sleep(3)
+        print repr(bsl.bounce_hid())
+        print repr("waiting")
+        print repr("Next")
+        print repr(bsl.TxBufferSize())
+        print repr(bsl.TxBslVersion())
+    finally:
+        bsl.device.close()
+
+def mainx():
+    for addr, data in segment_flash(TiHex(RAM_BSL)):
+        bs = 64
+        hexdata = "\n     ".join(data[s:s+bs].encode("hex") for s in range(0,len(data),bs))
+        print "%04x %s" % (addr, hexdata)
+
+main()

@@ -1,0 +1,96 @@
+#!/usr/bin/env python
+
+#GoodFET I2C eeprom Client
+
+import re
+import sys
+import binascii
+import array
+from GoodFETI2C import GoodFETI2C
+#from intelhex import IntelHex
+
+if len(sys.argv) == 1:
+    print "Usage: %s verb [objects]\n" % sys.argv[0]
+    print "%s dump 0x$target $filename.bin [0x$start [0x$length]]" % sys.argv[0]
+    print "%s read 0x$target [0x$start [0x$length]]" % sys.argv[0]
+    print "%s write 0x$target 0x$adr 0x$val [0x...]" % sys.argv[0]
+    print "%s scan" % sys.argv[0]
+    sys.exit()
+
+#Initialize FET and set baud rate
+client = GoodFETI2C()
+#client.verbose=True
+client.serInit()
+client.I2Csetup()
+
+control_chars = ''.join(map(chr, range(0, 32) + range(127, 256)))
+control_char_re = re.compile('[%s]' % re.escape(control_chars))
+
+
+def dotnpc(s):
+    """Replace non-printing-characters with dots"""
+    return control_char_re.sub('.', s)
+
+
+def xxd(data):
+    for offset in range(0, len(data), 16):
+        line = data[offset:offset + 16]
+        hexdata = binascii.hexlify(line)
+        print "%07x: %4s %4s %4s %4s %4s %4s %4s %4s  %s" % tuple(
+            [offset] + [hexdata[s:s + 4] for s in range(0, 32, 4)] + [dotnpc(line)])
+
+
+if sys.argv[1] == "dump":
+    devadr = int(sys.argv[2], 16)
+    f = sys.argv[3]
+    start = 0x00
+    count = 0x100
+    if len(sys.argv) > 4:
+        start = int(sys.argv[4], 16)
+    if len(sys.argv) > 5:
+        count = int(sys.argv[5], 16)
+
+    print "Dumping %i bytes from device 0x%02x starting at 0x%02x to file: %s." % (count, devadr, start, f)
+    output = open(f, mode='wb')
+    total = 0
+    for x in xrange(0, count, 128):
+        data = client.I2Ctrans(min(128, count - x), [devadr, ((start + x) >> 8) & 0x0ff, (start + x) & 0x0ff])
+        sys.stdout.write(".")
+        sys.stdout.flush()
+        output.write(data)
+        total += len(data)
+    print ""
+    print "Dumped %i bytes" % total
+    output.close()
+
+if sys.argv[1] == "read":
+    devadr = int(sys.argv[2], 16)
+    start = 0x00
+    if len(sys.argv) > 3:
+        start = int(sys.argv[3], 16)
+    count = 1
+    if len(sys.argv) > 4:
+        count = int(sys.argv[4], 16)
+    print "Reading %i bytes from device 0x%02x starting at 0x%02x." % (count, devadr, start)
+    data = []
+    for x in xrange(0, count, 128):
+        data += client.I2Ctrans(min(128, count - x), [devadr, ((start + x) >> 8) & 0x0ff, (start + x) & 0x0ff])
+    if data:
+        xxd(data)
+    else:
+        print "No data received"
+
+if sys.argv[1] == "write":
+    if len(sys.argv) > 2:
+        data = [int(x, 16) for x in sys.argv[2:]]
+    for i, byte in enumerate(data):
+        print "0x%02x: 0x%02x" % (i, byte)
+    client.I2Cwritebytes(data)
+
+if sys.argv[1] == "scan":
+    print "Scanning I2C bus..."
+    arr = client.I2Cscan()
+    if len(arr) > 100:
+        print "Warning: found more than 100 devices. Wiring may be wrong!"
+    for result in arr:
+        print "    Found 0x%02X (0x%02X %s)" % (result, result >> 1, "R" if (result >> 1) & 1 else "W")
