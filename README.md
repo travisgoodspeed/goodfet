@@ -24,3 +24,27 @@ have different names, and the MSP430 compiler might be separated from
 its libc implementation.
 
 
+Client
+------
+
+First, grab a copy of the client code and link it into /usr/local/bin.
+
+```
+git clone https://github.com/travisgoodspeed/goodfet/
+(cd client && sudo make link)
+```
+
+Before using the client, you will need to specify your hardware
+revision in the $client or %client% environment variable.
+
+
+Firmware
+--------
+
+If your GoodFET has not yet been flashed, or if you would like to
+develop new firmware features, you will need to compile from scratch.
+
+```
+cd ~/goodfet/firmware
+board=goodfet41 make clean all
+```
