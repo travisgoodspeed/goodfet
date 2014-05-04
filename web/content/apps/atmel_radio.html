@@ -1,0 +1,41 @@
+---
+title: Atmel Radio
+---
+<h1>Atmel Radio Application</h1>
+
+<p>This application is for use by the atmega128rfa1 radio, but may also work for other Atmel chips with both an AVR microcontroller and an IEEE 802.15.4 radio on board.</p>
+
+<!-- Photo goes here.
+-->
+
+
+
+<h2>Clients</h2>
+
+<p>A Python client, <a href="/clients/goodfetzigduino/">goodfet.zigduino</a>,
+is in the works, but only implements very basic send and receive functionality.
+
+<h2>Development</h2>
+
+<h2>Verbs</h2>
+
+<p>The following verbs are supported.  The Write-Enable command is implied
+by those that write flash memory, such as POKE and SPI_ERASE.</p>
+
+<table border="1">
+<tr><th>Hex</th><th>#define</th><th>Description</th></tr>
+<tr><td>0x02</td><td>PEEK</td><td>Read a register.</td></tr>
+<tr><td>0x03</td><td>POKE</td><td>Write a register</td></tr>
+<tr><td>0x10</td><td>SETUP</td><td>Initialize radio.</td></tr>
+<tr><td>0x7E</td><td>NOK</td><td>No Operation</td></tr>
+
+<tr><td>0x80</td><td>ATMEL_RADIO_RX</td><td>Receive a packet.</td></tr>
+<tr><td>0x81</td><td>ATMEL_RADIO_TX</td><td>Transmit a packet.</td></tr>
+<tr><td>0x84</td><td>ATMEL_RADIO_AACK_ON</td><td>Enable radio's extended operating mode (Disabled by default.  For research purposes only).</td></tr>
+<tr><td>0x85</td><td>ATMEL_RADIO_AACK_OFF</td><td>Disable radio's extended operating mode..</td></tr>
+<tr><td>0x86</td><td>ATMEL_RADIO_AUTOCRC_ON</td><td>Enable auto checksumming.</td></tr>
+<tr><td>0x8</td><td>ATMEL_RADIO_AUTOCRC_OFF</td><td>Disable auto checksumming.</td></tr>
+
+
+
+</table>

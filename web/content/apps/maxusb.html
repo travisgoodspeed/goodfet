@@ -1,0 +1,81 @@
+---
+title: Maxim USB Controllers
+---
+<h1>MAXUSB Application</h1>
+
+<p>This is a driver for the MAX342x USB chips from Maxim.  The pinout
+is SPI except that pin 8 becomes INT and pin 11 becomes !RST.</p>
+
+<p>You can use the <a href="/hardware/facedancer11/">Facedancer11</a> device,
+or you could purchase the Maxim MAX3421 EVK, then wiring it up with the
+following configuration:</p>
+
+<a href="http://www.flickr.com/photos/travisgoodspeed/6813696484/" title="GoodFET wiring for Max3421 EVK by Travis Goodspeed, on Flickr"><img src="http://farm8.staticflickr.com/7205/6813696484_d4d1a8daf1.jpg" width="282" height="500" alt="GoodFET wiring for Max3421 EVK"></a>
+
+<a href="http://www.flickr.com/photos/travisgoodspeed/6801358124/" title="GoodFET Does USB by Travis Goodspeed, on Flickr"><img src="http://farm8.staticflickr.com/7182/6801358124_6054d938bb.jpg" width="500" height="282" alt="GoodFET Does USB"></a>
+
+
+<h2>Clients</h2>
+
+<p>A Python client, <a href="/clients/goodfetmaxusb/">goodfet.maxusb</a>, is a
+doodle for simple experimentation.</p>
+<ul>
+    <li>goodfet.maxusb</li>
+    <li>goodfet.maxusbdfu</li>
+    <li>goodfet.maxusbftdi</li>
+    <li>goodfet.maxusbhid</li>
+    <li>goodfet.maxusbhost</li>
+    <li>goodfet.maxusbmass</li>
+</ul>
+
+<h2>Development</h2>
+
+<p>Nothing yet.</p>
+
+<h2>Verbs</h2>
+
+<p>The following verbs are supported.  The Write-Enable command is implied
+by those that write flash memory, such as POKE and SPI_ERASE.</p>
+
+<table border="1">
+<tr><th>Hex</th><th>#define</th><th>Description</th></tr>
+<tr><td>0x00</td><td>READ</td><td>Exchange SPI data.</td></tr>
+<tr><td>0x01</td><td>WRITE</td><td>Exchange SPI data.</td></tr>
+<tr><td>0x02</td><td>PEEK</td><td>TODO</td></tr>
+<tr><td>0x03</td><td>POKE</td><td>TODO</td></tr>
+<tr><td>0x10</td><td>SETUP</td><td>Configure I/O pins.</td></tr>
+<!--
+<tr><td>0x20</td><td>START</td><td>Start a transaction.</td></tr>
+<tr><td>0x21</td><td>STOP</td><td>Stop a transaction.</td></tr>
+<tr><td>0x7E</td><td>NOK</td><td>No Operation</td></tr>
+
+<tr><td>0x80</td><td>SPI_JEDEC</td><td>Grab 3-byte JEDEC ID.</td></tr>
+<tr><td>0x81</td><td>SPI_ERASE</td><td>Erase a Flash EEPROM.</td></tr>
+-->
+</table>
+
+<h2>Example Usage</h2>
+
+<p>
+On the host side, run goodfet.maxusbmass.
+On a target machine, you will see it appear as a thumb drive, and you
+can mount it like a read-only USB device as shown below:
+</p>
+<pre>
+$ sudo mount /dev/sdc /mnt/gf
+mount: warning: /mnt/gf seems to be mounted read-only.
+$ ls /mnt/gf/
+add-ons  autorun.inf  cdsample  drivers  readme.txt  setup.exe  setuptip.txt  tools  win98
+$ head /mnt/gf/readme.txt 
+		   ------------------------------------------
+			Microsoft Windows 98 Second Edition
+                           README for Microsoft Windows  
+		    (c) Copyright Microsoft Corporation, 1999
+		   ------------------------------------------
+
+
+
+------------------------
+HOW TO USE THIS DOCUMENT
+</pre>
+

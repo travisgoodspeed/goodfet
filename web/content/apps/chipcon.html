@@ -1,0 +1,96 @@
+---
+title: Chipcon 8051
+---
+<h1>Chipcon Application</h1>
+
+<p>This application allows for the debugging of Chipcon radios with embedded
+8051 cores, such as the CC2430 and CC2530.  The protocol is SPI-like, but with
+a bi-directional data line.
+</p>
+
+<a href="http://www.flickr.com/photos/travisgoodspeed/3611512761/"
+title="GoodFET Chipcon pinout by Travis Goodspeed, on Flickr">
+<img src="http://farm4.static.flickr.com/3369/3611512761_61d030e6c1.jpg"
+width="500" height="375" alt="GoodFET Chipcon pinout" /></a>
+
+
+<h2>Clients</h2>
+
+<p><a href="/clients/goodfetcc/">chipcon.cc</a> is an actively maintained
+client application.</p>
+
+
+<h2>Development</h2>
+
+<p>Prior to any transactions, the SETUP (0x10) verb should be sent to the
+Chipcon application to properly set the I/O pin directions.
+After that, the START (0x20) and STOP (0x21) verbs may be used to enter and
+exit the debugger.
+</p>
+
+<p>The Chipcon protocol is similar to SPI, but with the difference that a single
+data line is used.  Rather than exchanging register values, the transfer is one-way.
+Use the WRITE (0x01) instruction only for debugging commands which do not result
+in a reply.  READ (0x00) will write its data to the target, then accept a return
+byte in reply.</p>
+
+
+<h2>Verbs</h2>
+
+<p>While standard verbs are supported on this platform,
+they are inadequate for full debugging.  Verbs 0x80 to 0x8F
+are debugging primitives, while verbs 0x90 to 0x9F
+are used for more complicated macro commands.</p>
+<table border="1">
+<tr><th>Hex</th><th>#define</th><th>Description</th></tr>
+<tr><td>0x00</td><td>READ</td><td>Write any data, return 1-byte reply.</td></tr>
+<tr><td>0x01</td><td>WRITE</td><td>Write data.</td></tr>
+
+<tr><td>0x02</td><td>PEEK</td><td>Read from IRAM.</td></tr>
+<tr><td>0x03</td><td>POKE</td><td>Write to IRAM.</td></tr>
+
+<tr><td>0x10</td><td>SETUP</td><td>Configure I/O pins.</td></tr>
+<tr><td>0x20</td><td>START</td><td>Start a transaction.</td></tr>
+<tr><td>0x21</td><td>STOP</td><td>Stop a transaction.</td></tr>
+<!--
+<tr><td>0x7E</td><td>NOK</td><td>No Operation</td></tr>
+<tr><td>0x7F</td><td>OK</td><td>No Operation</td></tr>
+-->
+
+<!-- Raw debugging commands. -->
+<tr><td>0x80</td><td>CC_CHIP_ERASE</td><td></td></tr>
+<tr><td>0x81</td><td>CC_WR_CONFIG</td><td></td></tr>
+<tr><td>0x82</td><td>CC_RD_CONFIG</td><td></td></tr>
+<tr><td>0x83</td><td>CC_GET_PC</td><td></td></tr>
+<tr><td>0x84</td><td>CC_READ_STATUS</td><td></td></tr>
+<tr><td>0x85</td><td>CC_SET_HW_BRKPNT</td><td></td></tr>
+<tr><td>0x86</td><td>CC_HALT</td><td></td></tr>
+<tr><td>0x87</td><td>CC_RESUME</td><td></td></tr>
+<tr><td>0x88</td><td>CC_DEBUG_INSTR</td><td></td></tr>
+<tr><td>0x89</td><td>CC_STEP_INSTR</td><td></td></tr>
+<tr><td>0x8A</td><td>CC_STEP_REPLACE</td><td></td></tr>
+<tr><td>0x8B</td><td>CC_GET_CHIP_ID</td><td></td></tr>
+
+<!--Higher level, make use of raw commands. -->
+<tr><td>0x90</td><td>CC_READ_CODE_MEMORY</td><td></td></tr>
+<tr><td>0x91</td><td>CC_READ_XDATA_MEMORY</td><td></td></tr>
+<tr><td>0x92</td><td>CC_WRITE_XDATA_MEMORY</td><td></td></tr>
+<tr><td>0x93</td><td>CC_SET_PC</td><td></td></tr>
+<tr><td>0x94</td><td>CC_CLOCK_INIT</td><td></td></tr>
+<tr><td>0x95</td><td>CC_WRITE_FLASH_PAGE</td><td></td></tr>
+<tr><td>0x96</td><td>CC_READ_FLASH_PAGE</td><td></td></tr>
+<tr><td>0x97</td><td>CC_MASS_ERASE_FLASH</td><td></td></tr>
+<tr><td>0x98</td><td>CC_PROGRAM_FLASH</td><td>Copy 2kB to Flash.</td></tr>
+<tr><td>0x99</td><td>CC_WIPEFLASHBUFFER</td><td>Wipe 2kB buffer to 0xFF.</td></tr>
+<tr><td>0x9A</td><td>CC_LOCKCHIP</td><td>Set security bits.</td></tr>
+
+
+</table>
+
+
+<h2>Thanks</h2>
+<p>Thanks, and a beer, are due to <a href="http://www.pkuhar.com">Peter Kuhar</a>,
+both for authoring the first open source Chipcon debugger and for the neighborly
+contribution of hardware.</p>
+
+

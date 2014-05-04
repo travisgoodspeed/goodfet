@@ -1,0 +1,108 @@
+---
+title: Development Manual
+---
+<h1>Development Manual</h1>
+
+<h2>Programming</h2>
+
+<p>The GoodFET is programmed by the MSP430's BootStrap Loader (BSL)
+which is adequately documented elsewhere.  Using the GoodFET's fork of
+the TinyOS BSL client, an image may be programmed by</p>
+<pre>goodfet.bsl -e -p foo.hex</pre>
+
+<h2>Serial Port</h2>
+
+<p>To minimize parts count, the DTR line, which is connected to
+the !RST pin of the MSP430, is not inverted by hardware.  The
+DTR line--Data Terminal Ready--is usually high when a terminal
+application is connected, low when one is not.  Unless this behavior
+is overridden, the GoodFET will run until a client connects, then
+idle in a reset until the client disconnects.</p>
+
+<h2>Standard Protocol</h2>
+
+<p>Most of the GoodFET applications will use this standard protocol,
+which has been composed so as to allow multiple applications to be
+compiled together.</p>
+
+<p>The baud rate is 115200 8/N/1 by default, but this may be made
+faster by sending the appropriate command.</p>
+
+<h3>Transactions</h3>
+
+<p>The workstation may send {u8 <i>app</i>, u8 <i>verb</i>,
+u16 <i>count</i>}. If <i>count</i> is non-zero, then <i>count</i> bytes of data
+follow.  The target will reply with {u8 <i>app</i>, u8 <i>verb</i>,
+u16 <i>count</i>} and data. <b>N.B., <i>count</i> was u8 until October 5, 2009.</b></p>
+
+<p>The GoodFET will announce that it is ready for a command by transmitting
+{0x00, 0x7F, 0x00, 0x00}, which is the "OK" message from the Monitor application.</p>
+
+<h3>Apps</h3>
+
+<p>The following table lists many application reservation codes.</p>
+
+<table border="1">
+<tr><th>Hex</th><th>#define</th><th>Description</th><th>Status</th></tr>
+<tr><td>0x00</td><td><a href="/apps/monitor/">MONITOR</a></td><td>Local Memory Monitor</td><td>Beta</td></tr>
+
+<tr><td>0x01</td><td><a href="/apps/spi/">SPI</a></td><td>SPI Adapter</td><td>Beta</td></tr>
+<tr><td>0x02</td><td><a href="/apps/i2c/">I2C</a></td><td>I<sup>2</sup>C Adapter</td><td>Pre-Alpha</td></tr>
+
+<tr><td>0x10</td><td><a href="/apps/jtag/">JTAG</a></td><td>Standard JTAG</td><td>Beta</td></tr>
+
+<tr><td>0x11</td><td><a href="/apps/jtag430/">JTAG430X2</a></td><td>MSP430 JTAG</td><td>Alpha</td></tr>
+<tr><td>0x12</td><td><a href="/apps/ejtag/">EJTAG</a></td><td>MIPS EJTAG</td><td>Pre-Alpha</td></tr>
+<tr><td>0x13</td><td><a href="/apps/jtagarm7tdmi/">JTAGARM7TDMI</a></td><td>Intel XScale JTAG</td><td>Pre-Alpha</td></tr>
+<tr><td>0x14</td><td>ADIv5</td><td>ADIv5</td><td>Pre-Alpha</td></tr>
+
+<tr><td>0x15</td><td><a href="/apps/jtagxscale/">JTAGXScale</a></td><td>Intel XScale JTAG</td><td>Pre-Alpha</td></tr>
+<tr><td>0x16</td><td><a href="/apps/jtag430/">JTAG430</a></td><td>MSP430 JTAG (Classic Only)</td><td>Beta</td></tr>
+<tr><td>0x17</td><td><a href="/apps/jtag430/">JTAG430</a></td><td>MSP430 SBW (Classic Only)</td><td>Pre-Alpha</td></tr>
+
+<tr><td>0x30</td><td><a href="/apps/chipcon/">Chipcon</a></td><td>Chipcon 8051</td><td>Pre-Alpha</td></tr>
+
+<tr><td>0x31</td><td>SIF</td><td>Cambridge SIF (EM2xx) Debugging</td><td></td></tr>
+<tr><td>0x32</td><td><a href="/apps/avr/">AVR</a></td><td>Atmel AVR</td><td></td></tr>
+<tr><td>0x33</td><td><a href="/apps/jtagarm7tdmi/">JTAGARM7TDMI</a></td><td>ARM7 TDMI</td><td></td></tr>
+<tr><td>0x34</td><td><a href="/apps/pic/">PIC</a></td><td>PIC</td><td></td></tr>
+
+<tr><td>0x40</td><td><a href="/apps/maxusb/">MaxUSB</a></td><td>MaxUSB</td><td></td></tr>
+
+<tr><td>0x50</td><td><a href="/apps/nrf/">NRF</a></td><td>Nordic RF SPI</td><td></td></tr>
+<tr><td>0x51</td><td><a href="/apps/ccspi/">ChipconSPI</a></td><td>Chipcon SPI</td><td></td></tr>
+<tr><td>0x52</td><td><a href="/apps/cc2500/">ChipconCC2500</a></td><td>Chipcon CC2500</td><td></td></tr>
+<tr><td>0x53</td><td><a href="/apps/atmel_radio/">ATMEL_RADIO</a></td><td>Atmega128rfa1 Radio</td><td></td></tr>
+
+<tr><td>0x71</td><td><a href="/apps/glitch/">GLITCH</a></td><td>Glitching</td><td></td></tr>
+<tr><td>0x72</td><td>PLUGIN</td><td>Plugin</td><td></td></tr>
+
+<tr><td>0x73</td><td>SMARTCARD</td><td>Smartcards and SIM Cards</td><td></td></tr>
+</table>
+
+<h3>Standard Verbs</h3>
+
+<p>The following verbs are standardized across all applications.
+An application need not support
+all (or any) of them, but it must not use these codes for anything else.
+All application-specific commands ought to have the most significant bit
+set; that is, they must be >=0x80.</p>
+
+<table border="1">
+<tr><th>Hex</th><th>#define</th><th>Description</th></tr>
+
+<tr><td>0x00</td><td>READ</td><td>Read data.</td></tr>
+<tr><td>0x01</td><td>WRITE</td><td>Write data.</td></tr>
+<tr><td>0x02</td><td>PEEK</td><td>Read from address.</td></tr>
+<tr><td>0x03</td><td>POKE</td><td>Write to address.</td></tr>
+<tr><td>0x10</td><td>SETUP</td><td>Configure I/O pins.</td></tr>
+
+<tr><td>0x20</td><td>START</td><td>Start a transaction.</td></tr>
+<tr><td>0x21</td><td>STOP</td><td>Stop a transaction.</td></tr>
+
+<tr><td>0x30</td><td>CALL</td><td>Call Address</td></tr>
+<tr><td>0x31</td><td>EXEC</td><td>Execute Arbitrary Code Fragment</td></tr>
+
+<tr><td>0x7E</td><td>NOK</td><td>No Operation</td></tr>
+<tr><td>0x7F</td><td>OK</td><td>No Operation</td></tr>
+</table>

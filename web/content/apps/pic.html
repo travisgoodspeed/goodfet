@@ -1,0 +1,74 @@
+---
+title: PIC
+---
+<h1>PIC Application</h1>
+
+<p>Read, program,
+erase <a href="http://en.wikipedia.org/wiki/PIC_microcontroller">PIC</a>
+chips. Originally targetted at 16-bit families (i.e., PIC24H,
+dsPIC33F, PIC24F, and dsPIC30F), but now moving in the 8-bit and
+32-bit directions.</p>
+
+
+<h2>Clients</h2>
+
+<p><a href="/clients/goodfetpic/">goodfet.pic</a> is a decent but
+unstable client. You can expect its command-line arguments to change
+as new chip families become supported and as the PIC app evolves.</p>
+
+<p>A Python class that subsumes goodfet.pic (whereby goodfet.pic will
+become a mere frontend to several methods of the class) is in the
+works. Stay tuned.</p>
+
+
+<h2>Status</h2>
+
+<p>
+<h3>ICSP likely supported families</h3>
+<table border="1">
+<tr><th>Family</th><th>Comments</th></tr>
+<tr><td>PIC24F</td><td></td></tr>
+<tr><td>dsPIC33F</td><td></td></tr>
+<tr><td>PIC24H</td><td></td></tr>
+</table>
+
+<h3>Specific chips tested</h3>
+<table border="1">
+<tr><th>Chip</th><th>Comments</th></tr>
+<tr><td>PIC24FJ64GA002</td><td></td></tr>
+<tr><td>PIC24FJ128DA106</td><td></td></tr>
+<tr><td>dsPIC33FJ128GP708</td><td></td></tr>
+<tr><td>dsPIC33FJ128GP710</td><td></td></tr>
+<tr><td>PIC24HJ12GP201</td><td></td></tr>
+</table>
+</p>
+
+<h2>Development</h2>
+
+<p>Coming soon!</p>
+
+<h2>Verbs</h2>
+
+<p>The following verbs are supported. Note that the standard verbs are
+currently <em>not</em> implemented in their &lt; 0x80 address
+(confer <a href="/manual/">the manual</a>). The PIC app is still young
+and, given variations in access methods across chip families, it is not
+ready to commit to standard verbs.</p>
+
+<p>Naming conventions:
+<ul>
+<li>*33F - targets PIC24H and dsPIC33F chips.</li>
+</ul></p>
+
+<table border="1">
+<tr><th>Hex</th><th>#define</th><th>Description</th></tr>
+<tr><td>0x81</td><td>PIC_DEVID33F</td><td>Read Device ID, application ID, and hardware revision.</td></tr>
+<tr><td>0x82</td><td>PIC_SIX33F</td><td>ICSP six command; execute instruction on target (sourcing clock from PGC).</td></tr>
+<tr><td>0x83</td><td>PIC_REGOUT33F</td><td>Read out VISI register.</td></tr>
+<tr><td>0x84</td><td>PIC_START33F</td><td>Start ICSP session.</td></tr>
+<tr><td>0x85</td><td>PIC_STOP33F</td><td>Stop ICSP session (basically, drop !MCLR pin and pause briefly).</td></tr>
+<tr><td>0x86</td><td>PIC_SIXLIST33F</td><td>Buffer list of instructions to MSP430, then execute them over ICSP session with target dsPIC33F/PIC24H chip. This reduces overhead of UART communication between client and app.</td></tr>
+<tr><td>0x87</td><td>PIC_RESET33F</td><td>Reset attached dsPIC33F/PIC24H chip</td></tr>
+<td><td>0x88</td><td>PIC_CMDLIST</td><td>Same as PIC_SIXLIST33F, but with an ICSP command before each instruction.</td></tr>
+
+</table>

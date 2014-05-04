@@ -1,0 +1,215 @@
+<!DOCTYPE HTML> 
+
+<html>
+  <head>
+    <title>GoodFET -- <%= @item[:title] %></title>
+    <style type="text/css" media="screen">
+      * {
+        margin: 0;
+        padding: 0;
+      
+        font-family: Georgia, Palatino, Times, 'Times New Roman', sans-serif;
+      }
+      
+      body {
+        background: #fff;
+      }
+      
+      a {
+        text-decoration: none;
+      }
+      
+      a:link,
+      a:visited {
+        color: #f30;
+      }
+      
+      a:hover {
+        color: #f90;
+      }
+      
+      #main {
+        position: absolute;
+      
+        top: 20px;
+        left: 280px;
+      
+        width: 500px;
+      }
+      
+      #main h1 {
+        font-size: 40px;
+        font-weight: normal;
+      
+        line-height: 40px;
+      
+        padding: 20px 0 20px 0;
+      
+        letter-spacing: -1px;
+      }
+      
+      #main p {
+        margin: 0 0 20px 0;
+        
+        font-size: 15px;
+        
+        line-height: 20px;
+      }
+      
+      #main ul {
+        padding: 0 0 0 20px;
+      }
+      
+      #main li {
+        margin: 0 0 20px 0;
+      
+        list-style-type: square;
+      
+        font-size: 15px;
+        
+        line-height: 20px;
+      }
+      
+      #sidebar {
+        position: absolute;
+      
+        top: 40px;
+        left: 20px;
+        width: 200px;
+      
+        padding: 20px 20px 0 0;
+      
+        border-right: 1px solid #ccc;
+      
+        text-align: right;
+      }
+      
+      #sidebar h2 {
+        text-transform: uppercase;
+      
+        font-size: 13px;
+      
+        color: #333;
+      
+        letter-spacing: 1px;
+      
+        line-height: 20px;
+      }
+      
+      #sidebar ul {
+        list-style-type: none;
+      
+        margin: 20px 0;
+      }
+      
+      #sidebar li {
+        font-size: 14px;
+      
+        line-height: 20px;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="main">
+      <%= yield %>
+    </div>
+    <div id="sidebar">
+      <h2>About</h2>
+      <ul>
+	<li><a href="/">Home</a></li>
+	<li><a href="/about/status/">Status</a></li>
+	<li><a href="/about/download/">Download</a></li>
+	<li><a href="/about/support/">Support</a></li>
+	<li><a href="/orders/">Ordering</a></li>
+        <li><a href="/about/people/">Maintainers</a></li>
+      </ul>
+      <h2>SourceForge</h2>
+      <ul>
+	<li><a href="https://sourceforge.net/projects/goodfet/develop/">Develop</a></li>
+	<li><a href="https://sourceforge.net/projects/goodfet/files">Files</a></li>
+	<li><a href="https://lists.sourceforge.net/lists/listinfo/goodfet-devel">GoodFET-devel List</a></li>
+      </ul>
+      
+      <h2>Documentation</h2>
+      <ul>
+        <li><a href="/construction/">Construction</a></li>
+	<li><a href="/tutorial/">Tutorial</a></li>
+	<li><a href="/faq/">FAQ</a></li>
+      </ul>
+      <h2>Clients</h2>
+      <ul>
+	<li><a href="/clients/goodfetmonitor/">Monitor</a></li>
+	<li><a href="/clients/goodfetmsp430/">MSP430 JTAG</a></li>
+	<li><a href="/clients/goodfetspiflash/">SPI Flash</a></li>
+    <li><a href="/clients/goodfetzensys/">Zensys SPI</a></li>
+	<li><a href="/clients/goodfeti2ceeprom/">I2C EEPROM</a></li>
+	<li><a href="/clients/goodfetmaxusb/">Max USB</a></li>
+	<li><a href="/clients/goodfetmcpcan/">MCP CAN</a></li>
+	<li><a href="/clients/goodfetcc/">Chipcon 8051</a></li>
+	<li><a href="/clients/goodfetccspi/">Chipcon SPI</a></li>
+	<li><a href="/clients/goodfetnrf/">Nordic RF</a></li>
+	<li><a href="/clients/goodfetcc2500/">Chipcon CC2500</a></li>
+	<li><a href="/clients/goodfetzigduino/">Zigduino</a></li>
+	<li><a href="/clients/goodfetavr/">AVR</a></li>
+	<li><a href="/clients/goodfetpic/">PIC</a></li>
+      </ul>
+      <h2>Hardware</h2>
+      <ul>
+	<li><b>GoodFET</b></li>
+	<li><a href="/hardware/goodfet42/">GoodFET42</a></li>
+	<li><a href="/hardware/goodfet32/">GoodFET32</a></li>
+	<li><b>Radio</b></li>
+	<li><a href="/hardware/apimote/">Api-Mote</a></li>
+	<li><a href="/hardware/z1/">Zolertia Z1</a></li>
+	<li><a href="/hardware/telosb/">TelosB/TMote</a></li>
+	<li><a href="/hardware/nhb12/">Next Hope Badge</a></li>
+	<li><a href="/hardware/zigduino/">Zigduino</a></li>
+	<li><b>USB</b></li>
+	<li><a href="/hardware/facedancer21/">Facedancer21</a></li>
+	<li><a href="/hardware/facedancer11/">Facedancer11</a></li>
+	<li><b>CAN Bus</b></li>
+	<li><a href="/hardware/goodthopter12/">GoodThopter12</a></li>
+	<li><b>Conference Badges</b></li>
+	<li><a href="/hardware/nsc2013/">No Such Con 2013</a></li>
+	<li><a href="/hardware/nhb12/">The Next Hope</a></li>
+	<li><b>Retired</b></li>
+	<li><a href="/hardware/facedancer20/">Facedancer20</a></li>
+	<li><a href="/hardware/goodthopter11/">GoodThopter11</a></li>
+	<li><a href="/hardware/goodthopter10/">GoodThopter10</a></li>
+	<li><a href="/hardware/facedancer10/">Facedancer10</a></li>
+	<li><a href="/hardware/goodfet41/">GoodFET41</a></li>
+	<li><a href="/hardware/goodfet40/">GoodFET40</a></li>
+	<li><a href="/hardware/goodfet31/">GoodFET31</a></li>
+        <li><a href="/hardware/goodfet31L/">GoodFET31L</a></li>
+	<li><a href="/hardware/goodfet22/">GoodFET22</a></li>
+	<li><a href="/hardware/goodfet21/">GoodFET21</a></li>
+	<li><a href="/hardware/goodfet30/">GoodFET30</a></li>
+	<li><a href="/hardware/badfet20/">BadFET20</a></li>
+	<li><a href="/hardware/goodfet20/">GoodFET20</a></li>
+	<li><a href="/hardware/goodfet11/">GoodFET11</a></li>
+        <li><a href="/hardware/goodfet10/">GoodFET10</a></li>
+      </ul>
+      <h2>Firmware</h2>
+      <ul>
+	<li><a href="/manual/">Protocol Manual</a></li><br />
+	<li><a href="/apps/monitor/">Monitor</li>
+	<li><a href="/apps/spi/">SPI</a></li>
+	<li><a href="/apps/maxusb/">MAXUSB</a></li>
+	<li><a href="/apps/i2c/">I2C</a></li>
+	<li><a href="/apps/jtag/">JTAG</a></li>
+	<li><a href="/apps/jtag430/">JTAG430</a></li>
+	<li><a href="/apps/ejtag/">EJTAG</a></li>
+	<li><a href="/apps/jtagarm7tdmi/">JTAG ARM7TDMI</a></li>
+	<li><a href="/apps/jtagxscale/">JTAG XScale</a></li>
+	<li><a href="/apps/chipcon/">Chipcon 8051</a></li>
+	<li><a href="/apps/ccspi/">Chipcon SPI</a></li>
+	<li><a href="/apps/nrf/">Nordic RF</a></li>
+	<li><a href="/apps/cc2500/">Chipcon CC2500</a></li>
+	<li><a href="/apps/atmel_radio/">Atmel Radio</a></li>
+	<li><a href="/apps/avr/">AVR</a></li>
+	<li><a href="/apps/pic/">PIC</a></li>
+	<li><a href="/apps/glitch/">GLITCH</a></li>
+      </ul>
+    </div>
+  </body>
+</html>

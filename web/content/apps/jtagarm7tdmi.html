@@ -1,0 +1,60 @@
+---
+title: ARM7TDMI JTAG
+---
+<h1>JTAGARM7TDMI Application</h1>
+
+<p>This is standing material.  The real documentation is coming, as soon as someone
+edits jtagarm7tdmi in web/gfweb/content/.</p>
+
+<h2>Clients</h2>
+
+
+<h2>Status</h2>
+
+<h2>Development</h2>
+
+<h2>Verbs</h2>
+
+<p>The following verbs are supported.  (Not really.  This is a standin
+list from the MSP430.)</p>
+
+<table border="1">
+<tr><th>Hex</th><th>#define</th><th>Description</th></tr>
+<tr><td>0x02</td><td>PEEK</td><td>Read word from memory at word[0].</td></tr>
+<tr><td>0x03</td><td>POKE</td><td>Write word[1] to memory at word[0]. (Not flash.)</td></tr>
+<tr><td>0x10</td><td>SETUP</td><td>Configure I/O pins.</td></tr>
+<tr><td>0x20</td><td>START</td><td>Begin to debug by JTAG.</td></tr>
+<tr><td>0x21</td><td>STOP</td><td>End JTAG debugging.</td></tr>
+<tr><td>0x7E</td><td>NOK</td><td>No Operation</td></tr>
+
+<tr><td>0x80</td><td>IR_SHIFT</td><td>Shift the IR.</td></tr>
+<tr><td>0x81</td><td>DR_SHIFT</td><td>Shift the DR.</td></tr>
+<tr><td>0x91</td><td>DR_SHIFT20</td><td>Shift 20 bits of DR.</td></tr>
+
+<tr><td>0xA0</td><td>HALTCPU</td><td>Halt the CPU.</td></tr>
+<tr><td>0xA1</td><td>RELEASECPU</td><td>Resume the CPU.</td></tr>
+
+<!--<tr><td>0xC0</td><td>GETDEVICE</td><td></td></tr>-->
+<tr><td>0xC1</td><td>SETINSTRFETCH</td><td>Set CPU to Instruction Fetch state.</td></tr>
+<tr><td>0xC2</td><td>SETPC</td><td>Set the Program Counter.</td></tr>
+<!--<tr><td>0xC3</td><td>EXECUTEPOR</td><td></td></tr>
+<tr><td>0xC4</td><td>RELEASEDEVICE</td><td></td></tr>-->
+
+<tr><td>0xD2</td><td>GETREG</td><td>Read register u8[0].</td></tr>
+<tr><td>0xD3</td><td>SETREG</td><td>Write u16[1] to register u8[0].</td></tr>
+
+<tr><td>0xE0</td><td>WRITEMEM</td><td>Alias for POKE.</td></tr>
+<tr><td>0xE1</td><td>WRITEFLASH</td><td>Write a word of flash memory.</td></tr>
+<tr><td>0xE2</td><td>READMEM</td><td>Alias for PEEK.</td></tr>
+<tr><td>0xE3</td><td>ERASEFLASH</td><td>Mass Erase</td></tr>
+<!--
+<tr><td>0xE4</td><td>ERASECHECK</td><td></td></tr>
+<tr><td>0xE5</td><td>VERIFYMEM</td><td></td></tr>
+<tr><td>0xE6</td><td>BLOWFUSE</td><td></td></tr>
+<tr><td>0xE7</td><td>ISFUSEBLOWN</td><td></td></tr>
+-->
+
+<tr><td>0xF0</td><td>COREIP_ID</td><td></td></tr>
+<tr><td>0xF1</td><td>DEVICE_ID</td><td></td></tr>
+
+</table>

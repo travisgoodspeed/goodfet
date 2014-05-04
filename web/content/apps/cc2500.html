@@ -1,0 +1,41 @@
+---
+title: Chipcon CC2500
+---
+<h1>CC2500 Application</h1>
+
+<p>This application is for use by the Chipcon CC2500 and similar radios
+such as the CC1100. It supports simple radio modules as well as modules
+with external power amplificator and external antenna. For the latter,
+the pin CE is used to switch the external PA between TX and RX.</p>
+
+<!-- Photo goes here.
+-->
+
+
+
+<h2>Clients</h2>
+
+<p>A Python client, <a href="/clients/goodfetcc2500/">goodfet.cc2500</a>,
+is in the works, but nothing is stable yet.</p>
+
+<h2>Development</h2>
+
+<h2>Verbs</h2>
+
+<p>The following verbs are supported.</p>
+
+<table border="1">
+<tr><th>Hex</th><th>#define</th><th>Description</th></tr>
+<tr><td>0x00</td><td>READ</td><td>Exchange data.</td></tr>
+<tr><td>0x01</td><td>WRITE</td><td>Exchange data.</td></tr>
+<tr><td>0x02</td><td>PEEK</td><td>Read a register.</td></tr>
+<tr><td>0x03</td><td>POKE</td><td>Write a register</td></tr>
+<tr><td>0x10</td><td>SETUP</td><td>Configure I/O pins.</td></tr>
+
+<tr><td>0x80</td><td>RX</td><td>Receive a packet.</td></tr>
+<tr><td>0x81</td><td>TX</td><td>Transmit a packet.</td></tr>
+<tr><td>0x82</td><td>RX_FLUSH</td><td>Flush RX buffer.</td></tr>
+<tr><td>0x83</td><td>TX_FLUSH</td><td>Flush TX buffer.</td></tr>
+
+
+</table>

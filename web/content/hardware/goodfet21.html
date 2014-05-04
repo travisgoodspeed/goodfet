@@ -1,0 +1,53 @@
+---
+title: GoodFET21
+---
+<h1>GoodFET21</h1>
+
+<p>The GoodFET21 is the sixth hardware revision of the GoodFET, owing
+its heritage to the <a href="/hardware/badfet20/">BadFET20</a>
+and <a href="/hardware/goodfet30/">GoodFET30</a>.  It retains the more
+powerful MCU of the BadFET20 while adopting the GoodFET30's smaller
+board and lack of crystals.  The 74HC4053 MUX has been dropped from
+the design, and glitching is now performed directly from the MCU's
+DAC.
+</p>
+
+<h2>CAD Files</h2>
+
+<p>Eagle CAD 5.x files for the design can be found in
+/branches/goodfet21 of the subversion repository, or as
+<a href="/releases/goodfet21.zip">goodfet21.zip</a>.</p>
+
+<h2>Bill of Materials</h2>
+
+<table border="1">
+<tr><td>Quantity</td><td>Package</td><td></td></tr>
+<tr><td>1</td><td>SSOP28</td><td>FT232RL</td></tr>
+<tr><td>1</td><td>QFP64</td><td>MSP430F2618</td></tr>
+<tr><td>2</td><td>0603</td><td>0.1&mu;F Decoupling Capacitors</td></tr>
+<tr><td>3</td><td>0603</td><td>0603 LED</td></tr>
+<tr><td>2</td><td>0603</td><td>330R LED Series Resistors</td></tr>
+<tr><td>6</td><td>0603</td><td>100R JTAG Series Resistors</td></tr>
+<tr><td>1</td><td>0603</td><td>47K !RST Pull-up Resistor</td></tr>
+</table>
+
+<p>Resistor values can be approximated.  Be sure to get the 64 pin
+variant of the MSP430F2618.</p>
+
+<h2>Construction</h2>
+
+<a href="http://www.flickr.com/photos/travisgoodspeed/4161224496/"
+title="GoodFET21 by Travis Goodspeed, on
+Flickr"><img src="http://farm3.static.flickr.com/2788/4161224496_e3638b1493.jpg"
+width="500" height="180" alt="GoodFET21" /></a>
+</p>
+
+<a href="http://www.flickr.com/photos/travisgoodspeed/4163020683/"
+title="GoodFET21 Schematic by Travis Goodspeed, on
+Flickr"><img src="http://farm3.static.flickr.com/2633/4163020683_1081ac8f02.jpg"
+width="500" height="276" alt="GoodFET21 Schematic" /></a>
+
+<h2>Errata</h2>
+
+<p>None so far!</p>
+

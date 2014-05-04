@@ -1,0 +1,39 @@
+---
+title: JTAG
+---
+<h1>JTAG Application</h1>
+
+<p>This application serves for the debugging of generic JTAG devices of all types,
+and the macros that it defines serve as the basis for other JTAG debugging applications,
+such as the one for the MSP430.</p>
+
+<p>The pinout is standard for the MSP430 FET.</p>
+
+<h2>Clients</h2>
+
+<p>Please write one.</p>
+
+<h2>Development</h2>
+
+<p>Prior to any transaction, the SETUP (0x10) verb should be sent to the JTAG application
+to properly set the I/O pin directions.  After that, the START (0x20) and STOP (0x21)
+verbs may be used to enter and exit the TAP.</p>
+
+<p>The JTAG protocol itself is rather barren, defining only the setting and clearing
+of the Instruction Register (IR) and Data Register (DR).</p>
+
+<h2>Verbs</h2>
+
+<p>The following verbs are supported.</p>
+
+<table border="1">
+<tr><th>Hex</th><th>#define</th><th>Description</th></tr>
+<tr><td>0x10</td><td>SETUP</td><td>Configure I/O pins.</td></tr>
+<tr><td>0x20</td><td>START</td><td>Start a transaction.</td></tr>
+<tr><td>0x21</td><td>STOP</td><td>Stop a transaction.</td></tr>
+<tr><td>0x7E</td><td>NOK</td><td>No Operation</td></tr>
+
+<tr><td>0x80</td><td>IR_SHIFT</td><td>Shift the IR.</td></tr>
+<tr><td>0x81</td><td>DR_SHIFT</td><td>Shift the DR.</td></tr>
+<tr><td>0x91</td><td>DR_SHIFT20</td><td>Shift 20 bits of DR.</td></tr>
+</table>

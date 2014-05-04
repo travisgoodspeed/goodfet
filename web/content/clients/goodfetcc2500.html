@@ -1,0 +1,51 @@
+---
+title: goodfet.cc2500
+---
+<h1>goodfet.cc2500</h1>
+
+<p></p>
+
+<h2>Client</h2>
+
+<p><pre>goodfet.cc2500
+Usage: goodfet.cc2500 verb [objects]
+
+goodfet.cc2500 info
+goodfet.cc2500 regs
+goodfet.cc2500 pyregs
+
+goodfet.cc2500 tunelelo
+        Tunes to Lelo vibrator configuration.
+goodfet.cc2500 snifflelo
+        Sniffs Lelo vibrator packets
+goodfet.cc2500 setlelo [0-128]
+        Set Lelo vibrator strength to a given value
+
+</pre></p>
+
+<h2>Pinout</h2>
+
+<p>
+  <table border="1">
+    <tr><th style="width: 5em;">Name</th><th colspan="2" style="width: 3.5em;">Pin</th><th style="width: 5em;">Name</th></tr>
+    <tr><td>MISO</td>	<td>1</td><td>2</td>	<td>Vcc</td></tr>
+    <tr><td>MOSI</td>	<td>3</td><td>4</td>	<td>Vcc</td></tr>
+    <tr><td>SS</td>	<td>5</td><td>6</td>	<td>	</td></tr>
+    <tr><td>SCK</td>	<td>7</td><td>8</td>	<td></td></tr>
+    <tr><td>GND</td>	<td>9</td><td>10</td>	<td>	</td></tr>
+    <tr><td>PA</td>	<td>11</td><td>12</td>	<td>    </td></tr>
+    <tr><td></td>	<td>13</td><td>14</td>	<td>    </td></tr>
+  </table>
+</p>
+<p>The optionnal PA (pin 11) is for modules that uses external power
+amplificator. In this case, the pin is set to 1 for TX mode and 0 for
+RX operations. Be sure your module is using this logic before wiring.</p>
+
+<h2>Examples</h2>
+<h3>Lelo vibrator</h3>
+A basic support for the Lelo vibrator remote control has been added.
+It has not been tested. All the code was adapted from <a href="http://scanlime.org/2012/11/hacking-my-vagina/">scanlime blog post</a>.
+
+<h2>Notes</h2>
+<p>This client is still very young.  Expect some bugs and
+oddities.</p>

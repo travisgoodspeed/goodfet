@@ -1,0 +1,55 @@
+---
+title: GoodFET10
+---
+
+<h1>GoodFET10</h1>
+
+<p>The GoodFET10 is the first hardware revision of the GoodFET.
+Like all first-run boards, it has a few errata that must be patched
+before use.  These inconveniences will be fixed in the GoodFET11.
+</p>
+
+<h2>CAD Files</h2>
+
+<p>Eagle CAD 5.x files for the design can be found in 
+/branches/goodfet10 of Subversion, or as
+<a href="/releases/goodfet10.zip">goodfet10.zip</a>.</p>
+
+<h2>Bill of Materials</h2>
+
+<table border="1">
+<tr><td>Quantity</td><td>Package</td><td></td></tr>
+<tr><td>1</td><td>SSOP28</td><td>FT232R </td></tr>
+<tr><td>1</td><td>QFP64</td><td>MSP430F1611 or 1612</td></tr>
+<tr><td>2</td><td>0603</td><td>0.1&mu;F Decoupling Capacitors</td></tr>
+<tr><td>3</td><td>0603</td><td>LED</td></tr>
+<tr><td>2</td><td>0603</td><td>330R LED Series Resistors</td></tr>
+<tr><td>5</td><td>0603</td><td>47K Pull-up Resistors</td></tr>
+<tr><td>6</td><td>0603</td><td>100R JTAG Series Resistors</td></tr>
+</table>
+
+<p>Also, one 47K through-hole resistor and a 32.768kHz crystal
+are required to patch errata.</p>
+
+<h2>Construction</h2>
+
+<p>Construct
+as described on the 
+<a href="http://www.flickr.com/photos/travisgoodspeed/3440547140/">
+following Flickr image's annotations</a>, then patch as described
+in the Errata section.
+<a href="http://www.flickr.com/photos/travisgoodspeed/3440547140/" title="GOODFET10 by Travis Goodspeed, on Flickr"><img src="http://farm4.static.flickr.com/3402/3440547140_93110cc816.jpg" width="500" height="375" alt="GOODFET10" /></a>
+</p>
+
+<h2>Errata</h2>
+<p>
+<a href="http://www.flickr.com/photos/travisgoodspeed/3472825191/" title="GOODFET10 Erratum Fix by Travis Goodspeed, on Flickr"><img src="http://farm4.static.flickr.com/3315/3472825191_9f7612cd5f.jpg" width="500" height="375" alt="GOODFET10 Erratum Fix" /></a>
+The GOODFET10 is missing a 47K pull-up resistor on the !RST pin of the MSP430F161x
+chip.  Solder one like so.</p>
+
+<p>Further, no crystals are present on this board.  A 32.768kHz crystal must be
+patched onto the XIN/XOUT pins.</p>
+
+<p>The board as first manufactured was too thin, so a wedge or a crimped
+USB extension cable is necessary for a tight fit.  Future runs will be made
+at 0.078'' thickness.</p>

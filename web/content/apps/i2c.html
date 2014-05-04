@@ -1,0 +1,52 @@
+---
+title: Inter-IC Bus (I2C)
+---
+<h1>I2C Application</h1>
+
+<p>This application allows for communication by I2C, the Inter-IC Bus.
+Use the following pinout, which is similar to the JTAG pinout.</p>
+
+<p>
+  <table border="1">
+    <tr><th style="width: 5em;">Name</th><th colspan="2" style="width: 3.5em;">Pin</th><th style="width: 5em;">Name</th></tr>
+    <tr><td>SCL</td>	<td>1</td><td>2</td>	<td>Vcc</td></tr>
+    <tr><td>SDA</td>	<td>3</td><td>4</td>	<td>Vcc</td></tr>
+    <tr><td></td>	<td>5</td><td>6</td>	<td>	</td></tr>
+    <tr><td></td>	<td>7</td><td>8</td>	<td></td></tr>
+    <tr><td>GND</td>	<td>9</td><td>10</td>	<td>	</td></tr>
+    <tr><td></td>	<td>11</td><td>12</td>	<td>    </td></tr>
+    <tr><td></td>	<td>13</td><td>14</td>	<td>    </td></tr>
+  </table>
+</p>
+
+<p>TODO, image goes here.</p>
+
+<h2>Clients</h2>
+
+<p>A Python client, <a href="/clients/goodfeti2ceeprom/">goodfet.i2ceeprom is
+currently in a alpha stage and needs more testing</a></p>
+
+<h2>Development</h2>
+
+<p>Prior to any transaction, the SETUP (0x10) verb should be sent to the
+I2C application to properly set the I/O directions and values.
+The START (0x20), STOP (0x21), READ (0x00), and WRITE (0x01) verbs are used
+for transactions, with WRITE returning the acknowledge bit.</p>
+
+<p>Please note that I2C application has yet to be tested.  This should be
+completed by June 17 at the latest.</p>
+
+<h2>Verbs</h2>
+
+<p>The following verbs are supported.</p>
+
+<table border="1">
+<tr><th>Hex</th><th>#define</th><th>Description</th></tr>
+<tr><td>0x00</td><td>READ</td><td>Read bytes.</td></tr>
+<tr><td>0x01</td><td>WRITE</td><td>Write bytes.</td></tr>
+<tr><td>0x10</td><td>SETUP</td><td>Configure I/O pins.</td></tr>
+<tr><td>0x20</td><td>START</td><td>Start a transaction.</td></tr>
+<tr><td>0x21</td><td>STOP</td><td>Stop a transaction.</td></tr>
+
+<tr><td>0x80</td><td>SCAN</td><td>Scan 8 bit addresses on the bus.</td></tr>
+</table>

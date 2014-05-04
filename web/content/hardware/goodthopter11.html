@@ -1,0 +1,96 @@
+---
+title: GoodThopter11
+---
+<h1>GoodThopter11</h1>
+
+<p>The GoodThopter11 is a sexy GoodFET CAN device based around the
+design of the <a href="/hardware/goodfet31/">GoodFET31</a>. Unlike the
+general- purpose GoodFET boards, the purpose of this board is to be
+used in the exploration of Automotive communication buses, currently
+supporting only the CAN bus. In addition to GF31 circuitry we have
+added a high-speed CAN Transceiver (MCP2551) and a Stand-alone CAN
+Controller with a SPI Interface (MCP2515).  This design improves upon
+the <a href="/hardware/goodthopter10/">GoodThopter10</a> by correcting
+one important and many minor errata.
+</p>
+
+
+<p><a href="http://www.flickr.com/photos/travisgoodspeed/7799398280/" title="GoodThopter10 by Travis Goodspeed, on Flickr"><img src="http://farm9.staticflickr.com/8289/7799398280_d1093d3ce5.jpg" width="500" height="282" alt="GoodThopter10"></a></p>
+
+<h2>CAD Files</h2>
+
+<p>Eagle CAD 6.x files for the design can be found in
+/branches/goodthopter11 of the GoodFET subversion repository, or along
+with gerbers as
+<a href="/releases/goodthopter11.zip">goodthopter11.zip</a>.</p>
+
+<h2>Bill of Materials</h2>
+
+<p>Resistor values can be approximated.</p>
+
+<p><b>N.B., The BOM including Digi-Key part numbers can be found in SVN branches/goodthopter10/bom/ (GoodThopter11 uses the same components)</b></p>
+
+<p><table border="1">
+<tr><td>Quantity</td><td>Package</td><td></td></tr>
+<tr><td>1</td><td>SSOP28</td><td><a href="http://www.ftdichip.com/Products/FT232R.htm">FT232RL</a></td></tr>
+<tr><td>1</td><td>TSSOP38</td><td><a href="http://www.ti.com/product/msp430f2274">MSP430F2274</a></td></tr>
+<tr><td>1</td><td>TSSOP20</td><td><a href="http://www.microchip.com/wwwproducts/Devices.aspx?dDocName=en010406">MCP2515</a></td></tr>
+<tr><td>1</td><td>SOIC8</td><td><a href="http://www.microchip.com/wwwproducts/Devices.aspx?dDocName=en010405">MCP2551</a></td></tr>
+<tr><td>1</td><td>HC49/UP**</td><td>20MHz SMD Crystal, 15pF</td></tr>
+<tr><td>4</td><td>0603</td><td>0.1&mu;F Decoupling Capacitors</td></tr>
+<tr><td>2</td><td>0603</td><td>15pF Capacitors*</td></tr>
+<tr><td>5</td><td>0603</td><td>0603 LED</td></tr>
+<tr><td>4</td><td>0603</td><td>330R LED Series Resistors</td></tr>
+<tr><td>1</td><td>0603</td><td>10K Pull-up Resistor</td></tr>
+<tr><td>1</td><td></td><td>USB Type B - TE 292304-2 or FCI 61729-1011BLF</td></tr>
+<tr><td>1</td><td></td><td>D-SUB 9 Position Mountable Conn. - TE 1734351-1</td></tr>
+</table>
+</p>
+
+<p>* These should match the required capacitance of the crystal.</p>
+<p>** The /US SMD package works as an alternative.</p>
+
+<h2>Construction</h2>
+
+<p>Place the components as shown in the comments of this Flickr image.
+As this is a surface-mount design, be sure that you are familiar with
+such techniques or have assistance before beginning assembly.</p>
+
+<a href="http://www.flickr.com/photos/travisgoodspeed/7799398280/" title="GoodThopter10 on Flickr"><img src="http://farm9.staticflickr.com/8289/7799398280_d1093d3ce5.jpg" width="500" height="282" alt="GoodThopter10"></a>
+
+<p>See the <a href="http://goodfet.sourceforge.net/tutorial/">GoodFET
+Tutorial</a> for more detailed explanations.</p>
+
+<h2>Usage</h2>
+
+<p>Build and flash firmware with the following commands.  This board
+self-flashes over USB through a masked-ROM bootloader, so there is no
+need for an external programmer.</p>
+
+<p><pre>export board=goodthopter11
+make clean install
+goodfet.mcpcan info
+</pre></p>
+
+<p>See the <a href="http://goodfet.sourceforge.net/tutorial/">GoodFET
+Tutorial</a> for more detailed explanations.</p>
+
+
+<h2>Errata</h2>
+
+<h3>OBD2 Cable</h3>
+
+<a href="http://www.flickr.com/photos/andrewrighter/8208572495/" title="GoodThopter1x CAN Serial Pinout">
+<img src="http://farm9.staticflickr.com/8062/8208572495_61689453f9_n.jpg" width="320" height="179" alt="GoodThopter11 CAN"></a>
+
+<p>The pinout of the GoodThopter1x series is above and since CANH and CANL is located on pins 7 and 2 (respectively) 
+the cable you will want to choose is something like this
+<a href="http://store.intrepidcs.com/VCAN3-OBDII-MSHSCAN-Cable-p/vcan3-obd.htm"> one</a> and <b>not the Sparkfun model</b> which
+has a different pinout for CANH,CANL. Apologies, I think in the future, if it makes sense we will design to the cheaper option after
+we test both.</p>
+
+
+
+<p>The MCP2551 pads do not extend past the legs. Shorten the legs by
+clipping them at their knees or use an SMD rework station to heat the
+solder without an iron or use an iron with extra flux and care.</p>

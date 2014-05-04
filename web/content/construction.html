@@ -1,0 +1,170 @@
+---
+title: Construction
+---
+<h1>GoodFET Construction</h1>
+
+<!--March 2010, jbest-->
+
+<h3>Necessities</h3>
+
+<p>Besides the components listed on the page that corresponds to your
+particular PCB, there are a number of things you'll want to have on
+hand before assembling a GoodFET.</p>
+
+<table border="1">
+<tr><td>Controlled output soldering station</td></tr>
+<tr><td>Fine soldering iron tip</td></tr>
+<tr><td>Water-soluble liquid flux</td></tr>
+<tr><td>23 gauge solder</td></tr>
+<tr><td>Brass sponge</td></tr>
+<tr><td>Desoldering braid</td></tr>
+<tr><td>Soldering iron tinner</td></tr>
+<tr><td>Tweezers</td></tr>
+<tr><td>Helping hands</td></tr>
+<tr><td>ESD wristband</td></tr>
+<tr><td>Sharp, fine knife of some sort</td></tr>
+<tr><td>Masking tape</td></tr>
+<tr><td>Multi-meter with an "LED Test" function</td></tr>
+<tr><td>Isopropyl alcohol</td></tr>
+<tr><td>Soft toothbrush</td></tr>
+</table>
+
+<p>This list isn't meant to be all-inclusive, nor are all of these
+items necessarily required. This is simply a list of tools that will
+help with assembling a GoodFET.</p>
+ 
+<h3>Prepare the work area</h3>
+
+<p>You'll want a nice, clutter-free work area.  You might want to
+remove all of the surface mount components from their packaging and
+put them in their own labeled bins for easy access.  The trash that
+accumulates from the packaging will build up quickly as you work on
+the board.  Make sure your soldering iron is in a spot where you won't
+get it tangled up in anything or accidentally burn something.  Be sure
+you have easy access to your flux, solder, brass sponge, desoldering
+braid, tweezers, helping hands/magnifier, and soldering iron holder.
+A little extra lighting goes a long way here, so grab an extra desk
+lamp or work light if you have one.</p>
+
+<h3>Prepare the tools and board</h3>
+
+<p>Make sure the PCB you'll be working on is clean and free of oils
+and dirt (from fingerprints, etc.).  99% isopropyl alcohol will
+quickly take care of anything that will prevent a good contact between
+the components and the board.  Heat up the soldering iron enough to
+melt the solder, and make sure the tip is clean and tinned.  If this
+is your first time surface mounting components, this is a good time to
+become familiar with the methods you'll be using to solder the ICs to
+the board.</p>
+
+<h3>Practice</h3>
+
+<p>Once the iron is hot, apply a small amount of flux to a PCB.  If
+you don't have a spare PCB, the USB portion of the GoodFET PCB will
+work.  Cut some desoldering braid (about 6'') and some solder from each
+of their spools.  Heat up the flux (you will it burn) and apply some
+solder directly to the PCB.  Never apply solder directly to the
+soldering iron.  Remove the iron and the solder, then lay the
+desoldering braid on top of the soldered area.  Gently press the tip
+of the soldering iron over the area that you previously applied the
+solder.  The desoldering braid will heat up (so watch your fingers),
+and it will begin to melt the solder.  The desoldering braid will suck
+up all but a small amount of the solder you applied to the board.</p>
+
+<h3>Soldering the FT232R/FT232RL</h3>
+
+<p>The ICs are probably the most intimidating components of the board,
+but they are the easiest to solder.  Place the FT232RL on the board,
+ensuring the small circle on the chip is in the same corner as the
+small circle silk-screened on the board (the lower right when viewed
+from the top with the USB portion pointing to the left).  With masking
+tape, cover half of the IC so that the pins on one side are
+visible. Align the pins that are still showing and tape the IC to the
+board.  Now, cover the uncovered half with a second piece of masking
+tape and uncover the first half.  Repeat this until you're sure that
+all of the pins are aligned properly, but leave half of the IC taped
+to the board.  You'll be moving the board around, so be sure it will
+stay put.</p>
+
+<p>Now, apply flux to the side you'll be soldering.  Run your iron
+across the leads on the board once or twice to get the board hot, then
+apply solder to the leads while running the iron across.  You don't
+need a whole lot of solder, just enough to make a small contact
+between the IC and the board.  Applying the solder should take less
+than 5 seconds.  If you accidentally bridge some of the pins, don't
+worry; we'll be applying desoldering braid to the entire side anyway
+to ensure we haven't bridged anything.</p>
+
+<p>Take the desoldering braid and lay it across the pins of the IC.
+Gently pin the desoldering braid down with the soldering iron and rub
+the pins with the desoldering braid.  You should be moving the
+desoldering braid with the iron, so the portion of desoldering braid
+that is in contact with the board remains hot.  You might need to use
+different areas of the desoldering braid if one becomes saturated with
+solder.  Continue rubbing the board with desoldering braid until the
+pins are clean.  Check to see if any of the pins are bridged from
+below.  If you see blobs of solder underneath the chip, you will have
+to draw them out with your iron and repeat the desoldering process.
+To draw out the solder, hold the board so that gravity will pull on
+the solder as you heat the pins.</p>
+
+<p>Once you've finished that side of the chip, remove the masking tape
+holding the IC in place.  It takes very little solder to hold the chip
+to the board; you don't have to worry about the chip moving around
+without the tape.  Flux the other side, heat the pins, apply solder,
+and then clean up with the desoldering braid.  You've just surface
+mounted the first IC!  Repeat this process for each of the remaining
+ICs.</p>
+
+<h3>Soldering the components</h3>
+
+<p>The 100 Ohm series resistors are probably the easiest components to
+start with.  Place one on the board (they are non-directional, you
+only need to worry about placing them so each side touches each solder
+pad).  Apply a small amount of flux to the side you will solder first.
+Like before, you will heat the place that you will apply solder to,
+and then apply the solder.  The component might move around a little
+as you apply the solder.  Using your tweezers or a small knife, move
+the component back into place, applying heat to the solder with your
+iron as necessary.  Once the part is properly aligned, solder the
+other side of the component.</p>
+
+<p>The LEDs are the toughest components to solder.  It is very
+important to ensure that they are oriented correctly before you solder
+them to the board. Some surface mount LEDs have indicators on them to
+tell you the polarity, but some markings are rather vague. Use the
+"LED Test" function of a multi-meter to determine the polarity of the
+LED. Use the circuit diagram for the GoodFET you are soldering to
+determine the correct orientation, and then solder the component
+appropriately.</p>
+
+<h3>Soldering the headers</h3>
+
+<p>Back to through-hole soldering!  Break up your headers into two
+rows of seven. If you have a connector that will accept these headers
+(an old floppy drive cable will work), plug the headers into that
+cable.  This will ensure the headers will be aligned properly against
+each other.  Flip the board over and guide the rows of headers through
+the board.  Apply a small amount of flux and solder one pin to the
+board.  Flip the board back over and ensure the headers are
+perpendicular to the board. If they are not, heat the pin that you
+soldered and move the headers into place.  It is very difficult to
+move the headers once you have soldered more than one pin!  Once the
+headers are aligned properly, solder the rest of the pins to the
+board.</p>
+
+<h3>Add solder to the USB connector</h3>
+
+<p>Finally, add a small amount of flux to the USB connector, and add
+some solder to each of the four pads.  You're done soldering your
+GoodFET!</p>
+
+<h3>Clean the board</h3>
+
+<p>Use the manufacturer's recommended solvent for the flux you used on
+the board.  A soft toothbrush can help loosen any flux that's hard to
+remove.</p>
+
+<h3>Use the board</h3>
+
+<p>Once dry, your GoodFET is ready to use!</p>

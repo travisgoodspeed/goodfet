@@ -1,0 +1,86 @@
+---
+title: goodfet.cc
+---
+<h1>goodfet.cc</h1>
+
+<p></p>
+
+<h2>Client</h2>
+
+<p><pre>goodfet.cc | sed 's,/usr/local/bin/,,'
+Usage: goodfet.cc verb [objects]
+
+goodfet.cc erase
+goodfet.cc flash $foo.hex
+goodfet.cc test
+goodfet.cc term
+goodfet.cc info
+goodfet.cc infotest
+goodfet.cc halt
+goodfet.cc regs
+goodfet.cc dumpcode $foo.hex [0x$start 0x$stop]
+goodfet.cc dumpdata $foo.hex [0x$start 0x$stop]
+goodfet.cc writedata $foo.hex [0x$start 0x$stop]
+goodfet.cc verify $foo.hex [0x$start 0x$stop]
+goodfet.cc peekdata 0x$start [0x$stop]
+goodfet.cc pokedata 0x$adr 0x$val
+goodfet.cc peek 0x$iram
+goodfet.cc poke 0x$iram 0x$val
+goodfet.cc peekcode 0x$start [0x$stop]
+
+
+goodfet.cc rssi [freq]
+    Graphs signal strength on [freq] Hz.
+goodfet.cc carrier [freq]
+    Holds a carrier on [freq] Hz.
+goodfet.cc reflex [freq]
+    Jams on [freq] Hz.
+goodfet.cc sniffsimpliciti [us|eu|lf]
+    Sniffs SimpliciTI packets.
+goodfet.cc sniffdash7 [lf]
+    Sniffs Dash7. (untested)
+goodfet.cc snifficlicker [us]
+    Sniffs iClicker.
+
+
+goodfet.cc simpliciti [us|eu|lf]
+    Simpliciti access point for Chronos watch.
+goodfet.cc iclicker [us|eu|lf]
+    Sniffs iClicker packets as ASCII.
+</pre></p>
+
+<h2>Pinout</h2>
+<p>
+	<table border="1">
+		<tr><th style="width: 5em;">Name</th><th colspan="2" style="width: 3.5em;">Pin</th><th style="width: 5em;">Name</th></tr>
+		<tr><td>DD/P2_1</td>	<td>1</td><td>2</td>	<td>Vcc</td></tr>
+		<tr><td></td>	<td>3</td><td>4</td>	<td>Vcc</td></tr>
+		<tr><td>RST</td>	<td>5</td><td>6</td>	<td></td></tr>
+		<tr><td>DC/P2_2</td>	<td>7</td><td>8</td>	<td></td></tr>
+		<tr><td>GND</td>	<td>9</td><td>10</td><td></td></tr>
+		<tr><td></td>	<td>11</td><td>12</td>	<td></td></tr>
+		<tr><td></td>	<td>13</td><td>14</td>	<td></td></tr>
+	</table>
+</p>
+
+<h2>SmartRF Studio Integration</h2>
+
+<p>At least temporarily, many features of the GoodFET's Chipcon client
+depend upon an installation
+of <a href="http://focus.ti.com/docs/toolsw/folders/print/smartrftm-studio.html">Smart
+RF Studio</a> being found at /opt/smartrf7.  XML files from this
+installation are used to auto-configure register names for the CC1110
+and other 8051-based devices.</p>
+
+<h2>Screenshots</h2>
+
+<a href="http://www.flickr.com/photos/travisgoodspeed/5242553766/" title="Chipcon Carrier by Travis Goodspeed, on Flickr"><img src="http://farm6.static.flickr.com/5162/5242553766_649ba3ea64.jpg" width="500" height="375" alt="Chipcon Carrier" /></a>
+
+<p><a href="http://www.flickr.com/photos/travisgoodspeed/5247787940/" title="GoodFET Simpliciti Sniffing! by Travis Goodspeed, on Flickr"><img src="http://farm6.static.flickr.com/5164/5247787940_daca7e2506.jpg" width="500" height="182" alt="GoodFET Simpliciti Sniffing!" /></a></p>
+
+<p><a href="http://www.flickr.com/photos/travisgoodspeed/5247268140/" title="GoodFET CC1110 RSSI Graph by Travis Goodspeed, on Flickr"><img src="http://farm6.static.flickr.com/5245/5247268140_b1f831f59f.jpg" width="257" height="500" alt="GoodFET CC1110 RSSI Graph" /></a></p>
+
+<p><a href="http://www.flickr.com/photos/travisgoodspeed/5300424980/" title="GoodFET iClicker Sniffing by Travis Goodspeed, on Flickr"><img src="http://farm6.static.flickr.com/5282/5300424980_9d8436f955.jpg" width="500" height="346" alt="GoodFET iClicker Sniffing" /></a></p>
+
+<h2>Notes</h2>
+<p>No notes for this client.</p>

@@ -1,0 +1,56 @@
+---
+title: BadFET20
+---
+<h1>BadFET20</h1>
+
+<p>The BadFET20 is the fourth hardware revision of the GoodFET, and it
+shares a board with the <a href="/hardware/goodfet20/">GoodFET20</a>.
+It differs from the GoodFET20 in that its microcontroller is a more
+powerful MSP430F2618 running at 16MHz by an internal oscillator.</p>
+
+<h2>CAD Files</h2>
+
+<p>Eagle CAD 5.x files for the design can be found in
+/branches/goodfet20 of the subversion repository, or as
+<a href="/releases/goodfet20.zip">goodfet20.zip</a>.  The GoodFET20
+and the BadFET20 use identical boards; they only differ in the choice
+of components.
+</p>
+
+<h2>Bill of Materials</h2>
+
+<table border="1">
+<tr><td>Quantity</td><td>Package</td><td></td></tr>
+<tr><td>1</td><td>SSOP28</td><td>FT232RL</td></tr>
+<tr><td>1</td><td>QFP64</td><td>MSP430F2618</td></tr>
+<tr><td>2</td><td>0603</td><td>0.1&mu;F Decoupling Capacitors</td></tr>
+<tr><td>3</td><td>0603</td><td>LED</td></tr>
+<tr><td>2</td><td>0603</td><td>330R LED Series Resistors</td></tr>
+<tr><td>6</td><td>0603</td><td>100R JTAG Series Resistors</td></tr>
+<tr><td>1</td><td>0603</td><td>47K !RST Pull-up Resistor</td></tr>
+<tr><td>1</td><td>SO16</td><td>74HC4053 Analog MUX</td></tr>
+</table>
+
+<h2>Construction</h2>
+
+<p>Construct as described on the following Flickr image's annotations,
+using a 2618 in lieu of the 1612.  Omit the row of pull-up resistors.
+
+<a href="http://www.flickr.com/photos/travisgoodspeed/3938883506/"
+title="BadFET20 by Travis Goodspeed, on
+Flickr"><img src="http://farm3.static.flickr.com/2529/3938883506_42f6ddb29e.jpg"
+width="500" height="375" alt="BadFET20" /></a>
+</p>
+
+<h2>Errata</h2>
+
+<p>The GoodFET20 documentation used to indicate that adding an 8MHz
+crystal would suffice to convert a GoodFET to a BadFET.  That was
+incorrect, and an MSP430F2618 is required.</p>
+
+<p>Thanks to Kenny for reporting that the 47K pull-up resistor
+was missing from the BOM.  This has since been corrected.</p>
+
+<p>Most 74HC4053 chips do not function at 3.3V.  For glitching
+research, please use the <a href="/hardware/goodfet21/">GoodFET21</a>
+instead.</p>

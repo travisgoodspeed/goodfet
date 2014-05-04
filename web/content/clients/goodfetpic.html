@@ -1,0 +1,87 @@
+---
+title: goodfet.pic
+---
+<h1>goodfet.pic</h1>
+
+<p></p>
+
+<h2>Client</h2>
+<p><pre>Usage: ./goodfet.pic verb [objects]
+
+./goodfet.pic devid
+./goodfet.pic read 0x$addr
+./goodfet.pic dump $foo.hex [0x$start 0x$stop] [pretty]
+./goodfet.pic config
+./goodfet.pic reset
+./goodfet.pic program $foo.hex
+./goodfet.pic verify $foo.hex
+./goodfet.pic write 0x$address 0x$value
+./goodfet.pic write_config 0x$reg_address (or $reg_name) [$0x0000]
+./goodfet.pic erase [0x$page]
+./goodfet.pic six [instruction]
+./goodfet.pic sixfile [$foo.txt]
+./goodfet.pic regout
+
+Note: use - for stdout.
+Warning: only formally supports dsPIC33F/PIC24H,
+         but read/write flash memory works with PIC24F.
+</pre></p>
+
+<h2>Pinout</h2>
+<p>
+<table border="1">
+<tr><th style="width: 5em;">Name</th><th colspan="2" style="width: 3.5em">Pin</th><th style="width: 5em;">Name</th></tr>
+<tr><td></td><td>1</td><td>2</td><td>Vcc</td></tr>
+<tr><td>PGD</td><td>3</td><td>4</td><td>Vcc</td></tr>
+<tr><td>!MCLR</td><td>5</td><td>6</td><td></td></tr>
+<tr><td>PGC</td><td>7</td><td>8</td><td></td></tr>
+<tr><td>GND</td><td>9</td><td>10</td><td></td></tr>
+<tr><td></td><td>11</td><td>12</td><td></td></tr>
+<tr><td></td><td>13</td><td>14</td><td></td></tr>
+</table>
+</p>
+
+<h2>Examples</h2>
+
+<p>To dump the device and application
+IDs and hardware revision number of an attached dsPIC33F/PIC24H chip,
+use the goodfet.pic client:
+<pre>
+$ ./goodfet.pic devid
+</pre></p>
+
+<p>To read the configuration registers, with labels for recognized addresses,
+<pre>
+$ ./goodfet.pic config
+</pre><b>N.B.,</b> should only work with PIC24H and dsPIC33F chip
+family. Much more documentation is needed for the programmer and is
+forthcoming. For now, here are some quick examples. To bulk erase
+program memory (this is necessary before programming),
+<pre>
+$ ./goodfet.pic erase
+</pre></p>
+<p>Then to program the device with a code file, foo.hex,
+<pre>
+$ ./goodfet.pic program foo.hex
+</pre></p>
+<p>To verify programming results,
+<pre>
+$ ./goodfet.pic verify foo.hex
+</pre></p>
+<p>Please note that only addresses in given hex file are verified. A
+quick visual check of results might be a dump of the first few
+instruction words.
+<pre>
+$ ./goodfet.pic - 0x200 0x220 pretty
+</pre></p>
+<p>This command prints (24-bit width) contents of program memory at
+addresses 0x200 through 0x220 to stdout.</p>
+
+<h2>Notes</h2>
+<p>This client (and <a href="/apps/pic/">corresponding app</a>) are
+alpha releases. Or rather, I use them in a production environment, but
+they are only thoroughly tested on my own research hardware. At
+present, usability features are minimal or absent.</p>
+<p>Contact <a href="http://scottman.net/">Scott Livingston</a>
+(slivingston [at] caltech) with any comments, questions, requests,
+etc.</p>

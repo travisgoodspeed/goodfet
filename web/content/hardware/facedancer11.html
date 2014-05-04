@@ -1,0 +1,104 @@
+---
+title: Facedancer11
+---
+<h1>Facedancer11</h1>
+
+<p>The Facedancer11 is the fifteenth hardware revision of the GoodFET,
+owing its heritage to the <a href="/hardware/goodfet41/">GoodFET41</a>
+and <a href="/hardware/facedancer10/">Facedancer10</a>.  Unlike the
+general-purpose GoodFET boards, the only purpose of this board is to
+allow USB devices to be written in host-side Python, so that one
+workstation can fuzz-test the USB device drivers of another host.
+The board is functionally identical to the Facedancer10, correcting
+only minor errata.
+</p>
+
+<p>See the <a href="/orders/">Orders</a> page for details on ordering
+PCBs.  Assembled boards are not yet available.</p>
+
+<p><a href="http://www.flickr.com/photos/travisgoodspeed/7397758016/"
+title="Facedancer10 by Travis Goodspeed, on
+Flickr"><img src="http://farm6.staticflickr.com/5333/7397758016_7b01d44ca9.jpg"
+width="500" height="282" alt="Facedancer10"></a></p>
+
+<h2>Further Reading</h2>
+
+<p>For more information on USB emulation and fuzzing, see Travis
+Goodspeed's
+article, <a href="http://travisgoodspeed.blogspot.com/2012/07/emulating-usb-devices-with-python.html">Emulating
+USB Device with Python</a>.  A follow-up article
+describes <a href="http://travisgoodspeed.blogspot.com/2012/10/emulating-usb-dfu-to-capture-firmware.html">emulating
+DFU</a> to capture firmware updates.</p>
+
+<h2>CAD Files</h2>
+
+<p>Eagle CAD 5.x files for the design can be found in
+/branches/facedancer11 of the GoodFET subversion repository, or along
+with gerbers as
+<a href="/releases/facedancer11.zip">facedancer11.zip</a>.</p>
+
+<h2>Bill of Materials</h2>
+
+<p>The MSP430F2618TPM may be replaced with a 2617, 2619, 2417, 2418,
+or 2419 chip, provided that the $mcu variable is set.</p>
+
+<p>Resistor values can be approximated, and the 1.0&mu;F capacitors
+are probably unneeded.  Be sure to get the 64 pin variant of the
+MSP430F2618, as 80-pin versions are also manufactured.
+</p>
+
+<p><table border="1">
+<tr><td>Quantity</td><td>Package</td><td></td></tr>
+<tr><td>1</td><td>SSOP28</td><td><a href="http://www.ftdichip.com/Products/FT232R.htm">FT232RL</a></td></tr>
+<tr><td>1</td><td>QFP64</td><td><a href="http://focus.ti.com/docs/prod/folders/print/msp430f2618.html">MSP430F2618TPM</a></td></tr>
+<tr><td>1</td><td>LQFP32</td><td><a href="http://www.maxim-ic.com/datasheet/index.mvp/id/4751">MAX3420E</a></td></tr>
+<tr><td>2</td><td>0603</td><td>1.0&mu;F Capacitors</td></tr>
+<tr><td>3</td><td>0603</td><td>0.1&mu;F Decoupling Capacitors</td></tr>
+<tr><td>2</td><td>0603</td><td>18pF Capacitors*</td></tr>
+<tr><td>1</td><td>HC49/UP**</td><td>12MHz SMD Crystal, 18pF</td></tr>
+<tr><td>3</td><td>0603</td><td>0603 LED</td></tr>
+<tr><td>2</td><td>0603</td><td>330R LED Series Resistors</td></tr>
+<tr><td>2</td><td>0603</td><td>33R USB Series Resistors</td></tr>
+<tr><td>2</td><td></td><td>USB Mini Receptacle Kobiconn 154-15320-E or FCI 10033526-N3212MLF or On Shore USB-M26FTR</td></tr>
+</table></p>
+
+<p>* These should match the required capacitance of the crystal.</p>
+<p>** The /US SMD package works as an alternative.</p>
+
+<p>If you need help selecting parts, you can follow this <a
+href="http://www.reddit.com/r/netsec/comments/10g7f0/goodfetfacedancer_parts_list/">example
+Digi-Key order</a>.</p>
+
+
+<h2>Construction</h2>
+
+<p>Place the components as shown in the comments of this Flickr image.
+As this is a surface-mount design, be sure that you are familiar with
+such techniques or have assistance before beginning assembly.</p>
+
+<p><a href="http://www.flickr.com/photos/travisgoodspeed/7106527681/"
+title="Facedancer10 by Travis Goodspeed, on Flickr">
+<img src="http://farm9.staticflickr.com/8004/7106527681_2c1481fa77.jpg"
+width="500" height="168" alt="Facedancer11"></a></p>
+
+<p>See the <a href="http://goodfet.sourceforge.net/tutorial/">GoodFET
+Tutorial</a> for more detailed explanations.</p>
+
+<h2>Usage</h2>
+
+<p>Build and flash firmware with the following commands.  This board
+self-flashes over USB through a masked-ROM bootloader, so there is no
+need for an external programmer.</p>
+
+<p><pre>export board=facedancer11
+make clean install
+goodfet.maxusbhid
+</pre></p>
+
+<p>See the <a href="http://goodfet.sourceforge.net/tutorial/">GoodFET
+Tutorial</a> for more detailed explanations.</p>
+
+<h2>Errata</h2>
+
+<p>None, we hope!</p>
+

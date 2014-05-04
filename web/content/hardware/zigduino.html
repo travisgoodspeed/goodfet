@@ -1,0 +1,44 @@
+---
+title: Zigduino r1
+---
+<h1>Zigduino (r1)</h1>
+
+
+<p>
+The <a href="http://logos-electro.com/zigduino-r1/">Zigduino r1</a> is
+an Arduino-like and Arduino-compatible platform that contains an Atmel
+atmega128rfa1 microcontroller that hasan integrated IEEE 802.15.4
+radio. It was developed by Logos Electromechanical LLC.  Unfortunately
+the Zigduino r1 is not for sale anymore.  Logos Electromechanical, now
+offers a
+new-and-improved <a href="http://logos-electro.com/zigduino-r2/">Zigduino
+r2</a> that uses the same microcontroller.  GoodFET has not yet been
+tested on the Zigduino r2.
+</p>
+
+<h2>Building</h2>
+
+<p>Build and flash firmware with the following commands.  The $board
+variable must be set whenever the client is used, and the device will
+not function without it.  Installation of this firmware requires
+avrdude to be install</p>
+
+<pre>export board=zigduino
+make clean avrinstall
+</pre>
+
+<h2>Schematics</h2>
+
+<p>Schematics for the Zigduino r1 can be found on <a href="http://logos-electro.com/documentation/zigduino/zigduino-r1/zigduino-v5-schematic.pdf">Logos Electromechanical's website</a> [pdf].
+</p>
+
+
+<h2>Examples</h2>
+
+<p>Basic packet sniffing and transmitting tools are implemented in the zigduino's client code, <a href="/clients/goodfetzigduino/">goodfet.zigduino</a>.
+The device is good for
+802.15.4 packet sniffing and injection, as well as for the quick
+prototyping of new
+applications.  <a href="http://www.secdev.org/projects/scapy/">Scapy</a>
+integration also allows for packet crafting and dissection.</p>
+

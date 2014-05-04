@@ -1,0 +1,37 @@
+---
+title: goodfet.avr
+---
+<h1>goodfet.avr</h1>
+
+<p></p>
+
+<h2>Client</h2>
+
+<p><pre>Usage: goodfet.avr verb [objects]
+
+goodfet.avr test
+goodfet.avr info
+goodfet.avr lockbits [value]
+goodfet.avr dumpflash $foo.hex [0x$start 0x$stop]
+goodfet.avr erase
+goodfet.avr peekeeprom 0x$start [0x$stop]</pre></p>
+
+<h2>Pinout</h2>
+<p>
+	<table border="1">
+		<tr><th style="width: 5em;">Name</th><th colspan="2" style="width: 3.5em;">Pin</th><th style="width: 5em;">Name</th></tr>
+		<tr><td>MISO</td>	<td>1</td><td>2</td>	<td>Vcc</td></tr>
+		<tr><td>MOSI</td>	<td>3</td><td>4</td>	<td>Vcc</td></tr>
+		<tr><td>SS</td>	<td>5</td><td>6</td>	<td>	</td></tr>
+		<tr><td>SCK</td>	<td>7</td><td>8</td>	<td></td></tr>
+		<tr><td>GND</td>	<td>9</td><td>10</td>	<td></td></tr>
+		<tr><td></td>	<td>11</td><td>12</td>	<td></td></tr>
+		<tr><td></td>	<td>13</td><td>14</td>	<td></td></tr>
+	</table>
+</p>
+
+
+<h2>Notes</h2>
+<p>This is a new port, and it is not yet ready for daily use. Reading
+of chips is stabilized, as is the writing of EEPROM, but the writing
+of Flash memory pages is not yet stabilized.</p>

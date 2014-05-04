@@ -1,0 +1,117 @@
+---
+title: Monitor
+---
+<h1>Monitor Application</h1>
+
+<p>This application manages local memory, providing access to peripherals
+and the GoodFET's global configuration.</p>
+
+<h2>Clients</h2>
+
+<p>All clients deal with the monitor in some way.</p>
+
+<h2>Development</h2>
+
+<p>The monitor provides access to the local memory of the GoodFET device,
+and it ought to be used to debug the unit or poke pieces of memory directly.
+Additionally, it might serve as a standalone bootloader with a few tweaks
+to the IVT.</p>
+
+<h2>Verbs</h2>
+
+<p>The following verbs are supported.</p>
+
+<p>
+<table border="1">
+<tr><th>Hex</th><th>#define</th><th>Description</th></tr>
+<tr><td>0x02</td><td>PEEK</td><td>Read word from memory at word[0].</td></tr>
+<tr><td>0x03</td><td>POKE</td><td>Write word[1] to memory at word[0]. (Not flash.)</td></tr>
+<tr><td>0x30</td><td>CALL</td><td>Call Address</td></tr>
+<tr><td>0x31</td><td>EXEC</td><td>Execute Arbitrary Code Fragment</td></tr>
+
+<tr><td>0x80</td><td>CHANGE_BAUD</td><td>Change the baud rate.</td></tr>
+<tr><td>0x81</td><td>ECHO</td><td>Echo the buffer back.</td></tr>
+<tr><td>0x82</td><td>LIST_APPS</td><td>List the supported applications.</td></tr>
+<tr><td>0x90</td><td>RAM_PATTERN</td><td>Suicide, filling RAM with a pattern.</td></tr>
+
+<tr><td>0x91</td><td>RAM_DEPTH</td><td>Determine heap/stack depth.</td></tr>
+
+<tr><td>0xA0</td><td>DIR</td><td>Set port direction bits.</td></tr>
+<tr><td>0xA1</td><td>OUT</td><td>Set output value.</td></tr>
+<tr><td>0xA2</td><td>IN</td><td>Get input value.</td></tr>
+
+<tr><td>0xB0</td><td>SILENT</td><td>Set silence to byte[0]</td></tr>
+<tr><td>0xB1</td><td>CONNECTED</td><td>Connection successful.</td></tr>
+
+<tr><td>0xC0</td><td>READBUF</td><td>Dump buffer, takes 16-bit length.</td></tr>
+<tr><td>0xC1</td><td>WRITEBUF</td><td>Set buffer, takes 16-bit length.</td></tr>
+<tr><td>0xC2</td><td>SIZEBUF</td><td>Return buffer size.</td></tr>
+
+<tr><td>0xFD</td><td>NOP</td><td>No operation.</td></tr>
+<tr><td>0xFE</td><td>DEBUGHEX</td><td>Print a hex value.</td></tr>
+<tr><td>0xFF</td><td>DEBUGSTRING</td><td>Debug a string.</td></tr>
+
+</table>
+</p>
+
+<h3>READBUF (0xC0)</h3>
+
+<p>This command takes a 16-bit, little-endian length as its
+parameter, then spits out as many bytes from the beginning of the buffer.
+The bytes come after the reply command, outside of the command stream.</p>
+
+<h3>WRITEBUF (0xC1)</h3>
+
+<p>This command takes a 16-bit, little-endian length as its parameter,
+then reads as many bytes into the beginning of the buffer.  The bytes
+come after the reply command, outside of the command stream.</p>
+
+<h3>SIZEBUF (0xC2)</h3>
+
+<p>This command returns the size of the monitor buffer.</p>
+
+
+<h3>CHANGE_BAUD (0x80)</h3>
+
+<p>The GoodFET defaults to 115200 baud, but alternate baud rates are
+available by use of the CHANGE_BAUD (0x80) command of the Monitor
+application.  This takes a single byte, which specifies the baud rate
+as per the following table.</p>
+
+<p><b>N.B.,</b> This command does not generate a reply.</p>
+
+<p>
+<table border="1">
+<tr><th>Byte</th><th>Value</th></tr>
+<tr><td>0x00</td><td>Default (115200)</tr>
+<tr><td>0x01</td><td>9600</tr>
+<tr><td>0x02</td><td>19200</tr>
+<tr><td>0x03</td><td>38400</tr>
+<tr><td>0x04</td><td>57600</tr>
+<tr><td>0x05</td><td>115200</tr>
+</table>
+</p>
+
+<h3>RAM_PATTERN (0x90)</h3>
+
+<p>Fill all of RAM with 0xBEEF, then reset to begin the firmware from
+the start.  Unless power is lost, this pattern will only be
+overwritten by the firmware's use of RAM and the bootloader's caching
+of write blocks.</p>
+
+<p>The GoodFET will reboot after sending a reply.  It is recommended
+that the client session reset as well.</p>
+
+<h3>RAM_DEPTH (0x91)</h3>
+
+<p>Measures the size of the 0xBEEF block in the middle of RAM,
+calculating from that the amount of RAM which has been used by the
+firmware.  Running RAM_PATTERN, then several test cases, followed by
+RAM_DEPTH, will allow the RAM requirements of the application to be
+accurately estimated.</p>
+
+<p>See <a
+href="http://travisgoodspeed.blogspot.com/2009/08/goodfets-msp430-stack-depth.html">
+The GoodFET's MSP430 Stack Depth</a> for a description of this command
+and its usefulness in measuring the RAM usage of a GoodFET.</p>
+

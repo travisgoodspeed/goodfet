@@ -1,0 +1,44 @@
+---
+title: Nordic RF
+---
+<h1>NRF Application</h1>
+
+<p>This application is for use by the Nordic RF radios, such as the
+NRF24L01+.</p>
+
+<!-- Photo goes here.
+-->
+
+
+
+<h2>Clients</h2>
+
+<p>A Python client, <a href="/clients/goodfetnrf/">goodfet.nrf</a>,
+is in the works, but nothing is stable yet.
+
+<h2>Development</h2>
+
+<h2>Verbs</h2>
+
+<p>The following verbs are supported.  The Write-Enable command is implied
+by those that write flash memory, such as POKE and SPI_ERASE.</p>
+
+<table border="1">
+<tr><th>Hex</th><th>#define</th><th>Description</th></tr>
+<tr><td>0x00</td><td>READ</td><td>Exchange data.</td></tr>
+<tr><td>0x01</td><td>WRITE</td><td>Exchange data.</td></tr>
+<tr><td>0x02</td><td>PEEK</td><td>Read a register.</td></tr>
+<tr><td>0x03</td><td>POKE</td><td>Write a register</td></tr>
+<tr><td>0x10</td><td>SETUP</td><td>Configure I/O pins.</td></tr>
+<tr><td>0x20</td><td>START</td><td>Start listening.</td></tr>
+<tr><td>0x21</td><td>STOP</td><td>Stop listening.</td></tr>
+<tr><td>0x7E</td><td>NOK</td><td>No Operation</td></tr>
+
+
+<tr><td>0x80</td><td>RX</td><td>Receive a packet.</td></tr>
+<tr><td>0x81</td><td>TX</td><td>Transmit a packet.</td></tr>
+<tr><td>0x82</td><td>RX_FLUSH</td><td>Flush RX buffer.</td></tr>
+<tr><td>0x83</td><td>TX_FLUSH</td><td>Flush TX buffer.</td></tr>
+
+
+</table>

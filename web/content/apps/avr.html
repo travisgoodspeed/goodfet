@@ -1,0 +1,67 @@
+---
+title: AVR
+---
+<h1>AVR Application</h1>
+
+<p>This application is used for programming and debugging the Atmel
+AVR series of microcontrollers by the serial interface.</p>
+
+<p>This pinout differs significantly from the Atmel 6-pin
+and 10-pin pinouts, but an adapter board is available.</p>
+
+<h2>Pinout</h2>
+<p>
+	<table border="1">
+		<tr><th style="width: 5em;">Name</th><th colspan="2" style="width: 3.5em;">Pin</th><th style="width: 5em;">Name</th></tr>
+		<tr><td>MISO</td>	<td>1</td><td>2</td>	<td>Vcc</td></tr>
+		<tr><td>MOSI</td>	<td>3</td><td>4</td>	<td>Vcc</td></tr>
+		<tr><td>SS</td>	<td>5</td><td>6</td>	<td>	</td></tr>
+		<tr><td>SCK</td>	<td>7</td><td>8</td>	<td></td></tr>
+		<tr><td>GND</td>	<td>9</td><td>10</td>	<td></td></tr>
+		<tr><td></td>	<td>11</td><td>12</td>	<td></td></tr>
+		<tr><td></td>	<td>13</td><td>14</td>	<td></td></tr>
+	</table>
+</p>
+
+<!--
+<p><a href="http://www.flickr.com/photos/travisgoodspeed/4074539820/"
+title="GFAVR10 AVR Adapter by Travis Goodspeed, on
+Flickr"><img src="http://farm3.static.flickr.com/2690/4074539820_3db9f21cdd.jpg"
+width="500" height="324" alt="GFAVR10 AVR Adapter" /></a></p>
+-->
+
+<h2>Clients</h2>
+
+<p>A simple client in python is available as
+'<a href="/clients/goodfetavr/">goodfet.avr</a>'.</p>
+
+<h2>Status</h2>
+
+<p>This is a new port, and it is not yet ready for daily use.  Reading
+of chips is stabilized, as is the writing of EEPROM, but the writing
+of Flash memory pages is not yet stabilized.</p>
+
+<h2>Verbs</h2>
+
+<table border="1">
+<tr><th>Hex</th><th>#define</th><th>Description</th></tr>
+<tr><td>0x02</td><td>PEEK</td><td>Read from memory at word[0].</td></tr>
+<tr><td>0x03</td><td>POKE</td><td>Write word[1] to memory at word[0].</td></tr>
+<tr><td>0x10</td><td>SETUP</td><td>Configure I/O pins.</td></tr>
+<tr><td>0x20</td><td>START</td><td>Take the device under control.</td></tr>
+<tr><td>0x21</td><td>STOP</td><td>Release the device.</td></tr>
+<tr><td>0x7E</td><td>NOK</td><td>No Operation</td></tr>
+
+<tr><td>0x80</td><td>PEEKPGM</td><td></td></tr>
+<tr><td>0x81</td><td>PEEKEEPROM</td><td></td></tr>
+<tr><td>0x82</td><td>PEEKLOCK</td><td></td></tr>
+<tr><td>0x83</td><td>PEEKSIG</td><td></td></tr>
+<tr><td>0x84</td><td>READFUSES</td><td></td></tr>
+<tr><td>0x85</td><td>READCAL</td><td></td></tr>
+<tr><td>0x86</td><td>BULKLOAD</td><td>Load an entire page to be flashed. Significantly reduces USB latency</td></tr>
+<tr><td>0x91</td><td>POKEEEPROM</td><td></td></tr>
+<tr><td>0x92</td><td>POKELOCK</td><td></td></tr>
+
+<tr><td>0xF0</td><td>ERASE</td><td>Chip Erase (Flash+EEPROM)</td></tr>
+<tr><td>0xF1</td><td>RDYBSY</td><td>Ready/!Busy</td></tr>
+</table>

@@ -1,0 +1,41 @@
+---
+title: Api-Mote
+---
+<h1>Api-Mote</h1>
+
+<a href="http://www.rmspeers.com/">
+<img src="http://rmspeers.com/wp-content/uploads/2012/07/web.jpg"
+width="450" height="250" alt="Api-Mote base rev1" />
+</a>
+
+<p>The Api-Mote base is a hybrid device designed by rmspeers specifically for low-level interaction
+with the IEEE 802.15.4 and Zigbee radio protocols. It also supports typical 
+GoodFET activities via a GoodFET header. It's similar to the TelosB/Tmote in
+design, but updated chips and more expansion options.</p>
+
+<p><strong>See the <a href="http://code.google.com/p/zigbee-security/wiki/ApiMote_Overview">Api-Do project</a> site for full documentation.</strong></p>
+
+<h2>Building</h2>
+
+<p>Build and flash firmware with the following commands.  The
+$board variable must be set whenever the client is used, and the
+device will not function without it.</p>
+
+<pre>export board=apimote1
+make clean install
+goodfet.ccspi info
+</pre>
+
+<h2>Hardware</h2>
+<p>Hardware is not yet widely available. To indicate interest, use the form <a href="http://rmspeers.com/contact/pcb-requests">here</a>.</p>
+
+<h2>Examples</h2>
+
+<p>Given the similarity to the TelosB, a few nifty examples are covered in the
+article <a href="http://travisgoodspeed.blogspot.com/2011/03/goodfet-on-telosb-tmote-sky.html">GoodFET
+on the TelosB, TMote Sky</a>. Specifically, the device is good for
+802.15.4 packet sniffing and injection, as well as for the quick
+prototyping of new
+applications.  <a href="http://www.secdev.org/projects/scapy/">Scapy</a>
+802.15.4 layer integration (scapy-com repository dot15d4.py by rmspeers) also allows for packet dissection.</p>
+

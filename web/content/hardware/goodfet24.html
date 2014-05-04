@@ -1,0 +1,73 @@
+---
+title: GoodFET24
+---
+<h1>GoodFET24</h1>
+
+<p>The GoodFET24 is the fourteenth hardware revision of the GoodFET,
+owing its heritage to the <a href="/hardware/goodfet41/">GoodFET41</a>
+and the unreleased GoodFET23.  As it is designed for timing-sensitive
+tasks, there is a crystal reference clock for each MSP430.  (The two
+do not share a clock because it is useful to have them be out of phase
+with one another.)
+</p>
+
+<p><b>N.B. This model does not yet have software support, and might
+contain mistakes that will require significant design changes.  Unless
+you really know what you're doing, build
+the <a href="/hardware/goodfet41/">GoodFET41</a> instead.</b></p>
+
+<h2>CAD Files</h2>
+
+<p>Eagle CAD 5.x files for the design can be found in
+/branches/goodfet24 of the subversion repository, or as
+<a href="/releases/goodfet24.zip">goodfet24.zip</a>.</p>
+
+<h2>Bill of Materials</h2>
+
+<p>The MSP430F2618TPM may be replaced with a 2617, 2619, 2247, 2248,
+or 2249 chip.  Similarly, the MSP430F2001 may be replaced with other
+MSP430 chips in that same package.</p>
+
+<p>Resistor values can be approximated.  Be sure to get the 64 pin
+variant of the MSP430F2618, as 80-pin versions are also manufactured.</p>
+
+<table border="1">
+<tr><td>Name</td><td>Quantity</td><td>Package</td><td></td></tr>
+
+<tr><td>U1</td><td>1</td><td>QFP64</td><td><a href="http://focus.ti.com/docs/prod/folders/print/msp430f2618.html">MSP430F2618TPM</a></td></tr>
+<tr><td>U2</td><td>1</td><td>SSOP28</td><td><a href="http://www.ftdichip.com/Products/FT232R.htm">FT232RL</a></td></tr>
+<tr><td></td><td>7</td><td>0603</td><td>0.1&mu;F Decoupling Capacitors</td></tr>
+<tr><td></td><td>3</td><td>0603</td><td>0603 LED</td></tr>
+<tr><td>R1, R2</td><td>2</td><td>0603</td><td>330R LED Series Resistors</td></tr>
+<tr><td>CN1</td><td>1</td><td></td><td>USB Mini Receptacle UX60-MB-5ST</td></tr>
+<tr><td>SBW</td><td>1</td><td></td><td>Mill-Max 850-10-050-20-001000</td></tr>
+<tr><td>JTAG</td><td>1</td><td></td><td>2x14 pin 0.1&quot; Male Header</td></tr>
+
+<tr><td>U3</td><td>1</td><td>SOIC 8</td><td>LM358DR Op Amp</td></tr>
+<tr><td>U4</td><td>1</td><td>VSSOP 8</td><td>74LVC1G53 2-Channel Mux</td></tr>
+<tr><td>U5</td><td>1</td><td>TSSOP 14</td><td>MSP430F2001IDAR</td></tr>
+
+
+<tr><td>Q1</td><td>1</td><td>X1123</td><td>32.768kHz Crystal</td></tr>
+<tr><td>Q2</td><td>1</td><td>NX3225SA</td><td>16.000MHz Crystal</td></tr>
+<tr><td>C4,C5</td><td>7</td><td>0603</td><td>8pF or as specific by 16MHz crystal</td></tr>
+
+</table>
+
+
+<h2>Construction</h2>
+
+<p>Please the components as shown the comments to this Flickr image.
+As this is a surface-mount design, be sure that you are familiar with
+such techniques or have assistance before beginning assembly.</p>
+
+<a href="http://www.flickr.com/photos/travisgoodspeed/5533243752/" title="GoodFET24 Layout by Travis Goodspeed, on Flickr"><img src="http://farm6.static.flickr.com/5097/5533243752_e1256d10f7.jpg" width="500" height="358" alt="GoodFET24 Layout" /></a>
+
+<p>This schematic might help.</p>
+
+<a href="http://www.flickr.com/photos/travisgoodspeed/5532662355/" title="GoodFET24 Schematic by Travis Goodspeed, on Flickr"><img src="http://farm6.static.flickr.com/5054/5532662355_0df882a8fa.jpg" width="500" height="460" alt="GoodFET24 Schematic" /></a>
+
+<h2>Errata</h2>
+
+<p>Nothing yet.</p>
+

@@ -1,0 +1,67 @@
+---
+title: Chipcon SPI
+---
+<h1>Chipcon SPI Application</h1>
+
+<p>This application allows for the use of SPI radios in the Chipcon
+family, such as the CC2420.
+</p>
+
+
+<p>At present, this port is only being used in
+the <a href="/hardware/telosb">Telos B</a> port of the GoodFET
+firmware.  As such, no pinout is available, but the SPI pinout below
+ought to be all but identical.</p>
+
+<a href="http://www.flickr.com/photos/travisgoodspeed/3839800528/"
+title="GoodFET SPI Flash Pinout by Travis Goodspeed, on Flickr">
+<img src="http://farm3.static.flickr.com/2577/3839800528_65e6430feb_o.png"
+width="420" height="412" alt="GoodFET SPI Flash Pinout" /></a>
+
+<h2>Clients</h2>
+
+<p><a href="/clients/goodfetccspi/">chipcon.ccspi</a> is an actively
+maintained client application.</p>
+
+<h2>Development</h2>
+
+<p>Prior to any transactions, the SETUP (0x10) verb should be sent to the
+Chipcon application to properly set the I/O pin directions.
+</p>
+
+<p>The Chipcon protocol is similar to SPI, but with additional
+signal lines to indicate the availability of a packet.  Data
+is buffered within the radio, eliminating the need to catch
+it byte-wise.</p>
+
+
+<h2>Verbs</h2>
+
+<p>Verbs 0x80 to 0x8F are radio primitives, while verbs 0x90 to
+0x9F are used for more complicated macro commands.  Higher than that
+are a few special functions that don't exist on other platforms.  The
+low commands are similar to the <a href="/apps/nrf/">Nordic RF</a>
+application.
+</p>
+
+<table border="1">
+<tr><th>Hex</th><th>#define</th><th>Description</th></tr>
+<tr><td>0x80</td><td>RX</td><td>Receive</td></tr>
+<tr><td>0x90</td><td>RXDEC</td><td>Receive and Decrypt</td></tr>
+<tr><td>0x91</td><td>REPEAT_RX</td><td>Receive Loop</td></tr>
+<tr><td>0x81</td><td>TX</td><td>Transmit</td></tr>
+<tr><td>0x82</td><td>RX_FLUSH</td><td>Flush RX buffer.</td></tr>
+<tr><td>0x83</td><td>TX_FLUSH</td><td>Flush TX buffer.</td></tr>
+<tr><td>0x84</td><td>PEEK_RAM</td><td>Peeks from RAM.</td></tr>
+<tr><td>0x85</td><td>POKE_RAM</td><td>Pokes to RAM.</td></tr>
+
+<tr><td>0xA0</td><td>REFLEX</td><td>Reflex jams on present channel.</td></tr>
+</table>
+
+
+<h2>Thanks</h2>
+
+<p>Many thanks are due to Sergey Bratus and the Sooby Crew of the Good
+Ship Shelldrop at Dartmouth College.</p>
+
+

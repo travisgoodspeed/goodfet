@@ -1,0 +1,66 @@
+---
+title: GLITCH
+---
+<h1>GLITCH Application</h1>
+
+<p>The GLITCH (0x71) application uses the DAC0 output of some GoodFET
+models to bypass access controls of target devices.  It is of no use
+alone, but rather creates a glitching environment suitable for
+extracting data from target chips.</p>
+
+<p>The target device should in most cases be connected to the GoodFET
+as closely as possible, with no decoupling capacitors.  The 14-pin
+connector will be the same as before, except that Pin 10 is used
+as the supply voltage rather than Pin 2.</p>
+
+<h2>Status</h2>
+
+<p>The glitching effect is working in the lab, but it is not yet ready
+for daily use.  The glitch module is not compatible with the
+GoodFET30.</p>
+
+<h2>Verbs</h2>
+
+<p>
+<table border="1">
+<tr><th>Hex</th><th>#define</th><th>Description</th></tr>
+<tr><td>0x10</td><td>SETUP</td><td>Configure I/O pins.</td></tr>
+<tr><td>0x20</td><td>START</td><td>Take the device under control.</td></tr>
+<tr><td>0x21</td><td>STOP</td><td>Release the device.</td></tr>
+
+<tr><td>0x80</td><td>GLITCHAPP</td><td>Glitch by application ID.</td></tr>
+<tr><td>0x81</td><td>GLITCHVERB</td><td>Glitch for a verb, then stop.</td></tr>
+<tr><td>0x82</td><td>GLITCHVERB</td><td>Time a verb.</td></tr>
+<tr><td>0x90</td><td>GLITCHVOLTAGES</td><td>Set glitching voltages.</td></tr>
+<tr><td>0x91</td><td>GLITCHRATE</td><td>Set glitching cycle count.</td></tr>
+
+</table>
+</p>
+
+<h3>START (0x20)</h3>
+<p>Begin glitching, or resume if paused.</p>
+
+<h3>STOP (0x21)</h3>
+<p>Pause glitching, keeping voltage steady at its present value.
+Pass an optional 16-bit value as the parameter to stabilize at that value,
+rather than the present one.</p>
+
+<h3>GLITCHAPP (0x80)</h3>
+<p>Takes a single byte, the application ID to be entered.  For
+supported applications, this will glitch until the target application
+has been successfully entered and stabilized.</p>
+
+<h3>GLITCHVERB (0x81)</h3>
+<p>Takes an application and verb as bytes, then sends all remaining
+bytes as parameters to a that app and verb while glitching.  Glitching
+will automatically cease once the execution has completed.</p>
+
+<h3>GLITCHVOLTAGES (0x90)</h3>
+<p>Takes two u16 values as parameters.  Glitching will then bounce
+between the two values.  To reduce the target voltage without further
+jumps, set these to be identical.  Executing with no parameters causes
+the present values to be returned.</p>
+
+<h3>GLITCHRATE (0x91)</h3>
+<p>Takes a u16 value as a parameter, the number of ticks that will
+occur between glitches.</p>

@@ -1,0 +1,121 @@
+---
+title: Facedancer20
+---
+<h1>Facedancer20</h1>
+
+<p>The Facedancer20 is the twenty-third hardware revision of the
+GoodFET, owing its heritage to
+the <a href="/hardware/goodfet41/">GoodFET41</a>
+and <a href="/hardware/facedancer11/">Facedancer11</a>.  Unlike the
+general-purpose GoodFET boards, the only purpose of this board is to
+allow USB devices to be written in host-side Python, so that one
+workstation can fuzz-test the USB device drivers of another host.
+This board replaces the MAX3420E of earlier Facedancers with a
+MAX3421E, allowing for optional host mode through a USB A receptacle.
+</p>
+
+<p>See the <a href="/orders/">Orders</a> page for details on ordering
+PCBs.  Assembled boards are not yet available.</p>
+
+<p><a href="http://www.flickr.com/photos/travisgoodspeed/8389993794/"
+title="Facedancer20 by Travis Goodspeed, on
+Flickr"><img src="http://farm9.staticflickr.com/8081/8389993794_a9d6e2cf8d.jpg"
+width="500" height="282" alt="Facedancer20"></a></p>
+
+<h2>Further Reading</h2>
+
+<p>For more information on USB emulation and fuzzing, see Travis
+Goodspeed's
+article, <a href="http://travisgoodspeed.blogspot.com/2012/07/emulating-usb-devices-with-python.html">Emulating
+USB Device with Python</a>.  A follow-up article
+describes <a href="http://travisgoodspeed.blogspot.com/2012/10/emulating-usb-dfu-to-capture-firmware.html">emulating
+DFU</a> to capture firmware updates.</p>
+
+
+
+<h2>CAD Files</h2>
+
+<p>Eagle CAD 6.x files for the design can be found in
+/branches/facedancer20 of the GoodFET subversion repository, or along
+with gerbers as
+<a href="/releases/facedancer20.zip">facedancer20.zip</a>.</p>
+
+<h2>Bill of Materials</h2>
+
+<p>The MSP430F2618TPM may be replaced with a 2617, 2619, 2417, 2418,
+or 2419 chip, provided that the $mcu variable is set.</p>
+
+<p>Resistor values can be approximated, and the 1.0&mu;F capacitors
+are probably unneeded.  Be sure to get the 64 pin variant of the
+MSP430F2618, as 80-pin versions are also manufactured.
+</p>
+
+<p><table border="1">
+<tr><td>Quantity</td><td>Package</td><td></td></tr>
+<tr><td>1</td><td>SSOP28</td><td><a href="http://www.ftdichip.com/Products/FT232R.htm">FT232RL</a></td></tr>
+<tr><td>1</td><td>QFP64</td><td><a href="http://focus.ti.com/docs/prod/folders/print/msp430f2618.html">MSP430F2618TPM</a></td></tr>
+<tr><td>1</td><td>TQFP32</td><td><a href="http://www.maximintegrated.com/datasheet/index.mvp/id/3639">MAX3421E</a></td></tr>
+<tr><td>2</td><td>0603</td><td>1.0&mu;F Capacitors</td></tr>
+<tr><td>3</td><td>0603</td><td>0.1&mu;F Decoupling Capacitors</td></tr>
+<tr><td>2</td><td>0603</td><td>18pF Capacitors*</td></tr>
+<tr><td>1</td><td>HC49/UP**</td><td>12MHz SMD Crystal, 18pF</td></tr>
+<tr><td>3</td><td>0603</td><td>0603 LED</td></tr>
+<tr><td>2</td><td>0603</td><td>330R LED Series Resistors</td></tr>
+<tr><td>2</td><td>0603</td><td>33R USB Series Resistors</td></tr>
+<tr><td>2</td><td></td><td>USB Mini Receptacle Kobiconn 154-15320-E or FCI 10033526-N3212MLF or On Shore USB-M26FTR</td></tr>
+<tr><td>1</td><td></td><td>USB TYPE A SMT CONN RECEPT</td></tr>
+
+</table></p>
+
+<p>* These should match the required capacitance of the crystal.  18pF is wrong, but close enough to work.</p>
+<p>** The /US SMD package works as an alternative.</p>
+
+<p>If you need help selecting parts, you can follow
+this <a href="http://www.reddit.com/r/netsec/comments/10g7f0/goodfetfacedancer_parts_list/">example
+Digi-Key order</a>, but be sure to replace the MAX3420 with a MAX3421.
+You will also need the USB Type A receptacle for Host Mode</p>
+
+
+<h2>Construction</h2>
+
+<p>Place the components as shown in the comments of this Flickr image.
+As this is a surface-mount design, be sure that you are familiar with
+such techniques or have assistance before beginning assembly.  See the
+errata section for details on where to run fly-wires, as two pins
+were not connected in the PCB layout.</p>
+
+<p>
+<a href="http://www.flickr.com/photos/travisgoodspeed/8211249413/"
+title="Facedancer20 by Travis Goodspeed, on
+Flickr"><img src="http://farm9.staticflickr.com/8065/8211249413_69622ecc48.jpg"
+width="500" height="168" alt="Facedancer20"></a>
+</p>
+
+<p>See the <a href="http://goodfet.sourceforge.net/tutorial/">GoodFET
+Tutorial</a> for more detailed explanations.</p>
+
+<h2>Usage</h2>
+
+<p>Build and flash firmware with the following commands.  This board
+self-flashes over USB through a masked-ROM bootloader, so there is no
+need for an external programmer.</p>
+
+<p><pre>export board=facedancer20
+make clean install
+goodfet.maxusbhid
+</pre></p>
+
+<p>See the <a href="http://goodfet.sourceforge.net/tutorial/">GoodFET
+Tutorial</a> for more detailed explanations.</p>
+
+<h2>Errata</h2>
+
+<p>In the MAX3421 chip, pins 3 and 19 should have been--but were
+not--wired to ground.  This is fixed in
+the <a href="/hardware/facedancer21/">Facedancer21</a> board.  To
+assemble a proper Facedancer11 board, you must manually fly-wire these
+chips to ground as shown in the picture below.</p>
+
+<p>
+<a href="http://www.flickr.com/photos/travisgoodspeed/8390110004/" title="Facedance20 Erratum by Travis Goodspeed, on Flickr"><img src="http://farm9.staticflickr.com/8229/8390110004_fb3da17341.jpg" width="466" height="356" alt="Facedance20 Erratum"></a>
+</p>

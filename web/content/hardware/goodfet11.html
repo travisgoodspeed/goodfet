@@ -1,0 +1,44 @@
+---
+title: GoodFET11
+---
+
+<h1>GoodFET11</h1>
+
+<p>The GoodFET11 is the second hardware revision of the GoodFET.
+It fixes minor errata from the GoodFET10 but adds no new features
+other than a <strike>optional</strike> 32KHz crystal.
+</p>
+
+<h2>CAD Files</h2>
+
+<p>Eagle CAD 5.x files for the design can be found in 
+/branches/goodfet11 of Subversion, or as
+<a href="/releases/goodfet11.zip">goodfet11.zip</a>.</p>
+
+<h2>Bill of Materials</h2>
+
+<table border="1">
+<tr><td>Quantity</td><td>Package</td><td></td></tr>
+<tr><td>1</td><td>SSOP28</td><td>FT232R </td></tr>
+<tr><td>1</td><td>QFP64</td><td>MSP430F1611 or 1612</td></tr>
+<tr><td>2</td><td>0603</td><td>0.1&mu;F Decoupling Capacitors</td></tr>
+<tr><td>3</td><td>0603</td><td>LED</td></tr>
+<tr><td>2</td><td>0603</td><td>330R LED Series Resistors</td></tr>
+<tr><td>6</td><td>0603</td><td>47K Pull-up Resistors</td></tr>
+<tr><td>6</td><td>0603</td><td>100R JTAG Series Resistors</td></tr>
+<tr><td>1</td><td>TC26H</td><td>32.768kHz Crystal</td></tr>
+</table>
+
+<h2>Construction</h2>
+
+<p>Construct as described on the 
+<a href="http://www.flickr.com/photos/travisgoodspeed/3574993035/">
+following Flickr image's annotations</a>.
+</p>
+<a href="http://www.flickr.com/photos/travisgoodspeed/3574993035/" title="GoodFET12 by Travis Goodspeed, on Flickr"><img src="http://farm3.static.flickr.com/2460/3574993035_9f01b1bfa3.jpg" width="500" height="375" alt="GoodFET11" /></a>
+
+<h2>Errata</h2>
+
+<p>The documentation previously specified a 32kHz crystal.
+Use 32.768kHz, not 32.000kHz.</p>
+

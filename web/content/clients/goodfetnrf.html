@@ -1,0 +1,111 @@
+---
+title: goodfet.nrf
+---
+<h1>goodfet.nrf</h1>
+
+<p></p>
+
+<h2>Client</h2>
+<p><pre>Usage: goodfet.nrf verb [objects]
+
+goodfet.nrf info
+goodfet.nrf test
+goodfet.nrf regs
+goodfet.nrf regbits
+goodfet.nrf pyregs
+
+goodfet.nrf tune aa|55,mac,r5,r6
+        Tunes to a configuration.
+goodfet.nrf sniff
+        Sniffs packets by current config.
+goodfet.nrf sniffob
+        Sniffs OpenBeacon traffic.
+goodfet.nrf snifftp
+        Sniffs Turning Point Clicker traffic.
+goodfet.nrf sniffsf
+        Sniffs SparkFun Dongle traffic.
+goodfet.nrf sniffmskb
+        Sniffs Microsoft Keyboard traffic.
+
+goodfet.nrf sniffmacs 
+        Sniffs for MAC addresses on the present channel.
+goodfet.nrf sniffprom [0xaa|0x55]
+        Sniffs promiscuously for a preamble of 0xAA or 0x55
+goodfet.nrf autotune
+        Searches for a valid destination address.
+
+goodfet.nrf carrier [freq]
+        Holds a carrier on [freq] Hz.
+</pre></p>
+
+<h2>Pinout</h2>
+<p>
+  <table border="1">
+    <tr><th style="width: 5em;">Name</th><th colspan="2" style="width: 3.5em;">Pin</th><th style="width: 5em;">Name</th></tr>
+    <tr><td>MISO</td>	<td>1</td><td>2</td>	<td>Vcc</td></tr>
+    <tr><td>MOSI</td>	<td>3</td><td>4</td>	<td>Vcc</td></tr>
+    <tr><td>SS</td>	<td>5</td><td>6</td>	<td>	</td></tr>
+    <tr><td>SCK</td>	<td>7</td><td>8</td>	<td></td></tr>
+    <tr><td>GND</td>	<td>9</td><td>10</td>	<td>	</td></tr>
+    <tr><td>CE</td>	<td>11</td><td>12</td>	<td>    </td></tr>
+    <tr><td></td>	<td>13</td><td>14</td>	<td>    </td></tr>
+  </table>
+</p>
+
+<h2>Examples</h2>
+
+<h3>Turning Point Clicker</h3>
+
+<p>The Turning
+Point <a href="http://www.turningtechnologies.com/audienceresponseproducts/responseoptions/responsecards/responsecardrf/">ResponseCardRF</a>
+series of audience response devices can be sniffed using 'goodfet.nrf
+snifftp'.  See Travis Goodspeed's
+article, <a href="http://travisgoodspeed.blogspot.com/2010/07/reversing-rf-clicker.html">Reversing
+an RF Clicker</a>, for details of how the protocol was reverse
+engineered.</p>
+
+<p><a href="http://www.flickr.com/photos/travisgoodspeed/4747156868/"
+title="Turning Point Clicker by Travis Goodspeed, on
+Flickr"><img src="http://farm5.static.flickr.com/4079/4747156868_867d3e6c09.jpg"
+width="500" height="375" alt="Turning Point Clicker" /></a></p>
+
+<h3>OpenBeacon</h3>
+
+<p>The <a href="http://www.openbeacon.org/">OpenBeacon</a>
+and <a href="http://amd.hope.net/">OpenAMD</a> projects use Nordic
+radios to track the positions of conference and museum attendees.
+These can be sniffed with 'goodfet.nrf sniffob', but packets will be
+encrypted with XXTEA by all deployments except the Next Hope, where
+cryptography was disabled to facilitate badge hacking.</p>
+
+<p>Additionally, the <a href="/hardware/nhb12/">NHB12</a> and NHB12B
+badges from the <a href="http://thenexthope.org/">Next Hope</a> can be
+flashed with the GoodFET firmware to run this application.</p>
+
+<p><a href="http://www.flickr.com/photos/travisgoodspeed/4746123271/"
+title="NHBadge by Travis Goodspeed, on
+Flickr"><img src="http://farm5.static.flickr.com/4093/4746123271_7888160588.jpg"
+width="500" height="375" alt="NHBadge" /></a></p>
+
+<h3>Sparkfun Fob</h3>
+
+<p>A mode also exists to sniff the example firmware of
+Sparkfun's <a href="http://www.sparkfun.com/commerce/product_info.php?products_id=8602">WRL-08602
+Nordic FOB</a> by 'goodfet.nrf sniffsf'.</p>
+
+<h3>Microsoft 2.4GHz Keyboard</h3>
+
+<p>Many Microsoft wireless keyboards use their MAC address as an XOR
+key, allowing packets to be easily intercepted and deciphered.  A
+sniffer for this protocol was first implemented in
+the <a href="http://www.remote-exploit.org/?p=437">KerKeriki V2.0</a>
+project, and the GoodFET is now able to sniff this traffic as well.
+For more details,
+see <a href="http://travisgoodspeed.blogspot.com/2011/02/promiscuity-is-nrf24l01s-duty.html">Promiscuity
+is the nRF24L01+'s Duty</a>.
+</p>
+
+<a href="http://www.flickr.com/photos/travisgoodspeed/5416657948/"
+title="NHBadge Key Sniffer by Travis Goodspeed, on
+Flickr"><img src="http://farm6.static.flickr.com/5052/5416657948_8fe0b0b4c6.jpg"
+width="289" height="500" alt="NHBadge Key Sniffer" /></a>

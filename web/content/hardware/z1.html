@@ -1,0 +1,57 @@
+---
+title: Zolertia Z1
+---
+<h1>Zolertia Z1</h1>
+
+<a href="http://www.flickr.com/photos/travisgoodspeed/7024891345/"
+title="Zolertia Z1 by Travis Goodspeed, on
+Flickr"><img src="http://farm7.staticflickr.com/6096/7024891345_c6e29d6957.jpg"
+width="500" height="282" alt="Zolertia Z1"></a>
+
+<p>The Zolertia Z1 is a modernized replacement for
+the <a href="/hardware/telosb/">Telos B</a>, using a more modern
+MSP430 and a different USB chip but being otherwise nearly identical.
+Most importantly, the Z1 is available for order at
+the <a href="http://www.zolertia.com/ti">Zolertia</a> website.
+</p>
+
+<h2>Building</h2>
+
+<p>Build and flash firmware with the following commands.  The
+$board variable must be set whenever the client is used, and the
+device will not function without it.</p>
+
+<pre>export board=z1
+make clean install
+goodfet.ccspi info
+goodfet.spiflash info
+</pre>
+
+<h2>Schematics</h2>
+
+<p>Schematics and documentation can be found
+at <a href="http://www.zolertia.com/ti">http://www.zolertia.com/ti</a>
+along with ordering information and expansion boards.
+</p>
+
+<!-- CAD Files would go here, but we didn't make the board. -->
+
+<!-- Bill of Materials, Construction -->
+
+
+<h2>Errata</h2>
+
+<p>The Z1 has only been tested with the GoodFET in Linux.  Mac and
+Windows compatibility have not yet been verified.</p>
+
+<h2>Examples</h2>
+
+<p>A few nifty examples for the related Telos B board are covered in
+the
+article <a href="http://travisgoodspeed.blogspot.com/2011/03/goodfet-on-telosb-tmote-sky.html">GoodFET
+on the TelosB, TMote Sky</a>.  Specifically, the device is good for
+802.15.4 packet sniffing and injection, as well as for the quick
+prototyping of new
+applications.  <a href="http://www.secdev.org/projects/scapy/">Scapy</a>
+integration also allows for packet dissection.</p>
+

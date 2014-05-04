@@ -1,0 +1,100 @@
+---
+title: GoodThopter12
+---
+<h1>GoodThopter12</h1>
+
+<p>The GoodThopter12 is a sexy GoodFET CAN device based around the
+design of the <a href="/hardware/goodfet31/">GoodFET31</a>. Unlike the
+general- purpose GoodFET boards, the purpose of this board is to be
+used in the exploration of Automotive communication buses, currently
+supporting only the CAN bus. In addition to GF31 circuitry we have
+added a high-speed CAN Transceiver (MCP2551) and a Stand-alone CAN
+Controller with a SPI Interface (MCP2515).  This design improves upon
+the <a href="/hardware/goodthopter10/">GoodThopter10</a> by correcting
+one important and many minor errata and improves on the GoodThopter11
+by allowing users to purchase the cheaper OBD2 cables from SparkFun
+or OBD2Cables.com.
+</p>
+
+
+<p><a href="http://www.flickr.com/photos/travisgoodspeed/7799398280/" title="GoodThopter10 by Travis Goodspeed, on Flickr"><img src="http://farm9.staticflickr.com/8289/7799398280_d1093d3ce5.jpg" width="500" height="282" alt="GoodThopter10"></a></p>
+
+<h2>CAD Files</h2>
+
+<p>Eagle CAD 6.x files for the design can be found in
+/branches/goodthopter12 of the GoodFET subversion repository, or along
+with gerbers as
+<a href="/releases/goodthopter12.zip">goodthopter12.zip</a>.</p>
+
+<h2>Bill of Materials</h2>
+
+<p>Resistor values can be approximated.</p>
+
+<p><b>N.B., The BOM including Digi-Key part numbers can be found in SVN branches/goodthopter10/bom/ (GoodThopter10 uses the same components)</b></p>
+
+<p><table border="1">
+<tr><td>Quantity</td><td>Package</td><td></td></tr>
+<tr><td>1</td><td>SSOP28</td><td><a href="http://www.ftdichip.com/Products/FT232R.htm">FT232RL</a></td></tr>
+<tr><td>1</td><td>TSSOP38</td><td><a href="http://www.ti.com/product/msp430f2274">MSP430F2274</a></td></tr>
+<tr><td>1</td><td>TSSOP20</td><td><a href="http://www.microchip.com/wwwproducts/Devices.aspx?dDocName=en010406">MCP2515</a></td></tr>
+<tr><td>1</td><td>SOIC8</td><td><a href="http://www.microchip.com/wwwproducts/Devices.aspx?dDocName=en010405">MCP2551</a></td></tr>
+<tr><td>1</td><td>HC49/UP**</td><td>20MHz SMD Crystal, 15pF</td></tr>
+<tr><td>4</td><td>0603</td><td>0.1&mu;F Decoupling Capacitors</td></tr>
+<tr><td>2</td><td>0603</td><td>15pF Capacitors*</td></tr>
+<tr><td>5</td><td>0603</td><td>0603 LED</td></tr>
+<tr><td>4</td><td>0603</td><td>330R LED Series Resistors</td></tr>
+<tr><td>1</td><td>0603</td><td>10K Pull-up Resistor</td></tr>
+<tr><td>2</td><td>0603</td><td>0 OHM Resistors - Jumpers for OBD2 Cable</td></tr>
+<tr><td>1</td><td></td><td>USB Type B - TE 292304-2 or FCI 61729-1011BLF</td></tr>
+<tr><td>1</td><td></td><td>D-SUB 9 Position Mountable Conn. - TE 1734351-1</td></tr>
+</table>
+</p>
+
+<p>* These should match the required capacitance of the crystal.</p>
+<p>** The /US SMD package works as an alternative.</p>
+
+<h2>Construction</h2>
+
+<p>Place the components as shown in the comments of this Flickr image.
+As this is a surface-mount design, be sure that you are familiar with
+such techniques or have assistance before beginning assembly.</p>
+
+<a href="http://www.flickr.com/photos/travisgoodspeed/7799398280/" title="GoodThopter10 on Flickr"><img src="http://farm9.staticflickr.com/8289/7799398280_d1093d3ce5.jpg" width="500" height="282" alt="GoodThopter10"></a>
+
+<p>See the <a href="http://goodfet.sourceforge.net/tutorial/">GoodFET
+Tutorial</a> for more detailed explanations.</p>
+
+<h2>Usage</h2>
+
+<p>Build and flash firmware with the following commands.  This board
+self-flashes over USB through a masked-ROM bootloader, so there is no
+need for an external programmer.</p>
+
+<p><pre>export board=goodthopter12
+make clean install
+goodfet.mcpcan info
+</pre></p>
+
+<p>See the <a href="http://goodfet.sourceforge.net/tutorial/">GoodFET
+Tutorial</a> for more detailed explanations.</p>
+
+<h2>OBD2 Cables</h2>
+
+<p>NEW! On the GoodThopter12 you have your choice of OBD2 cable. We suggest
+purchasing the much cheaper <a href="https://www.sparkfun.com/products/10087">Sparkfun model</a></p>
+<p><b>Note: the SparkFun cable does not work with previous versions of the GoodThopter (10,11)</b></p>
+
+<a href="http://www.flickr.com/photos/andrewrighter/8629206120/" title="GoodThopter12 Cable Selection">
+<img src="http://farm9.staticflickr.com/8534/8629206120_32090373c6.jpg" width="324" height="500" alt="GoodThopter12 - Cable Selection"></a>
+<p>
+Looking at the image above, this is the GoodThopter12 silkscreen.  We
+routed the SparkFun OBD2 cable by default, so if you use this cable
+you don't need to do anything.</p>
+
+<p><b>IMPORTANT!</b> For those who have previous GoodThopter devices
+and wish to use their existing cable (the one from ICS) then you can
+do so by populating resistors R6 and R8 AND cutting the traces to the
+SparkFun lines (see silkscreen). We hope this alleviates the expensive
+purchase of the ICS cable and allows all future users to purchase
+SparkFun's cable for much less!
+</p> 

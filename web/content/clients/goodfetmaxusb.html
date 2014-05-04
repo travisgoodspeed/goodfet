@@ -1,0 +1,60 @@
+---
+title: goodfet.maxusb
+---
+<h1>goodfet.maxusb</h1>
+
+<p>The goodfet.maxusb client is a simple proof of concept for talking
+to the MAX3421 and MAX3420 chips.  Additional clients exist as
+goodfet.maxusbftdi for emulating the FTDI USB to Serial adapters,
+goodfet.maxusbhid for emulating an HID keyboard, and
+goodfet.maxusbmass for emulating a mass storage disk.  Use
+goodfet.maxusbhost to interact with host mode on MAX3421 devices.
+</p>
+
+<h2>Client</h2>
+<p><pre>Usage: goodfet.maxusb verb [objects]
+
+goodfet.maxusb info
+goodfet.maxusb iotest
+goodfet.maxusb peek 0x$start [0x$stop]
+goodfet.maxusb poke 0x$adr 0x$val
+
+Usage: goodfet.maxusbhost verb [objects]
+
+goodfet.maxusbhost info
+goodfet.maxusbhost allstrings
+
+Usage: goodfet.maxusbhid
+
+Usage: goodfet.maxusbftdi
+
+Usage: goodfet.maxusbmass disk.img
+
+Usage: goodfet.maxusbhost [info|allstrings]
+
+</pre></p>
+
+
+<h2>Pinout</h2>
+<p>The <a href="/apps/maxusb/">MAXUSB</a> app has wiring diagrams for
+connecting a GoodFET to the MAX3421E development kit, but it's easier
+to build a <a href="/hardware/facedancer11/">Facedancer11</a> board
+with integrated USB.</p>
+
+<h2>Further Reading</h2>
+
+<p>The Facedancer board and the MAXUSB module were introduced by
+Travis Goodspeed
+in <a href="http://travisgoodspeed.blogspot.com/2012/07/emulating-usb-devices-with-python.html">Emulating
+USB Devices with Python</a>.  A later article
+described <a href="http://travisgoodspeed.blogspot.com/2012/10/emulating-usb-dfu-to-capture-firmware.html">emulation
+of the Device Firmware Update</a> protocol in order to impersonate an
+Ubertooth and catch it's firmware update.  An article will soon be
+posted on mass storage emulation, but for now you can probably find
+the video from the 29th Chaos Communication Congress in Berlin.
+</p>
+
+<h2>Notes</h2>
+
+<p>As this is a rather new port, expect new features and better
+documentation in the near future.</p>

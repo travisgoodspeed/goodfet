@@ -1,0 +1,127 @@
+---
+title: Frequently Asked Questions
+---
+<h1>FAQ</h1>
+
+<h3>Software</h3>
+
+<p><i>In Ubuntu 10.4, goodfet.bsl crashes randomly.</i><br/>  Kenneth
+Finnegan describes the
+problem <a href="http://kennethfinnegan.blogspot.com/2010/12/soldering-goodfet-31.html#software">in
+this article</a>.  The jist is that a bad udev rule makes the
+GoodFET's FT232 chip look like a power management device, which upowerd
+then grabs hold of.  The fix is to delete the udev rule in /lib/udev/rules.d/95-upower-wup.rules.</p>
+
+<p><i>Is there a standalone version for Windows?</i><br/>
+Yes, but it is rather old, as no one in the development team uses
+Windows.  Please get in touch if you would like to help automate
+py2exe builds for us.
+Download <a href="http://sourceforge.net/projects/goodfet/files/">GFWin.zip</a>
+and be sure that you have
+the <a href="http://www.microsoft.com/downloads/details.aspx?familyid=9b2da534-3e03-4391-8a4d-074b9f2bc1bf&displaylang=en">Visual
+Studio Redistribution Package</a>.
+</p>
+
+<p><i>Will the client run on my operating system?</i><br/>
+
+While the software is developed in unix, you ought to be able to run
+it under Windows with Cygwin and Python.  Linux, OpenBSD, and OS X are
+well supported.  There is also an experimental QT-Quick GUI for Meego.
+</p>
+
+<p><i>Which python packages are required?</i><br/>
+<a href="http://pyserial.sourceforge.net/">python-serial</a>, <a href="http://code.google.com/p/pysqlite/">python-sqlite</a></p>
+
+<p><i>Where do I get MSPGCC?</i><br/>  A good build script is
+available at <a href="http://mspgcc4.sourceforge.net/">MSPGCC4</a>.
+Compatibility is maintained with MSPGCC3, but all present development
+is performed in version 4.  Be sure to build without Insight, and feel
+free to omit GDB if you don't need it.</p>
+
+<p><i>Can I install the firmware without MSPGCC?</i><br/>
+Sure.  'goodfet.bsl --fromweb' will download the most recent firmware from
+the website.  If you are working with special platforms like the Next Hope Badge,
+Facedancer or the Telos B, you will need to specify the board environment variable.
+'board=facedancer20 goodfet.bsl --fromweb' should do the trick if you are
+programming a facedancer20 board.
+</p>
+
+
+<h3>BSL</h3>
+
+<p><i>What does ``Verb FF is wrong.  Incorrect firmware or bad Info guess?'' mean?</i><br/>
+This is an older error that should no longer be seen.  Update to the latest client.
+</p>
+
+<h3>Hardware</h3>
+
+<p><i>Which model do I want?</i><br/>
+The <a href="/hardware/goodfet42">GoodFET42</a> is by far the best
+model, but the <a href="/hardware/goodfet32">GoodFET32</a> is kept is
+stock as it is easier to solder.  Boards can be obtained at little to
+no cost as explained in the <a href="/orders/">Ordering
+Information</a> page.</p>
+
+<p>Adafruit sells
+assembled <a href="http://www.adafruit.com/products/1279">GoodFET42
+boards</a>.  At int3.cc, you can order
+assembled <a href="http://int3.cc/collections/frontpage/products/facedancer21">Facedancer21</a>
+boards for USB fuzzing and emulation.</p>
+
+<p><i>Do I use a 47K pull-up resistor or a 74K resistor for the !RST line?</i><br/>
+74K is a typo, but anything from 1K to 100K ought to work.  The !RST pull-up
+resistor has been removed from recent models, and it can probably be omitted
+in older models.</p>
+
+<p><i>I would like a GoodFET, but I am unable to solder.  Will you send me an assembled
+unit?</i><br/>
+Unless you are willing to pay an absurd markup, it is best to build your own.  Bring
+the components to your local <a href="http://hackerspaces.org">hackerspace</a>, and
+ask a neighbor to help you out.</p>
+
+<p><i>In the * BOM are the 0603 componentss imperial or metric?</i><br/>
+These are imperial measurements.  0603 (0.063 in x 0.031 in) are equivalent
+to 1608 metric (1.6mm x 0.8mm).</p>
+
+<h3>Distribution</h3>
+
+<p><i>What license does this project use?  Can I fork it, package it, or trade
+it for battle umbrellas?</i><br/>
+The GoodFET firmware and client software are 3-clause BSD licensed, and you are free to
+redistribute anything in the GoodFET repository without any unneighborly
+restrictions.</p>
+
+<p><i>Where can I get the latest version of the code?</i><br/>
+svn co https://svn.code.sf.net/p/goodfet/code goodfet
+</p>
+
+<p><i>Is a zip archive available that's just a little more stable</i><br/>
+Periodically, releases are made among the <a href="http://sourceforge.net/projects/goodfet/files/">Sourceforge Files</a>.
+</p>
+
+<h3>Ordering</h3>
+
+<p><i>How can I order a GoodFET?</i><br/>
+Pre-assembled boards are not available, but you can get PCBs from our
+<a href="/orders/">ordering</a> page and solder them yourself.</p>
+
+
+<h3>Development</h3>
+
+<p><i>Would you like patches for the $foo architecture?</i><br/>
+Yes!  Email travis at radiantmachines.com or join us in #goodfet
+on Freenode to discuss it.</p>
+
+<p><i>Will you write support for $foo?</i><br/>
+There's a long queue of chips to support.  Getting pushed to the front
+won't be easy.</p>
+
+<p><i>Who builds the GoodFET?</i><br/>  The project was begun
+by <a href="http://travisgoodspeed.blogspot.com/">Travis Goodspeed</a>
+in early 2009.  Other neighbors contribute regularly.</p>
+
+<p><i>Can the firmware be ported?</i><br/>  Yes.  Ports are underway
+for the <a href="http://zolertia.sourceforge.net/">Zolertia Z1</a>,
+Telos B, and other MSP430 devices.  In the longer term, a port is
+planned to the Chipcon 8051 radios.</p>
+

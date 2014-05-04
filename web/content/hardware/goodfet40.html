@@ -1,0 +1,58 @@
+---
+title: GoodFET40
+---
+<h1>GoodFET40</h1>
+
+<p>The GoodFET40 is the twelfth hardware revision of the GoodFET,
+owing its heritage to the <a href="/hardware/goodfet21/">GoodFET21</a>
+and <a href="/hardware/goodfet31/">GoodFET31</a>.  It retains the small
+BOM of the GoodFET31 while using the more powerful microcontroller of the
+GoodFET21.  The PCB USB connector has been dropped in favor of a Mini USB
+receptable, allowing PCBs to be manufactured on very thin boards, suitable
+for embedding within the cases of other electronics.
+</p>
+
+<p><b>N.B. This version has been discontinued due to the boards being
+insufficiently thick to handle the mechanical stress of the 0.1&quot;
+header.  Use the <a href="/hardware/goodfet41/">GoodFET41</a>
+instead.</b></p>
+
+<h2>CAD Files</h2>
+
+<p>Eagle CAD 5.x files for the design can be found in
+/branches/goodfet40 of the subversion repository, or as
+<a href="/releases/goodfet40.zip">goodfet40.zip</a>.</p>
+
+<h2>Bill of Materials</h2>
+
+<p>The MSP430F2618TPM may be replaced with a 2617, 2619, 2417, 2418,
+or 2419 chip.  LEDs may be of any color, but a smaller series resistor
+should be used in such a case.</p>
+
+<p>Resistor values can be approximated.  Be sure to get the 64 pin
+variant of the MSP430F2618.</p>
+
+<table border="1">
+<tr><td>Quantity</td><td>Package</td><td></td></tr>
+<tr><td>1</td><td>SSOP28</td><td><a href="http://www.ftdichip.com/Products/FT232R.htm">FT232RL</a></td></tr>
+<tr><td>1</td><td>QFP64</td><td><a href="http://focus.ti.com/docs/prod/folders/print/msp430f2618.html">MSP430F2618TPM</a></td></tr>
+<tr><td>2</td><td>0603</td><td>0.1&mu;F Decoupling Capacitors</td></tr>
+<tr><td>3</td><td>0603</td><td>0603 LED</td></tr>
+<tr><td>2</td><td>0603</td><td>330R LED Series Resistors</td></tr>
+<tr><td>1</td><td></td><td>USB Mini Receptacle UX60-MB-5ST</td></tr>
+</table>
+
+
+<h2>Construction</h2>
+
+<i>Coming soon.</i>
+
+<h2>Errata</h2>
+
+<p>The USB positioning holes do not match many brands of connector.
+If the part doesn't fit, break the tabs from the connector and rely
+upon the solder points for proper positioning.</p>
+
+<p>The board is too thin for use without a supporting case, causing
+some boards to flex and become damaged.  For this reason,
+the <a href="/hardware/goodfet41/">GoodFET41</a> uses a thicker PCB.</p>

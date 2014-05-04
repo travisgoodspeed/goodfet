@@ -1,0 +1,58 @@
+---
+title: GoodFET22
+---
+<h1>GoodFET22</h1>
+
+<p>The GoodFET22 is the seventh hardware revision of the GoodFET,
+owing its heritage to the <a href="/hardware/badfet20/">BadFET20</a>
+and <a href="/hardware/goodfet30/">GoodFET30</a>.  It retains the more
+powerful MCU of the BadFET20 while adopting the GoodFET30's smaller
+board and lack of crystals.  The 74HC4053 MUX has been dropped from
+the design, and glitching is now performed through
+an <a href="http://www.analog.com/en/switchesmultiplexers/analog-switches/adg1634/products/product.html">ADG1634</a>
+from Analog Devices.
+</p>
+
+<h2>CAD Files</h2>
+
+<p>Eagle CAD 5.x files for the design can be found in
+/branches/goodfet22 of the subversion repository, or as
+<a href="/releases/goodfet22.zip">goodfet22.zip</a>.</p>
+
+<h2>Bill of Materials</h2>
+
+<p>The ADG1634BRUZ is optional and only useful for voltage glitching
+research.  If omitting it, populate the two empty resistor pads near
+it with zero-ohm resistors.</p>
+
+<table border="1">
+<tr><td>Quantity</td><td>Package</td><td></td></tr>
+<tr><td>1</td><td>SSOP28</td><td><a href="http://www.ftdichip.com/Products/FT232R.htm">FT232RL</a></td></tr>
+<tr><td>1</td><td>QFP64</td><td><a href="http://focus.ti.com/docs/prod/folders/print/msp430f2618.html">MSP430F2618TPM</a></td></tr>
+<tr><td>1</td><td>TSSOP20</td><td><a href="http://www.analog.com/en/switchesmultiplexers/analog-switches/adg1634/products/product.html">ADG1634BRUZ</a></td></tr>
+<tr><td>3</td><td>0603</td><td>0.1&mu;F Decoupling Capacitors</td></tr>
+<tr><td>3</td><td>0603</td><td>0603 LED</td></tr>
+<tr><td>2</td><td>0603</td><td>330R LED Series Resistors</td></tr>
+<tr><td>1</td><td>0603</td><td>47K !RST Pull-up Resistor</td></tr>
+</table>
+
+<p>Resistor values can be approximated.  Be sure to get the 64 pin
+variant of the MSP430F2618.</p>
+
+<h2>Construction</h2>
+
+<a href="http://www.flickr.com/photos/travisgoodspeed/4307787292/"
+title="GoodFET22 by Travis Goodspeed, on
+Flickr"><img src="http://farm5.static.flickr.com/4020/4307787292_381d9301d8.jpg"
+width="500" height="180" alt="GoodFET22" /></a>
+
+<a href="http://www.flickr.com/photos/travisgoodspeed/4351528769/"
+title="GoodFET22 Schematic by Travis Goodspeed, on
+Flickr"><img src="http://farm5.static.flickr.com/4023/4351528769_0ddb6a1f31.jpg"
+width="500" height="286" alt="GoodFET22 Schematic" /></a>
+
+<h2>Errata</h2>
+
+<p>The board's silkscreen lists the chip as an ADG1633.  Use a 1634,
+as the 1633 is a related chip that will not fit.</p>
+

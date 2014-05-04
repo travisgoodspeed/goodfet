@@ -1,0 +1,55 @@
+---
+title: TelosB
+---
+<h1>Telos B</h1>
+
+<a href="http://www.flickr.com/photos/travisgoodspeed/3118925792/"
+title="Telos B with JTAG Adapter by Travis Goodspeed, on
+Flickr"><img src="http://farm4.static.flickr.com/3286/3118925792_e0d93505ae.jpg"
+width="500" height="375" alt="Telos B with JTAG Adapter" /></a>
+
+<p>The Telos B is a wireless sensor development platform which is also
+sold as a MoteIV TMote Sky.  While the hardware predates the GoodFET
+project, the two share many design similarities, allowing a port
+with little trouble.
+</p>
+
+<h2>Building</h2>
+
+<p>Build and flash firmware with the following commands.  The
+$board variable must be set whenever the client is used, and the
+device will not function without it.</p>
+
+<pre>export board=telosb
+make clean install
+goodfet.ccspi info
+goodfet.spiflash info</pre>
+
+<h2>Schematics</h2>
+
+<p>Schematics for the devices are identical, and they can be found in
+the contrib/ directory of the subversion repository.
+</p>
+
+<!-- CAD Files would go here, but we didn't make the board. -->
+
+<!-- Bill of Materials, Construction -->
+
+
+<h2>Errata</h2>
+
+<p>The <a href="/clients/goodfetspiflash/">goodfet.spiflash</a>
+client cannot determine the size or model of the SPI Flash chip in the
+TMote Sky, whose chip differs somehow from the otherwise identical
+Telos B.  Reads, writes, and erases perform as expected.</p>
+
+<h2>Examples</h2>
+
+<p>A few nifty examples are covered in the
+article <a href="http://travisgoodspeed.blogspot.com/2011/03/goodfet-on-telosb-tmote-sky.html">GoodFET
+on the TelosB, TMote Sky</a>.  Specifically, the device is good for
+802.15.4 packet sniffing and injection, as well as for the quick
+prototyping of new
+applications.  <a href="http://www.secdev.org/projects/scapy/">Scapy</a>
+integration also allows for packet dissection.</p>
+

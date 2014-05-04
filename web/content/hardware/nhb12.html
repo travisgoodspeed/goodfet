@@ -1,0 +1,240 @@
+---
+title: NHB12
+---
+<h1>NHB12</h1>
+
+<p>The NHB12 and NHB12B are the tenth and eleventh hardware revisions
+of the GoodFET, but they also served as conference badges for
+the <a href="http://thenexthope.org/">Next Hope</a> conference that
+occurred in Manhattan in 2010.  These were the first GoodFETs to be
+mass produced, but an additional badge hacking kit is necessary to run
+the GoodFET firmware.</p>
+
+<p>All badges ship with an MSP430 port of
+the <a href="http://openbeacon.de/">OpenBeacon</a> firmware for use
+with the conference's <a href="http://amd.hope.net/">OpenAMD</a>
+deployment.</p>
+
+<p><a href="http://www.flickr.com/photos/travisgoodspeed/4746123271/"
+title="NHBadge by Travis Goodspeed, on
+Flickr"><img src="http://farm5.static.flickr.com/4093/4746123271_7888160588.jpg"
+width="500" height="375" alt="NHBadge" /></a></p>
+
+<h2>CAD Files</h2>
+
+<p>Eagle CAD 5.x files for the design can be found in
+/branches/nhb12 of the subversion repository, or as
+<a href="/releases/nhb12.zip">nhb12.zip</a>
+and <a href="/releases/nhb12b.zip">nhb12b.zip</a>.</p>
+
+<p>The complete project files, including the assembly line
+programming and regression tests scripts, are available at
+<a href="http://sourceforge.net/projects/nhbadge/files/"
+>http://sourceforge.net/projects/nhbadge/files/</a>.  A newly minted
+Win32 port of the GoodFET's <a href="/clients/goodfetmsp430/">MSP430
+Client</a> was used for all flashing and testing.</p>
+
+<h2>Firmware</h2>
+
+<p>The pinouts of the NHB12 and NHB12B differ from the GoodFET2x
+series that is assumed by the MSP430F2618 firmware.  Full support will
+be integrated into 'goodfet.bsl --fromweb' soon, but for the time
+being, flash one of the images at the
+<a href="http://sourceforge.net/projects/nhbadge/files/">NHBadge</a>
+project's file page</p> with 'goodfet.bsl -e -p foo.hex'.</p>
+
+<p>To build the GoodFET firmware for these boards, compile
+trunk/firmware with 'board=nhb12 make clean
+install' or 'board=nhb12b make clean install' as
+your hardware dictates.</p>
+
+<h2>Bill of Materials</h2>
+
+<!--
+<table border="1">
+<tr><td>Quantity</td><td>Package</td><td></td></tr>
+<tr><td>1</td><td>SSOP28</td><td>FT232RL</td></tr>
+<tr><td>1</td><td>TSSOP38</td><td>MSP430F2274</td></tr>
+<tr><td>2</td><td>0603</td><td>0.1&mu;F Decoupling Capacitors</td></tr>
+<tr><td>3</td><td>0603</td><td>LED</td></tr>
+<tr><td>2</td><td>0603</td><td>330R LED Series Resistors</td></tr>
+<tr><td>1</td><td></td><td>8 pin header (optional)</td></tr>
+<tr><td>1</td><td></td><td>2x7 pin header</td></tr>
+</table>
+-->
+
+<p>Coming Soon</p>
+
+<h2>Errata</h2>
+
+<p>Email travis at radiantmachines.com if you should find any.</p>
+
+<h2>Hacks</h2>
+
+<p>Makers Local 256 wired one of their badges to build
+a <a href="https://256.makerslocal.org/2010/07/24/the-next-hope-geiger-counter/">Geiger
+Counter</a> that detects other badges.</p>
+
+<p>Adam Mayer hacked up a replacement OpenBeacon firmware image which
+would clone a nearby device's ID, in order to confuse the aggregation
+servers.  You can find a copy of his firmware in
+the <a href="http://sourceforge.net/projects/nhbadge/develop">nhbadge
+subversion repository</a>.</p>
+
+<p>Travis managed to build a promiscuous sniffer for Microsoft's
+2.4GHz wireless keyboards, documented
+in <a href="http://travisgoodspeed.blogspot.com/2011/02/promiscuity-is-nrf24l01s-duty.html">Promiscuity
+is the nRF24L01+'s Duty</a>.  Keystrokes are USB HID events encrypted
+only by XOR, where the key is the 5 byte MAC address.  Because a
+key-up event includes a longer string of zero bytes, some packets
+actually include the key twice!</p>
+
+<h1>Next Hope Badge USB Modification</h1>
+
+<p>(The following are instructions for assembling the badge hacking
+kit.  They've yet to be edited properly into the project
+description.)</p>
+
+<p>This kit is best used with the 80-pin MSP430F2618 model, so
+switching to that model is recommended prior to assembly.  The 80-pin
+model is written as "NHB12" on the right of the badge, while the
+64-pin model is "NHB12B"</p>
+
+<h2>Introduction</h2>
+
+<p>The following instructions are for adding USB support to a Next
+Hope conference badge, model numbers of which are NHB12 and NHB12B.
+For further details see my article entitled
+<a href="http://travisgoodspeed.blogspot.com/2010/06/hacking-next-hope-badge.html">Hacking
+the Next Hope Badge</a>.</p>
+
+<p>While these instructions are not terribly complicated, the kit is
+not intended for a first-time solderer.  If you have never soldered
+before, then build a TV-B-Gone as practice before having someone help
+you assemble this kit.  Additionally, some Unix or command-line Windows
+experience is necessary, as the tools involved do not have a GUI.</p>
+
+<h2>Modification</h2>
+
+<p>First, be sure that you have both a mini USB connector and an
+FT232RL chip, as pictured below.  These are included in Mitch's
+kit.</p>
+
+<a href="http://www.flickr.com/photos/travisgoodspeed/4796189835/"
+title="Mini USB Connectors by Travis Goodspeed, on
+Flickr"><img src="http://farm5.static.flickr.com/4115/4796189835_81d2796af2.jpg"
+width="500" height="375" alt="Mini USB Connectors" /></a>
+
+<p><a href="http://www.flickr.com/photos/travisgoodspeed/4796190529/"
+title="FT232RL Chip by Travis Goodspeed, on
+Flickr"><img src="http://farm5.static.flickr.com/4119/4796190529_4b14c2728f.jpg"
+width="500" height="375" alt="FT232RL Chip" /></a></p>
+
+<p>Modify your badge by the following steps:</p>
+<ul>
+
+<li>(Optional) Use a soldering iron to remove first one side, then the
+other, of the battery clip.  If leaving the battery in place, be sure not to
+have both a battery and USB power at the same time.</li>
+
+<li>Use a Dremel tool or fine cutters to remove the two plastic nubs
+from the the Mini USB plug.  The badges as manufactured lack holes for the
+nubs, so it is necessary to remove them for mechanical compatibility.</li>
+
+<li>Fit the Mini USB connector to the board as shown in Appendix A.
+It should fit flush with the board, fitting securely after soldering.
+Solder a single of the pins first, then a second to ensure proper
+positioning.  The side plugs should be soldered last, with plenty of extra
+solder for mechanical stability.</li>
+
+<li><b>UNDER NO CIRCUMSTANCES</b> should the board be held by its USB
+connector.  If twisted as a lever, the connector will come off, and it
+will not be fun to repair the board.</li>
+
+<li>Once the USB connector is properly in place, fit the FTDI chip as
+shown in Appendix A.  The circle on the chip, which indicates Pin 1,
+should be next to the "U3" text.  First, tack a single corner pin of
+the chip.  Once this is done and the chip is still positioned
+properly, tack a pin on the opposite corner with as little solder as
+possible.  Finally, after verifying that those pins are properly
+positioned, solder the remaining pins.  If any bridge, remove the
+excess solder with a coper soldering wick.</li>
+
+<li>Having these parts connected, plug the badge into your computer
+using the included USB A to Mini B cable.  You should then see a new
+USB device enumeration.  If anything gets hot, immediately unplug the
+badge and check your soldering.</li>
+
+</ul>
+
+<h2>Driver</h2>
+
+The FTDI Virtual Comm Port (VCP) driver for Windows and Mac can be
+found
+at <a href="http://www.ftdichip.com/Drivers/VCP.htm">http://www.ftdichip.com/Drivers/VCP.htm</a>,
+while Linux and OpenBSD distributions generally ship with built-in
+support.
+
+<h2>OpenBeacon Firmware</h2>
+
+<p>To reflash your badge's OpenBeacon firmware, grab the NHBadge
+project from subversion.  The Unix command for this is ``<i>svn co
+https://nhbadge.svn.sourceforge.net/svnroot/nhbadge</i>''.  (TortoiseSVN will
+retrieve the same URL for Windows users.)  Inside
+the <i>nhbadge/dist</i> path, one will find the latest Next Hope badge firmware
+along with Windows batch scripts for programming the badges.  Unix users with
+a C compiler and GoodFET and instead run ``<i>goodfet.bsl -e -p foo.hex</i>'' to compile the firmware
+and flash a firmware image over USB.</p>
+
+<p>To make things a bit easier, a ZIP file distribution for Windows users is available at
+<a href="http://goodserv.cis.upenn.edu/nhdist.zip">http://goodserv.cis.upenn.edu/nhdist.zip</a>.
+This is the exact file that was sent to the manufacturer, and was the
+file used on the production line to program these things.</p>
+
+<h2>GoodFET Firmware</h2>
+
+<p>To download the GoodFET firmware for either Unix or Windows,
+visit <a href="http://goodfet.sourceforge.net/">http://goodfet.sf.net/</a>
+and follow the SVN instructions.  Once installed, you can flash the
+GoodFET firmware to the badge with either 'goodfet.bsl -e -p
+goodfet2618.hex' or 'GFBSL.EXE -e -p goodfet2618.hex'.
+<p>
+
+<p>To build the GoodFET firmware for these boards, compile
+trunk/firmware with 'board=nhb12 mcu=msp430x2618 make clean
+install' or 'board=nhb12b mcu=msp430x2618 make clean install' as
+your hardware dictates.</p>
+
+<p>Once flashed with firmware, the badge will respond to
+'goodfet.monitor info' ('GFMON.EXE info' on Windows) with its model
+number and clock calibrations.</p>
+
+<p>You can then use 'goodfet.nrf sniffob' to packet sniff the rest of
+the badge network or 'goodfet.nrf snifftp' to sniff traffic from
+Turning Point Clickers.  Read my articles
+on <a href="http://travisgoodspeed.blogspot.com/2010/06/hacking-next-hope-badge.html">Hacking
+the Next Hope Badge</a>
+and <a href="http://travisgoodspeed.blogspot.com/2010/07/reversing-rf-clicker.html">Reversing
+and RF Clicker</a> for details.</p>
+
+<h2>Appendix A: Component Placement</h2>
+
+
+<p><a href="http://www.flickr.com/photos/travisgoodspeed/4796886774/"
+title="NHBadge USB by Travis Goodspeed, on
+Flickr"><img src="http://farm5.static.flickr.com/4095/4796886774_3da98ef486.jpg"
+width="500" height="375" alt="NHBadge USB" /></a></p>
+
+<a href="http://www.flickr.com/photos/travisgoodspeed/4796257341/"
+title="NHBadge FTDI by Travis Goodspeed, on
+Flickr"><img src="http://farm5.static.flickr.com/4142/4796257341_6075970e35.jpg"
+width="500" height="375" alt="NHBadge FTDI" /></a>
+
+<!--
+<h2>Appendix B: Schematic</h2>
+
+<p>This is the NHB12 schematic diagram.  For modifications, the `Do
+Not Populate' section will be populated.</p>
+
+<p><img src="nhb12a_schem.jpg" /></p>
+-->
