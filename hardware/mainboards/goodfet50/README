@@ -1,0 +1,3 @@
+Note: This board design is not yet finished. I (thequux) plan to rodo the layout into the standard GoodFET form factor.
+
+The GoodFET 51 will also include an (optional) MAX3421E, so that it can be used with more Android phones.

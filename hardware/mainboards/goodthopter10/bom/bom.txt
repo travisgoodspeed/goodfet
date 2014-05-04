@@ -1,0 +1,23 @@
+
+Parts list for GoodFET CAN Adapter: 
+
+1	SSOP28	FT232RL						768-1007-1-ND
+1	TSSOP38 MSP430F2274IDAR					296-21439-1-ND
+1	TSSOP20	MCP2515-I/ST					MCP2515-I/ST-ND
+1	SOIC8	MCP2551-I/SN					MCP2551-I/SN-ND
+
+4	0603		0.1μF Decoupling Capacitors		490-1532-1-ND	
+2	0603		15pF Capacitors				490-1407-1-ND
+5	0603		0603 LED					
+				WHITE				511-1602-1-ND
+				RED				511-1581-1-ND	
+				GREEN				511-1585-1-ND
+4	0603		330R LED Series Resistors		541-330GCT-ND
+1	0603		10K Pull-Up Resistor			311-10KGRCT-ND
+1	0603		20MHz Crystal Oscillator		535-9074-1-ND
+
+1			USB Type B				A98573-ND
+1			D-SUB 9 Position Mountable Conn.	A35105-ND
+
+NOTE: Male Header Part No. is 2x40
+

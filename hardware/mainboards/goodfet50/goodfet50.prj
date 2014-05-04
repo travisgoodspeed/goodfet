@@ -1,0 +1,3 @@
+schematics goodfet50.sch
+elements-dir ../pcb-elements
+output-name goodfet50
