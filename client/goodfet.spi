@@ -1,0 +1,40 @@
+#!/usr/bin/env python
+
+#GoodFET Raw SPI Client
+#by Sebastien F4GRX <f4grx@f4grx.net>
+
+import sys;
+import binascii;
+import array;
+
+from GoodFETSPI import GoodFETSPI;
+from intelhex import IntelHex;
+
+if(len(sys.argv)==1):
+    print "Usage: %s verb [objects]\n" % sys.argv[0];
+    print "%s trx <hex> [ <hex>...] : send SPI transaction(s), display response" % sys.argv[0];
+    sys.exit();
+
+#Initialize FET and set baud rate
+client=GoodFETSPI();
+client.serInit()
+client.SPIsetup();
+
+def hex_bin_arr(str):
+	bin=[]
+	if len(str) & 1: return None
+	for i in range(0,len(str)/2):
+		#print "off",i," -> ",str[2*i:2*i+2]
+		bin.append(int(str[2*i:2*i+2],16))
+	return bin
+
+if(sys.argv[1]=="trx"):
+    for arg in sys.argv[2:]:
+		print "->",arg
+		#decode hex to bin
+		data = hex_bin_arr(arg)
+		#print data
+		#transaction
+		retval = client.SPItrans(data)
+		#show result
+		print "<-", "".join(["%02X" % ord(x) for x in retval])
