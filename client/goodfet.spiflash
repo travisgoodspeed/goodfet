@@ -9,6 +9,7 @@
 import sys;
 import binascii;
 import array;
+import time;
 
 from GoodFETSPI import GoodFETSPIFlash;
 from intelhex import IntelHex;
@@ -22,6 +23,8 @@ if(len(sys.argv)==1):
     print "%s verify $foo.rom [0x$start 0x$stop]" % sys.argv[0];
     print "%s peek 0x$start [0x$stop]" % sys.argv[0];
     print "%s poke 0x$adr 0x$val" % sys.argv[0];
+    print "%s readstatus" % sys.argv[0];
+    print "%s writestatus 0x$val" % sys.argv[0];
     sys.exit();
 
 #Initialize FET and set baud rate
@@ -189,3 +192,13 @@ if(sys.argv[1]=="poke"):
         client.SPIpokebyte(start,val);
         print "Poked to %02x" % client.SPIpeek(start);
 
+if(sys.argv[1] == "readstatus"):
+    print "Status: 0x%02x" % client.SPIreadstatusregister();
+
+if(sys.argv[1] == "writestatus"):
+    if(len(sys.argv)>2):
+        val=int(sys.argv[2],16);
+        client.SPIwritestatusregister(val);
+        print "Wrote status: 0x%02x" % val
+        time.sleep(1);
+        print "Read back status: 0x%02x" % client.SPIreadstatusregister();

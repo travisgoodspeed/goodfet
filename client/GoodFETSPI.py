@@ -336,3 +336,16 @@ class GoodFETSPIFlash(GoodFETSPI):
             device="???"
         return "%s %s" % (man,device);
 
+    def SPIreadstatusregister(self):
+        """Read the status register."""
+        data=[0x05,
+            0];
+        self.SPItrans(data);
+        return ord(self.data[1]);
+
+    def SPIwritestatusregister(self, val):
+        """Write the status register."""
+        data=[0x01,
+            val];
+        self.SPIwriteenable();
+        self.SPItrans(data);
