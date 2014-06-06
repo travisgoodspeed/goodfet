@@ -1311,7 +1311,9 @@ class BootStrapLoader(LowLevel):
         response = urllib2.urlopen(url)
         data = response.read()
         if 0 < len(data):
-            file(self.tempFileName, 'wb').write(data)
+            tempFile = file(self.tempFileName, 'wb')
+            tempFile.write(data)
+            tempFile.close()
         else:
             print "Failed to download file %s" % url
             sys.exit()
