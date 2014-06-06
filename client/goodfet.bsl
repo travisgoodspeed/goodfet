@@ -976,7 +976,7 @@ class BootStrapLoader(LowLevel):
         self.maxData        = self.MAXDATA
         self.cpu            = None
         self.info           = None
-        self.tempFileName   = os.sep.join([tempfile.gettempdir(), ".goodfet.hex" ])
+        self.tempFileName   = os.path.join([tempfile.gettempdir(), ".goodfet.hex" ])
 
     def fetchinfo(self):
         data=self.uploadData(0x1000,256);
