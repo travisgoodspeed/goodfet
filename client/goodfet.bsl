@@ -29,9 +29,9 @@
 #  - Use FTDI Serial Number to archive info text and/or password (dragorn's idea)
 #      /sys/bus/usb-serial/devices/ttyUSB0/../../serial
 
-import sys, time, string, cStringIO, struct
+import sys, time, string, cStringIO, struct, urllib2, tempfile
 #sys.path.append("/usr/lib/tinyos")  #We no longer require TinyOS.
-import serial, os, subprocess, glob
+import serial, os, glob
 
 #forked from TinyOS Telos version.
 VERSION = string.split("Revision: 1.39-goodfet-8 ")[1] 
@@ -976,6 +976,7 @@ class BootStrapLoader(LowLevel):
         self.maxData        = self.MAXDATA
         self.cpu            = None
         self.info           = None
+        self.tempFileName   = os.path.join( tempfile.gettempdir(), ".goodfet.hex" )
 
     def fetchinfo(self):
         data=self.uploadData(0x1000,256);
@@ -1307,21 +1308,19 @@ class BootStrapLoader(LowLevel):
         """Grab GoodFET firmware from the web."""
         url="%s%s.hex" % (FIRMWARE_BASEURL, self.board);
         print "Grabbing %s firmware from %s" % (self.board, url);
-        fn="/tmp/.%s.hex" % self.board
-        try:
-            subprocess.call(['curl', '-sS', url, '-o', fn])
-        except OSError:
-            print "Failed to run curl, trying wget"
-            try:
-                subprocess.call(['wget', '-nv', url, '-O', fn])
-            except OSError:
-                print "Failed to fetch firmware.  Maybe you need to install curl or wget?"
-                sys.exit()
+        response = urllib2.urlopen(url)
+        data = response.read()
+        if 0 < len(data):
+            tempFile = file(self.tempFileName, 'wb')
+            tempFile.write(data)
+            tempFile.close()
+        else:
+            print "Failed to download file %s" % url
+            sys.exit()
 
     def actionFromweb(self):
         """Flash the GoodFET firmware which has been downloaded in an earlier step."""
-        fn="/tmp/.%s.hex" % self.board
-        fw=Memory(fn);
+        fw = Memory(self.tempFileName);
         
         sys.stderr.write("Program ...\n")
         sys.stderr.flush()
