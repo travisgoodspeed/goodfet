@@ -1,7 +1,7 @@
 #Generates distribution files for all targets.
 #Testing is performed separately.
 
-gfpath?=.tmpbuild
+gfpath?=goodfet
 fwpath=$(gfpath)/firmware
 hwpath=$(gfpath)/hardware
 clientpath=$(gfpath)/client
@@ -13,7 +13,7 @@ all:
 	mkdir dist
 	echo "Options +Indexes" >dist/.htaccess
 	rm -rf $(gfpath)
-	svn co https://goodfet.svn.sourceforge.net/svnroot/goodfet/trunk $(gfpath)
+	git clone https://github.com/travisgoodspeed/goodfet
 	#cd $(testpath) && make nodiff 
 	cd $(fwpath) && board=goodfet11 make clean all >/dev/null 2>>/dev/null
 	cp $(fwpath)/goodfet.hex dist/goodfet11.hex >/dev/null
@@ -39,6 +39,8 @@ all:
 	cp $(fwpath)/goodfet.hex dist/goodthopter10.hex >/dev/null
 	cd $(fwpath) && board=goodthopter11 make clean all >/dev/null 2>>/dev/null
 	cp $(fwpath)/goodfet.hex dist/goodthopter11.hex >/dev/null
+	cd $(fwpath) && board=goodthopter12 make clean all >/dev/null 2>>/dev/null
+	cp $(fwpath)/goodfet.hex dist/goodthopter12.hex >/dev/null
 	cp $(clientpath)/*.py $(clientpath)/goodfet.* dist
 	cp distreadme.txt dist/README.txt
 	cd dist && zip `date +goodfet-%Y-%m-%d.zip` *
