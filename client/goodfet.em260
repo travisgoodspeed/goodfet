@@ -30,8 +30,7 @@ import binascii;
 import array;
 import struct;
 
-# TODO: Fix the following reference
-from GoodFETEM260_ing import GoodFETEM260;
+from GoodFETEM260 import GoodFETEM260;
 from intelhex import IntelHex;
 
 if(len(sys.argv)==1):
