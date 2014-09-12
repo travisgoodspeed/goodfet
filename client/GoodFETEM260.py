@@ -2,6 +2,7 @@
 # GoodFET EM260 Radio Client
 # 
 # (C) 2010 Travis Goodspeed <travis at radiantmachines.com>
+# EM260 testing and updates by Don C. Weber (@cutaway), InGuardians, Inc.
 #
 # This code is being rewritten and refactored.  You've been warned!
 
@@ -71,7 +72,10 @@ class GoodFETEM260(GoodFETSPI):
                 frame[0],ord(data[4]));
         self.seq=self.seq+1;
         return data;
-        
+    
+# TODO: Get SIF Debugging interface working
+# TODO: DUMP, PEEK, and POKE are broken because it needs to be done using the SIF debugging interface
+'''        
     def peek8(self,adr):
         """Read a byte from the given address.  Untested."""
         
@@ -82,6 +86,8 @@ class GoodFETEM260(GoodFETSPI):
         """Poke a value into RAM.  Untested"""
         self.EZSPtrans([0x46,adr&0xFF,1,val&0xFF]);
         return val;
+'''                
+        
     def rand16(self):
         """Read a random 16-bit word."""
         
@@ -130,7 +136,46 @@ class GoodFETEM260(GoodFETSPI):
             return 0;
         return status&1;
     
+    def echoData(self,edata='',ldata=None):
+        """Read the EZSP node id."""
+        tdata = [ord(e) for e in edata]
+        if ldata:
+            tdata += [ldata]
+        else:
+            tdata += [len(edata)]
+        
+        data=self.EZSPtrans([0x81]+tdata);
+        rdata = data[5:-2]
+        rlen  = data[-2]
+        print "Returned length:",rlen
+        print "Returned data:",rdata
+        print "Returned data list:",rdata.encode('hex')
+        return data
+    
     #Everything after here is ZigBee.
+    def getToken(self,token):
+        data=self.EZSPtrans([0x0a]+[token]);
+        return data[5:-1]
+
+    def getMfgToken(self,token):
+        data=self.EZSPtrans([0x0b]+[token]);
+        return data[5:-1]
+
+    def getKey(self,key):
+        data=self.EZSPtrans([0x6a]+[key]);
+        return data[5:-1]
+
+    def getKeyTableEntry(self,key):
+        data=self.EZSPtrans([0x6a]+[key]);
+        return data[5:-1]
+
+    def getCert(self):
+        data=self.EZSPtrans([0xec]);
+        return data[5:-1]
+
+    def getCert283k1(self):
+        data=self.EZSPtrans([0x6a]);
+        return data[5:-1]
     
     def getNodeID(self):
         """Read the EZSP node id."""
