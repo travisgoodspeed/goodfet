@@ -2,6 +2,12 @@
 
 #GoodFET SPI Flash Client
 #by Travis Goodspeed
+# EM260 testing and updates by Don C. Weber (@cutaway), InGuardians, Inc.
+
+# References: 
+#   http://www.silabs.com/products/wireless/zigbee/pages/zigbee-chips-em260.aspx
+#   http://www.silabs.com/Support%20Documents/TechnicalDocs/EM260.pdf
+#   http://www.silabs.com/Support%20Documents/TechnicalDocs/UG100.pdf
 
 # Pinout:
 #  1 MISO
@@ -15,25 +21,118 @@
 #  9 GND
 # 11 !WAKE
 
+# NOTE: Be patient. The SPI interface with the EM260, or the module configured with it, is not very stable.
+# NOTE: You may have to run a command multiple times. You may have to reset the ZigBee module.
+# NOTE: You may have to reboot the whole device.
+
 import sys;
 import binascii;
 import array;
+import struct;
 
 from GoodFETEM260 import GoodFETEM260;
 from intelhex import IntelHex;
 
 if(len(sys.argv)==1):
     print "Usage: %s verb [objects]\n" % sys.argv[0];
-    print "%s info" % sys.argv[0];
-    print "%s test" % sys.argv[0];
-    print "%s randtest" % sys.argv[0];
+    print "    %s info" % sys.argv[0];
+    print "    %s test" % sys.argv[0];
+    print "    %s randtest" % sys.argv[0];
+    print "    %s echo [value to echo] [length]";
+    print "    %s keys";
+    print "    %s certs";
+    print "    %s tokens";
+    print ""
+    print "NOTE: Be patient. The SPI interface with the EM260, or the module configured with it, is not very stable. You may have to run a command multiple times. You may have to reset the ZigBee module. You may have to reboot the whole device. Wash, rinse, repeat until success."
+    print ""
+    print "NOTE: Pinout is specific and necessary. Double check and tone out."
+    print "Goodfet-to-chip/module Pinout:"
+    print "    1 MISO"
+    print "    2 VCC"
+    print "    3 MOSI"
+    print "    4"
+    print "    5 !SS"
+    print "    6"
+    print "    7 CLK"
+    print "    8 !HOST_INT"
+    print "    9 GND"
+    print "    11 !WAKE"
+
+    # These functions will only be possible if the SIF Debugging ports are used
     #print "%s dump $foo.rom [0x$start 0x$stop]" % sys.argv[0];
     #print "%s erase" % sys.argv[0];
     #print "%s flash $foo.rom [0x$start 0x$stop]" % sys.argv[0];
     #print "%s verify $foo.rom [0x$start 0x$stop]" % sys.argv[0];
-    print "%s peek 0x$start [0x$stop]" % sys.argv[0];
-    print "%s poke 0x$adr 0x$val" % sys.argv[0];
+    #print "%s peek 0x$start [0x$stop]" % sys.argv[0];
+    #print "%s poke 0x$adr 0x$val" % sys.argv[0];
     sys.exit();
+
+key_names = [
+    'NO KEY LISTED',
+    'EMBER_TRUST_CENTER_LINK_KEY',
+    'EMBER_TRUST_CENTER_MASTER_KEY',
+    'EMBER_CURRENT_NETWORK_KEY',
+    'EMBER_NEXT_NETWORK_KEY',
+    'EMBER_APPLICATION_LINK_KEY',
+    'EMBER_APPLICATION_MASTER_KEY'
+    ]
+
+def parse_keys(data):
+    EmberKeyStructBitMask = struct.unpack('<H',data[0:2])[0]
+    EmberKeyType          = ord(data[2])
+    # This value should be entered into wireshark as a "normal" key (not "reversed")
+    EmberKeyData          = data[3:19].encode('hex')
+    OutFrameCounter       = hex(struct.unpack('<I',data[19:23])[0])
+    InFrameCounter        = hex(struct.unpack('<I',data[23:27])[0])
+    SequenceNumber        = hex(ord(data[27]))
+    EUI64                 = list(data[28:])
+    # Convert EUI64 to ZigBee MAC
+    EUI64.reverse()
+    EUI64 = ':'.join([x.encode('hex') for x in EUI64])
+    return [EmberKeyStructBitMask,EmberKeyType,EmberKeyData,OutFrameCounter,InFrameCounter,SequenceNumber,EUI64]
+
+def keys_to_string(data):
+    # data should be a list of key information from parse_keys
+    EmberKeyStructBitMask,EmberKeyType,EmberKeyData,OutFrameCounter,InFrameCounter,SequenceNumber,EUI64 = data
+    key_string = []
+    tmp = ''
+
+    # Process EmberKeyStructBitMask
+    if (EmberKeyStructBitMask > 0x0f):
+        key_string.append("EmberKeyStructBitMask unknown value: " + hex(EmberKeyStructBitMask))
+    else:
+        tmp = "EmberKeyStructBitMask: " + hex(EmberKeyStructBitMask) + " - "
+        if (EmberKeyStructBitMask & 0x1): tmp = tmp + "HAS_SEQ_NUM "
+        if (EmberKeyStructBitMask & 0x2): tmp = tmp + "HAS_OUTGOING_FRAME_CNTR "
+        if (EmberKeyStructBitMask & 0x4): tmp = tmp + "HAS_INCOMING_FRAME_CNTR "
+        if (EmberKeyStructBitMask & 0x8): tmp = tmp + "HAS_PARTNER_EUI64"
+        key_string.append(tmp)
+        
+    # Process EmberKeyType
+    tmp = ''
+    tmp = "EmberKeyType: " + hex(EmberKeyType) + " - "
+    if (EmberKeyType == 0) or (EmberKeyType > 6):
+        tmp = tmp + "Unknown Key Type"
+    else:
+        tmp = tmp + key_names[EmberKeyType]
+    key_string.append(tmp)
+
+    # Process EmberKeyData
+    key_string.append("EmberKeyData: " + EmberKeyData + " - if valid, enter into Wireshark Pre-Configured Keys using Normal Byte Order.")
+
+    # Process OutFrameCounter
+    key_string.append("OutFrameCounter: " + OutFrameCounter)
+
+    # Process InFrameCounter
+    key_string.append("InFrameCounter: " + InFrameCounter)
+
+    # Process SequenceNumber
+    key_string.append("SequenceNumber: " + SequenceNumber)
+
+    # Process SequenceNumber
+    key_string.append("EUI64: " + EUI64)
+
+    return key_string
 
 #Initialize FET and set baud rate
 client=GoodFETEM260();
@@ -48,6 +147,7 @@ client.EM260spiversion();
 
 if(sys.argv[1]=="info"):
     client.info();
+
 if(sys.argv[1]=="test"):
     print "Grabbing info three times."
     client.info();
@@ -57,6 +157,7 @@ if(sys.argv[1]=="test"):
     print "Some random numbers from EZSP."
     for foo in range(0,4):
         print "%04x" % client.rand16();
+
 if(sys.argv[1]=="randtest"):
     print "Even Odd HEven LEven Hodd Lodd "
     max=2**33;
@@ -74,6 +175,87 @@ if(sys.argv[1]=="randtest"):
         sys.stdout.flush()
         foo=foo+1;
 
+# Test connection. We can do this by sending data. We expect it to come back the same.
+# This allows you to fuzz the echo funtion by providing a different data length. But,
+# during initial testing the module seemed to ignore the length except to return it.
+if(sys.argv[1]=="echo"):
+    if (len(sys.argv)>2):
+        data = sys.argv[2]
+    else:
+        data = "Cutaway SMASH!!"
+    if (len(sys.argv)>3):
+        ldata = int(sys.argv[3])
+    else:
+        ldata = len(data)
+    indata = client.echoData(edata=data,ldata=ldata);
+    print "indata:",indata[5:-2]
+    print "Returned data list:",indata[5:-2].encode('hex')
+
+if(sys.argv[1]=="keys"):
+    keys = ['No Key Data']
+    for e in range(1,len(key_names)):
+        print "Key Value " + str(e) + ": " + key_names[e] + " - "
+        data = client.getKey(e)
+
+        status = ord(data[0])
+        if status == 0x70: 
+            print "   ",key_names[e]+": Invalid Call"
+            continue
+        print "    Status:",hex(status)
+        print "    ",
+        print '\n    '.join( keys_to_string(parse_keys(data[1:])) )
+        print ""
+
+    # TODO: It is not know what is returned by KeyTableEntry. Parse with parse_keys if possible.
+    print ""
+    cnt = 0
+    print "Key Table Values:"
+    while 1:
+        data = client.getKeyTableEntry(cnt)
+        status = ord(data[0])
+        if status == 0x70: 
+            print "    Table "+str(cnt)+": Invalid Call"
+            break
+        if status == 0xb5: 
+            print "    Table "+str(cnt)+": Out of range"
+            break
+        if status == 0xb6: 
+            print "    Table "+str(cnt)+": ERASED"
+            continue
+        print "    Table "+str(cnt)+":",hex(status)
+        #print "       ",data[1:]
+        #print "       ",data[1:].encode('hex')
+        print "    ",
+        print '\n    '.join( keys_to_string(parse_keys(data[1:])) )
+        print ""
+        cnt += 1
+
+if(sys.argv[1]=="certs"):
+    # Most likely you are not permitted to read these. But, hey, let's try anyway
+    data = client.getCert();
+    print "Cert:",data.encode('hex')
+    data = client.getCert283k1();
+    print "Cert283k1:",data.encode('hex')
+
+if(sys.argv[1]=="tokens"):
+    # This data should be coming from RAM. We can overwrite these if we really want to. Not sure yet.
+    for e in range(0x0b):
+        data = client.getMfgToken(e);
+        print "MfgToken",str(e)+":"
+        print "   Length:",ord(data[0])
+        print "   ",data[1:]
+        print "   ",data[1:].encode('hex')
+    print ''
+    for e in range(8):
+        data = client.getToken(e);
+        print "Token",str(e)+":"
+        print "   Status:",data[0].encode('hex')
+        print "   ",data[1:]
+        print "   ",data[1:].encode('hex')
+
+# TODO: Get SIF Debugging interface working
+# TODO: DUMP, PEEK, and POKE are broken because it needs to be done using the SIF debugging interface
+'''
 if(sys.argv[1]=="dump"):
     f = sys.argv[2];
     start=0x0000;
@@ -104,6 +286,7 @@ if(sys.argv[1]=="peek"):
     while start<=stop:
         print "%04x: %02x" % (start,client.peek8(start));
         start=start+1;
+
 if(sys.argv[1]=="poke"):
     start=0x0000;
     if(len(sys.argv)>2):
@@ -113,4 +296,4 @@ if(sys.argv[1]=="poke"):
         val=int(sys.argv[3],16);
     print "Poking %02x to be %02x." % (start,val);
     client.poke8(start,val);
-    
+'''
