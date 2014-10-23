@@ -575,6 +575,9 @@ void jtag_handle_fn(uint8_t const app,
 					uint8_t const verb,
 					uint32_t const len)
 {
+        uint16_t tmp16;
+        uint32_t tmp32;
+
 	switch(verb)
 	{
 	// START handled by specific JTAG
@@ -594,7 +597,8 @@ void jtag_handle_fn(uint8_t const app,
 		break;
 
 	case JTAG_DR_SHIFT:
-		cmddataword[0] = htons(jtag_dr_shift_16(ntohs(cmddataword[0])));
+		tmp16 = jtag_dr_shift_16(ntohs(cmddataword[0]));
+		cmddataword[0] = htons(tmp16);
 		txdata(app,verb,2);
 		break;
 
@@ -611,19 +615,22 @@ void jtag_handle_fn(uint8_t const app,
 
 	case JTAG_DETECT_IR_WIDTH:
 		jtag_reset_tap();
-		cmddataword[0] = htons(jtag_detect_ir_width());
+		tmp16 = jtag_detect_ir_width();
+		cmddataword[0] = htons(tmp16);
 		txdata(app,verb,2);
 		break;
 
 	case JTAG_DETECT_CHAIN_LENGTH:
 		jtag_reset_tap();
-		cmddataword[0] = htons(jtag_detect_chain_length());
+		tmp16 = jtag_detect_chain_length();
+		cmddataword[0] = htons(tmp16);
 		txdata(app,verb,2);
 		break;
 
 	case JTAG_GET_DEVICE_ID:
 		jtag_reset_tap();
-		cmddatalong[0] = htonl(jtag_get_device_id(ntohs(cmddataword[0])));
+		tmp32 = jtag_get_device_id(ntohs(cmddataword[0]));
+		cmddatalong[0] = htonl(tmp32);
 		txdata(app,verb,4);
 		break;
 
