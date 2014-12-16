@@ -135,6 +135,10 @@ void spiflash_setstatusflags(unsigned char s, unsigned char preserve_mask){
   spitrans8(0x05);//GET STATUS
   cs=spitrans8(0xFF);
 
+  // Some flash seem to require a WRTEN before
+  // updating the status register
+  spiflash_wrten();
+
   cs = (cs&preserve_mask)|(s&(~preserve_mask));
   SETSS;  //Raise !SS to end transaction.
   CLRSS; //Drop !SS to begin transaction.
@@ -178,12 +182,8 @@ void spiflash_pokeblock(unsigned long adr,
 
   while(spiflash_status()&0x01);//minor performance impact
 
-  spiflash_setstatus(0x02);
+  // Necessary
   spiflash_wrten();
-
-  //Are these necessary?
-  //spiflash_setstatus(0x02);
-  //spiflash_wrten();
 
   CLRSS; //Drop !SS to begin transaction.
   spitrans8(0x02); //Poke command.
