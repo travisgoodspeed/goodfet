@@ -227,6 +227,7 @@ class GoodFETSPIFlash(GoodFETSPI):
                         0xC2: "MXIC",
                         0x20: "Numonyx/ST",
                         0x1F: "Atmel",
+                        0x1C: "eON",
                         0x01: "AMD/Spansion"
                         };
 
@@ -244,6 +245,7 @@ class GoodFETSPIFlash(GoodFETSPI):
                   0x204011: "M45PE10",
                   0x202014: "M25P80",
                   0x1f4501: "AT24DF081",
+                  0x1C3114: "EN25F80",
                   };
     
     JEDECsizes={0x17: 0x800000,
