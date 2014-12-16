@@ -127,6 +127,23 @@ void spiflash_setstatus(unsigned char c){
   //return c;
 }
 
+//! Set SPI flash status flags.
+void spiflash_setstatusflags(unsigned char s, unsigned char preserve_mask){
+  unsigned char cs; // Current status
+  SETSS;
+  CLRSS; //Drop !SS to begin transaction.
+  spitrans8(0x05);//GET STATUS
+  cs=spitrans8(0xFF);
+
+  cs = (cs&preserve_mask)|(s&(~preserve_mask));
+  SETSS;  //Raise !SS to end transaction.
+  CLRSS; //Drop !SS to begin transaction.
+  spitrans8(0x01);//SET STATUS
+  spitrans8(cs);
+  SETSS;  //Raise !SS to end transaction.
+  //return c;
+}
+
 
 //! Read a block to a buffer.
 void spiflash_peekblock(unsigned long adr,
