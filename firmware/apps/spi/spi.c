@@ -117,7 +117,7 @@ unsigned char spiflash_status(){
 }
 
 
-//! Grab the SPI flash status byte.
+//! Set the SPI flash status byte.
 void spiflash_setstatus(unsigned char c){
   SETSS;
   CLRSS; //Drop !SS to begin transaction.
