@@ -65,6 +65,7 @@ extern unsigned char silent;
 #define SPI_ZENSYS_ENABLE 0x83
 #define SPI_ZENSYS_WRITE3_READ1 0x84
 #define SPI_ZENSYS_WRITE2_READ2 0x85
+#define SPI_ERASE_SECTOR 0x86
 
 //OCT commands
 #define OCT_CMP 0x90

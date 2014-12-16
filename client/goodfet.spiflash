@@ -19,6 +19,7 @@ if(len(sys.argv)==1):
     print "%s info" % sys.argv[0];
     print "%s dump $foo.rom [0x$start 0x$stop]" % sys.argv[0];
     print "%s erase" % sys.argv[0];
+    print "%s erasesector 0x$start" % sys.argv[0];
     print "%s flash $foo.rom [0x$start 0x$stop]" % sys.argv[0];
     print "%s verify $foo.rom [0x$start 0x$stop]" % sys.argv[0];
     print "%s peek 0x$start [0x$stop]" % sys.argv[0];
@@ -166,6 +167,11 @@ if(sys.argv[1]=="flash"):
 
 if(sys.argv[1]=="erase"):
   client.SPIchiperase();
+
+if(sys.argv[1]=="erasesector"):
+    start=int(sys.argv[2],16);
+    print "Erasing sector at %06x" % (start);
+    client.SPIerasesector(start)
 
 if(sys.argv[1]=="peek"):
     start=0x0000;

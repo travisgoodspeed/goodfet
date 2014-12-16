@@ -433,6 +433,11 @@ void spi_handle_fn( uint8_t const app,
 		txdata(app,verb,0);
 		break;
 
+	case SPI_ERASE_SECTOR:
+		spiflash_erasesector(cmddatalong[0]);
+		txdata(app,verb,0);
+		break;
+
 	case SPI_ERASE://Erase the SPI Flash ROM.
 		spiflash_wrten();
 		CLRSS; //Drop !SS to begin transaction.

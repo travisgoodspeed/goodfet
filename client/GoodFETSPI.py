@@ -313,6 +313,16 @@ class GoodFETSPIFlash(GoodFETSPI):
         self.writecmd(0x01,0x03,
                       len(adranddata),adranddata);
         
+    def SPIerasesector(self,adr):
+        #24 bits, BE, not 32 bits, LE.
+        adranddata=[adr&0xFF,
+                    (adr&0xFF00)>>8,
+                    (adr&0xFF0000)>>16,
+                    0, #MSB
+                    ];
+        self.writecmd(0x01,0x86,
+                      len(adranddata),adranddata);
+
     def SPIchiperase(self):
         """Mass erase an SPI Flash ROM."""
         self.writecmd(0x01,0x81);
