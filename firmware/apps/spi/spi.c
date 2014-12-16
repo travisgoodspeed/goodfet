@@ -117,12 +117,33 @@ unsigned char spiflash_status(){
 }
 
 
-//! Grab the SPI flash status byte.
+//! Set the SPI flash status byte.
 void spiflash_setstatus(unsigned char c){
   SETSS;
   CLRSS; //Drop !SS to begin transaction.
   spitrans8(0x01);//SET STATUS
   spitrans8(c);
+  SETSS;  //Raise !SS to end transaction.
+  //return c;
+}
+
+//! Set SPI flash status flags.
+void spiflash_setstatusflags(unsigned char s, unsigned char preserve_mask){
+  unsigned char cs; // Current status
+  SETSS;
+  CLRSS; //Drop !SS to begin transaction.
+  spitrans8(0x05);//GET STATUS
+  cs=spitrans8(0xFF);
+
+  // Some flash seem to require a WRTEN before
+  // updating the status register
+  spiflash_wrten();
+
+  cs = (cs&preserve_mask)|(s&(~preserve_mask));
+  SETSS;  //Raise !SS to end transaction.
+  CLRSS; //Drop !SS to begin transaction.
+  spitrans8(0x01);//SET STATUS
+  spitrans8(cs);
   SETSS;  //Raise !SS to end transaction.
   //return c;
 }
@@ -161,12 +182,8 @@ void spiflash_pokeblock(unsigned long adr,
 
   while(spiflash_status()&0x01);//minor performance impact
 
-  spiflash_setstatus(0x02);
+  // Necessary
   spiflash_wrten();
-
-  //Are these necessary?
-  //spiflash_setstatus(0x02);
-  //spiflash_wrten();
 
   CLRSS; //Drop !SS to begin transaction.
   spitrans8(0x02); //Poke command.
@@ -413,6 +430,11 @@ void spi_handle_fn( uint8_t const app,
 		spiflash_pokeblocks(cmddatalong[0],//adr
 		cmddata+4,//buf
 		len-4);//len
+		txdata(app,verb,0);
+		break;
+
+	case SPI_ERASE_SECTOR:
+		spiflash_erasesector(cmddatalong[0]);
 		txdata(app,verb,0);
 		break;
 

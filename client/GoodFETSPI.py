@@ -227,6 +227,7 @@ class GoodFETSPIFlash(GoodFETSPI):
                         0xC2: "MXIC",
                         0x20: "Numonyx/ST",
                         0x1F: "Atmel",
+                        0x1C: "eON",
                         0x01: "AMD/Spansion"
                         };
 
@@ -244,6 +245,7 @@ class GoodFETSPIFlash(GoodFETSPI):
                   0x204011: "M45PE10",
                   0x202014: "M25P80",
                   0x1f4501: "AT24DF081",
+                  0x1C3114: "EN25F80",
                   };
     
     JEDECsizes={0x17: 0x800000,
@@ -311,6 +313,16 @@ class GoodFETSPIFlash(GoodFETSPI):
         self.writecmd(0x01,0x03,
                       len(adranddata),adranddata);
         
+    def SPIerasesector(self,adr):
+        #24 bits, BE, not 32 bits, LE.
+        adranddata=[adr&0xFF,
+                    (adr&0xFF00)>>8,
+                    (adr&0xFF0000)>>16,
+                    0, #MSB
+                    ];
+        self.writecmd(0x01,0x86,
+                      len(adranddata),adranddata);
+
     def SPIchiperase(self):
         """Mass erase an SPI Flash ROM."""
         self.writecmd(0x01,0x81);
