@@ -51,6 +51,7 @@ mcu ?= msp430f2618
 platform := goodfet
 CONFIG_nrf = y
 CONFIG_ccspi = y
+CONFIG_owe = y
 endif
 
 ifneq (,$(findstring $(board),stm32f4discovery))
@@ -192,7 +193,7 @@ $(error Please define board, as explained in the README)
 endif
 #platform := $(board)
 
-AVAILABLE_APPS = monitor spi jtag sbw jtag430 jtag430x2 i2c jtagarm7 ejtag jtagxscale openocd chipcon avr pic adc nrf ccspi glitch smartcard ps2 slc2  maxusb atmel_radio cc2500
+AVAILABLE_APPS = monitor spi jtag sbw jtag430 jtag430x2 i2c jtagarm7 ejtag jtagxscale openocd chipcon avr pic adc nrf ccspi glitch smartcard ps2 slc2 owe maxusb atmel_radio cc2500
 
 # defaults
 CONFIG_monitor    ?= y
@@ -203,6 +204,7 @@ CONFIG_sbw        ?= n
 CONFIG_jtag430    ?= y
 CONFIG_jtag430x2  ?= y
 CONFIG_i2c        ?= y
+CONFIG_owe        ?= n
 CONFIG_jtagarm7   ?= y
 CONFIG_ejtag      ?= n
 CONFIG_jtagxscale ?= n

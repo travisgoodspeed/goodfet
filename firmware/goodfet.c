@@ -131,13 +131,13 @@ int main(void){
       reset_count++;
 	    
       if (reset_count > 4){
-	// We could trigger the WDT with either:
-	// WDTCTL = 0;
-	// or
-	// WDTCTL = WDTPW + WDTCNTCL + WDTSSEL + 0x00;
-	// but instead we'll jump to our reboot function pointer
-	(*reboot_function)();
-	debugstr("Rebooting not supported on this platform.");
+        // We could trigger the WDT with either:
+        // WDTCTL = 0;
+        // or
+        // WDTCTL = WDTPW + WDTCNTCL + WDTSSEL + 0x00;
+        // but instead we'll jump to our reboot function pointer
+        (*reboot_function)();
+        debugstr("Rebooting not supported on this platform.");
       }
 	    
       continue;
@@ -157,7 +157,7 @@ int main(void){
     }else {
       //Listen to the blaberring.
       for(i = 0; i < len; i++)
-	serial_rx();
+        serial_rx();
 	    
       //Reply with an error.
       debugstr("Buffer length exceeded.");
