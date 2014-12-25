@@ -45,6 +45,7 @@ CC =$(GCC) -Wall -O1 -fno-strict-aliasing -g   $(CCEXTRA)
 # ejtag -- MIPS JTAG
 # jtagxscale -- XScale JTAG
 # openocd -- OpenOCD bitbang device
+# owe -- Turns GF into USB-to-1-wire adapter
 
 #  Microcontrollers:
 # chipcon -- Chipcon radio 8051 debugging
@@ -171,6 +172,12 @@ endif
 ifeq ($(filter i2c, $(config)), i2c)
 	apps+= apps/i2c/i2c.o
 	hdrs+= i2c.h
+endif
+
+# include 1-wire app
+ifeq ($(filter owe, $(config)), owe)
+	apps+= apps/owe/owe.o
+	hdrs+= owe.h
 endif
 
 # include jtagarm7 app
