@@ -32,13 +32,11 @@ app_t const owe_app = {
 	"1-wire",
 
 	/* desc */
-	"\tThe 1-wire app implements the Dallas 1-wire bus\n"
-	"\tprotocol turning your GoodFET into a USB-to-i2c adapter.\n"
+	"\tThe 1-wire app implements the Dallas/Maxim 1-wire bus\n"
+	"\tprotocol turning your GoodFET into a USB-to-1-wire adapter.\n"
 };
 
 void setup() {
-	//debugstr("setup");
-	
 	prep_timer();
 	P4SEL  =  0;    //GPIO
 	P4DIR  =  0;    //IN
@@ -50,8 +48,6 @@ void setup() {
 }
 
 int initialize() {
-	//debugstr("initialize");
-
 	// Generate Reset Pulse
 	P4OUT &= ~BIT0;  //LOW
     delay_us(500);
@@ -80,8 +76,6 @@ void sendbit(int b)  {
 }
 
 void sendbyte(uint8_t b) {
-	//debugstr("sendbyte");
-		
 	int i;
 	for(i = 0; i<8;i++) {
 		sendbit(b & 0x01);
@@ -106,8 +100,6 @@ int receivebit() {
 }
 
 uint8_t receivebyte() {
-	//debugstr("receivebyte");
-		
 	int i = 0; uint8_t r = 0;
 	for(i = 0; i<8;i++) {
 		r |= (receivebit() & BIT0) <<i;
@@ -121,22 +113,22 @@ void owe_handle_fn(uint8_t  const app,
                    uint32_t const len)
 {
 	switch(verb) {
-		case 0x01:
+		case 0x10:
 			setup();
 			txdata(app,0,0);
 			break;
-		case 0x02:
+		case 0x20:
 			if(initialize() != 0) {
 				txdata(app,1,0);
 			} else {
 				txdata(app,0,0);
 			}
 			break;
-		case 0x03:
+		case 0x01:
 			sendbyte(cmddata[0]);
 			txdata(app,0,0);
 			break;
-		case 0x04:
+		case 0x00:
 			cmddata[0] = receivebyte();	
 			txdata(app,0,1);
 			break;

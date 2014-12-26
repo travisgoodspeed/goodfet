@@ -10,37 +10,31 @@ class GoodFETowe(GoodFET):
     
     def setup(self):
         """Move the FET into the 1-wire application."""
-        self.writecmd(0x81, 0x01, 0, [])      # SETUP
+        self.writecmd(0x05, 0x10, 0, [])      # SETUP
         if self.verb != 0:
-            print "Setup Failed"
+            print "Setup failed"
             sys.exit(-1);
-            
-    def sendCommand(self, cmd):
-        self.writecmd(0x81, 0x02, 0, [])      # Generate Reset Pulse 
+    
+    def reset(self):
+        self.writecmd(0x05, 0x20, 0, [])      # Generate Reset Pulse
         if self.verb != 0:
-            print "Device did not Responde"
+            print "Device did not responde"
             sys.exit(-1);
-            
-        self.writecmd(0x81, 0x03, 1, [cmd])   # Send Command
-        if self.verb != 0:
-            print "Send Command Failed"
-            sys.exit(-1);        
-        
-    def writeValue(self, cmd, value):
-        self.sendCommand(cmd);
-        self.writecmd(0x81, 0x03, 1, [value]) # Send Value
-        if self.verb != 0:
-            print "Send Command Failed"
-            sys.exit(-1);
-            
+    
     def read(self):
-        self.writecmd(0x81, 0x04, 0, [])      # Receive Response
+        self.writecmd(0x05, 0x00, 0, [])      # Read Byte
         if self.verb != 0:
-            print "Receive Response Failed"
-            sys.exit(-1);    
+            print "Read failed"
+            sys.exit(-1);
         return self.data
-            
-    def readValue(self, cmd):
-        self.sendCommand(cmd);
-        self.read();
+    
+    def write(self, value):
+        self.writecmd(0x05, 0x01, 1, [value]) # Send Byte
+        if self.verb != 0:
+            print "Write failed"
+            sys.exit(-1);
         return self.data
+    
+    def sendCommand(self, cmd):
+        self.reset();
+        self.write(cmd);

@@ -10,7 +10,8 @@ from intelhex import IntelHex;
 
 if(len(sys.argv)==1):
     print "Usage: %s verb [objects]\n" % sys.argv[0];
-    print "%s ds2401" % sys.argv[0];
+    print "%s readrom" % sys.argv[0];
+    print "%s readtemp" % sys.argv[0];
     sys.exit();
 
 #Initialize FET and set baud rate
@@ -19,10 +20,39 @@ client.serInit()
 
 client.setup()
 
-if(sys.argv[1]=="ds2401"):
+if(sys.argv[1]=="readrom"):
+    #Read Serial Nb
+    data = [];
     client.sendCommand(0x33);
     for i in range(0,8):
+        data.append(binascii.hexlify(client.read()))
+        
+    #Output Serial Nb
+    data.reverse();
+    sys.stdout.write("CR|    Serial Nb    |FC\n")
+    for i in range(0, 8):
         if i == 7:
-            sys.stdout.write("%s\n" % binascii.hexlify(client.read()));
+            sys.stdout.write("%s\n" % data[i]);
         else:
-            sys.stdout.write("%s " % binascii.hexlify(client.read()));
+            sys.stdout.write("%s " % data[i]);
+
+if(sys.argv[1]=="readtemp"):
+    #Start temperatur conversion
+    client.sendCommand(0xcc);              # Skip ROM
+    client.write(0x44);                    # Convert
+    
+    #Wait for temperatur conversion to finish
+    while True:
+        client.read()                      # Receive Byte
+        if ord(client.data) != 0:          # Poll DONE
+            break
+        time.sleep(0.1)
+    
+    #Read temperature
+    client.sendCommand(0xcc);              # Skip ROM
+    client.write(0xbe);                    # Read Scratchpad
+    client.read()                          # Receive Byte
+    temp = ord(client.data)>>4;
+    client.read()                          # Receive Byte
+    temp += ord(client.data)<<4;
+    sys.stdout.write("Temperature: %i\n" % temp);
