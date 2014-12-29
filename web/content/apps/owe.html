@@ -1,0 +1,48 @@
+---
+title: Dallas/Maxim 1-Wire Bus
+---
+<h1>1-Wire Application</h1>
+
+<p>This application allows for communication by 1-Wire.
+Use the following pinout.</p>
+
+<p>
+  <table border="1">
+    <tr><th style="width: 5em;">Name</th><th colspan="2" style="width: 3.5em;">Pin</th><th style="width: 5em;">Name</th></tr>
+    <tr><td></td>	<td>1</td><td>2</td>	<td>Vcc</td></tr>
+    <tr><td></td>	<td>3</td><td>4</td>	<td>Vcc</td></tr>
+    <tr><td></td>	<td>5</td><td>6</td>	<td>	</td></tr>
+    <tr><td></td>	<td>7</td><td>8</td>	<td>DATA</td></tr>
+    <tr><td>GND</td>	<td>9</td><td>10</td>	<td>	</td></tr>
+    <tr><td></td>	<td>11</td><td>12</td>	<td>    </td></tr>
+    <tr><td></td>	<td>13</td><td>14</td>	<td>    </td></tr>
+  </table>
+</p>
+
+<h2>Clients</h2>
+
+<p>A simple Python client, <a href="/clients/goodfetowe/">goodfet.owe</a> is
+implemented and tested with DS2401 (silicon serial number) and DS18B20 (temperature sensor)</p>
+
+<h2>Development</h2>
+
+<p>Prior to any transaction, the SETUP (0x10) verb should be sent to the
+1-Wire application to properly set the I/O directions and values.
+The START (0x20), READ (0x00), and WRITE (0x01) verbs are used
+for transactions, with START returning the presence pulse.</p>
+
+<p>Please note that HIGH is driven by the MSP430 internal pull-up.
+All chips should be powered from VCC and not relay on the power
+of the DATA line.</p>
+
+<h2>Verbs</h2>
+
+<p>The following verbs are supported.</p>
+
+<table border="1">
+<tr><th>Hex</th><th>#define</th><th>Description</th></tr>
+<tr><td>0x00</td><td>READ</td><td>Read a byte.</td></tr>
+<tr><td>0x01</td><td>WRITE</td><td>Write a byte.</td></tr>
+<tr><td>0x10</td><td>SETUP</td><td>Configure I/O pins.</td></tr>
+<tr><td>0x20</td><td>START</td><td>Start a transaction.</td></tr>
+</table>

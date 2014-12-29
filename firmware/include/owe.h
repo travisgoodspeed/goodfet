@@ -8,7 +8,7 @@
 
 #include "app.h"
 
-#define OWE_APP 0x81
+#define OWE_APP 0x05
 
 extern app_t const owe_app;
 
