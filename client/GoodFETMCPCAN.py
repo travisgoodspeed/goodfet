@@ -334,8 +334,8 @@ class GoodFETMCPCAN(GoodFETSPI):
             eId = eId<<8 | ord(data[2])
             eId = eId<<8 | ord(data[3])
             rtr = dp5>>6 & 0x01
-            packet['eID'] = " eID: %06d" %(eId)
-            packet['rtr'] = " rtr: %d" % (rtr)
+            packet['eID'] = eId
+            packet['rtr'] = rtr
     
         else:
             packet['rtr'] = dp2>>4 & 0x01
