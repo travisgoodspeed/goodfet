@@ -497,7 +497,7 @@ void sbwsetup(){
 
 //! Start SBW, take pins
 void sbw430_start(){
-  sbwsetup();
+//  sbwsetup();
 
   //Known-good starting position.
   //Might be unnecessary.
@@ -505,7 +505,7 @@ void sbw430_start(){
   //SETRST;
   //delay(0xFFFF);
   
-  sbwsetup();
+//  sbwsetup();
 
   //Perform a reset and disable watchdog.
   sbw430_por();
