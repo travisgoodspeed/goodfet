@@ -32,6 +32,28 @@ app_t const sbw_app = {
   "\tsupport for SBW'ing MSP430 devices with two wires.\n"
 };
 
+int sbw_tms=1, sbw_tdi=1, sbw_tdo=0;
+
+void sbw_clock() {
+  //exchange TMS
+  SETSBWIO(sbw_tms);
+  SBWCLK();
+
+  //exchange TDI
+  SETSBWIO(sbw_tdi);
+  SBWCLK();
+
+  //exchange TDO
+  P5DIR &= ~SBWTDIO; //input mode
+  P5OUT &= ~SBWTCK;  //Drop Metaclock
+  sbw_tdo=!!(P5IN & SBWTDIO);
+  P5OUT |= SBWTCK;   //output mode
+  P5DIR |= SBWTDIO;  //Raise Metaclock
+
+  //TCK implied
+}
+
+
 //! Shift 8 bits in and out.
 unsigned char sbwtrans8(unsigned char byte){
   unsigned int bit;
@@ -155,32 +177,8 @@ u8 sbw_ir_shift8(unsigned char in){
 }
 
 
-//FIXME these should be prefixed with sbw
-//to prevent name pollution.
-int tms=1, tdi=1, tdo=0;
-
-void clock_sbw() {
-  //exchange TMS
-  SETSBWIO(tms);
-  SBWCLK();
-  
-  //exchange TDI
-  SETSBWIO(tdi);
-  SBWCLK();
-  
-  //exchange TDO
-  P5DIR &= ~SBWTDIO; //input mode
-  P5OUT &= ~SBWTCK;  //Drop Metaclock
-  tdo=!!(P5IN & SBWTDIO);
-  P5OUT |= SBWTCK;   //output mode
-  P5DIR |= SBWTDIO;  //Raise Metaclock
-  
-  //TCK implied
-}
-
-
 void sbwSETTCLK(){
-  SETSBWIO(tms);
+  SETSBWIO(sbw_tms);
   SBWCLK();
 
   SETSBWIO(1);asm("nop");asm("nop");	 
@@ -199,7 +197,7 @@ void sbwSETTCLK(){
 }
 
 void sbwCLRTCLK(){
-  SETSBWIO(tms);
+  SETSBWIO(sbw_tms);
   SBWCLK();
 
   SETSBWIO(0);asm("nop");asm("nop");	 

@@ -27,23 +27,23 @@ extern app_t const sbw_app;
 #define jtagsetup sbwsetup
 
 // I/O Redefintions
-extern int tms, tdi, tdo;
+extern int sbw_tms, sbw_tdi, sbw_tdo;
 #undef SETTMS
-#define SETTMS tms=1
+#define SETTMS sbw_tms=1
 #undef CLRTMS
-#define CLRTMS tms=0
+#define CLRTMS sbw_tms=0
 #undef SETTDI
-#define SETTDI tdi=1
+#define SETTDI sbw_tdi=1
 #undef CLRTDI
-#define CLRTDI tdi=0
+#define CLRTDI sbw_tdi=0
 #undef TCKTOCK
-#define TCKTOCK clock_sbw()
+#define TCKTOCK sbw_clock()
 #undef SETMOSI
 #define SETMOSI SETTDI
 #undef CLRMOSI
 #define CLRMOSI CLRTDI
 #undef READMISO
-#define READMISO tdo
+#define READMISO sbw_tdo
 
 #endif
 
@@ -55,6 +55,7 @@ void sbw_handler_fn(u8 app, u8 verb, u32 len);
 
 //! Perform a SBW bit transaction.
 void clock_sbw();
+
 //! Set the TCLK line, performing a transaction.
 void sbwSETTCLK();
 //! Clear the line.
