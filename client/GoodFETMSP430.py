@@ -14,7 +14,7 @@ class GoodFETMSP430(GoodFET):
     
     #0x16 for class, 0x17 for SBW, 0x11 by default
     APP=0x11;
-    MSP430APP=0x11;    
+    MSP430APP=0x17;    
     
     CoreID=0;
     DeviceID=0;
