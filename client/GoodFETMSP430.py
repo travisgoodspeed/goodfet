@@ -33,6 +33,7 @@ class GoodFETMSP430(GoodFET):
         self.writecmd(self.MSP430APP,0xF0);
         CoreID=ord(self.data[0])+(ord(self.data[1])<<8);
         return CoreID;
+
     def MSP430deviceid(self):
         """Get the Device ID. (MSP430X2 only?)"""
         self.writecmd(self.MSP430APP,0xF1);
@@ -40,10 +41,13 @@ class GoodFETMSP430(GoodFET):
             ord(self.data[0])+(ord(self.data[1])<<8)+
             (ord(self.data[2])<<16)+(ord(self.data[3])<<24));
         return DeviceID;
+
     def peek16(self,adr,memory="vn"):
         return self.MSP430peek(adr);
+
     def peek(self,adr,memory="vn"):
         return self.MSP430peek(adr);
+
     def peek8(self,adr, memory="vn"):
         adr=self.MSP430peek(adr&~1);
         if adr&1==0: return adr&0xFF;
@@ -57,6 +61,7 @@ class GoodFETMSP430(GoodFET):
         self.writecmd(self.MSP430APP,0x02,4,self.data);
         #print "Got %i bytes peeking 0x%04x." % (len(self.data),adr);
         return ord(self.data[0])+(ord(self.data[1])<<8);
+
     def MSP430peekblock(self,adr):
         """Grab a few block from an SPI Flash ROM.  Block size is unknown"""
         data=[adr&0xff, (adr&0xff00)>>8,
@@ -75,6 +80,7 @@ class GoodFETMSP430(GoodFET):
         if(written!=val):
             print "Failed to write 0x%04x to 0x%04x" % (val,adr);
         return written;
+
     def MSP430pokeflash(self,adr,val):
         """Write the contents of flash memory at an address."""
         self.data=[adr&0xff, (adr&0xff00)>>8,
@@ -82,12 +88,15 @@ class GoodFETMSP430(GoodFET):
                    val&0xff, (val&0xff00)>>8];
         self.writecmd(self.MSP430APP,0xE1,6,self.data);
         return ord(self.data[0])+(ord(self.data[1])<<8);
+
     def setsecret(self,value):
         """Set a secret word for later retreival.  Used by glitcher."""
         self.MSP430pokeflash(0xFFFE,value);
+
     def getsecret(self):
         """Get a secret word.  Used by glitcher."""
         return self.peek(0xfffe);
+
     def MSP430pokeflashblock(self,adr,data):
         """Write many words to flash memory at an address."""
         self.data=[adr&0xff, (adr&0xff00)>>8,
@@ -96,6 +105,7 @@ class GoodFETMSP430(GoodFET):
         #print "%2x %2x %2x %2x ..." % (data[0], data[1], data[2], data[3]);
         self.writecmd(self.MSP430APP,0xE1,len(self.data),self.data);
         return ord(self.data[0])+(ord(self.data[1])<<8);
+
     def start(self):
         """Start debugging."""
         self.writecmd(self.MSP430APP,0x20,0,self.data);
@@ -109,26 +119,32 @@ class GoodFETMSP430(GoodFET):
         if(not (self.JTAGID==0x89 or self.JTAGID==0x91)):
             print "Error, misidentified as %02x.\nCheck wiring, as this should be 0x89 or 0x91." % self.JTAGID;
         self.MSP430haltcpu();
+
     def MSP430haltcpu(self):
         """Halt the CPU."""
         self.writecmd(self.MSP430APP,0xA0,0,self.data);
+
     def MSP430releasecpu(self):
         """Resume the CPU."""
         self.writecmd(self.MSP430APP,0xA1,0,self.data);
+
     def MSP430shiftir8(self,ins):
         """Shift the 8-bit Instruction Register."""
         data=[ins];
         self.writecmd(self.MSP430APP,0x80,1,data);
         return ord(self.data[0]);
+
     def MSP430shiftdr16(self,dat):
         """Shift the 16-bit Data Register."""
         data=[dat&0xFF,(dat&0xFF00)>>8];
         self.writecmd(self.MSP430APP,0x81,2,data);
         return ord(self.data[0])#+(ord(self.data[1])<<8);
+
     def MSP430setinstrfetch(self):
         """Set the instruction fetch mode."""
         self.writecmd(self.MSP430APP,0xC1,0,self.data);
         return self.data[0];
+
     def MSP430ident(self):
         """Grab self-identification word from 0x0FF0 as big endian."""
         ident=0x00;
@@ -142,9 +158,11 @@ class GoodFETMSP430(GoodFET):
             #ident=0x0091;
         
         return ident;
+
     def MSP430identstr(self):
         """Grab model string."""
         return self.MSP430devices.get(self.MSP430ident());
+
     MSP430devices={
         #MSP430F2xx
         0xf227: "MSP430F22xx",
