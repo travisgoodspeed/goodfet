@@ -160,7 +160,7 @@ ifeq ($(filter jtag430x2, $(config)), jtag430x2)
 		libs+= apps/jtag/jtag430asm.o
 	endif
 	#add in the jtag430 app if not already
-	ifneq ($(filter apps/jtag/jtag430.o, $(apps)), apps/jtag/jtag430.0)
+	ifneq ($(filter apps/jtag/jtag430.o, $(apps)), apps/jtag/jtag430.o)
 		apps+= apps/jtag/jtag430.o
 		hdrs+= jtag430.h
 	endif
