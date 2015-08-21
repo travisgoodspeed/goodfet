@@ -79,6 +79,7 @@ void sbw_clock() {
 }
 
 void sbwSETTCLK(void) {
+  sbw_tms = 0;
   SETSBWIO(sbw_tms); //shall be zero
   SBWCLK();
 
@@ -97,6 +98,7 @@ void sbwSETTCLK(void) {
 }
 
 void sbwCLRTCLK(void) {
+  sbw_tms = 0;
   SETSBWIO(sbw_tms);
   SBWCLK();
 
@@ -132,15 +134,13 @@ unsigned char sbwtrans8(unsigned char byte){
     byte |= sbw_tdo;
   }
 
+  sbw_tms = 1; sbw_tdi = 1;  sbw_clock();
+
   if(sbw_savedtclk) {
     sbwSETTCLK();
   } else {
     sbwCLRTCLK();
   }
-  
-  // update state
-  sbw_tms = 0;
-  sbw_clock();
   
   return byte;
 }
@@ -151,7 +151,7 @@ unsigned long sbwtransn(unsigned long word,
   unsigned int bit;
   //0x8000
   unsigned long high=0x8000;
-  
+
   if(bitcount==20)
     high=0x80000;
   if(bitcount==16)
@@ -159,17 +159,14 @@ unsigned long sbwtransn(unsigned long word,
   
   for (bit = 0; bit < bitcount; bit++) {
     /* write MOSI on trailing edge of previous clock */
-    if (word & high)
-      {sbw_tdi = 1;}
-    else
-      {sbw_tdi = 0;}
+    if (word & high) {sbw_tdi = 1;}
+    else             {sbw_tdi = 0;}
     word <<= 1;
     
     if(bit==bitcount-1)
       sbw_tms = 1;//TMS high on last bit to exit.
     
     sbw_clock();
-    /* read MISO on trailing edge */
     word |= sbw_tdo;
   }
   
@@ -177,15 +174,13 @@ unsigned long sbwtransn(unsigned long word,
     word = ((word << 16) | (word >> 4)) & 0x000FFFFF;
   }
   
+  sbw_tms = 1; sbw_tdi = 1;  sbw_clock();
+
   if(sbw_savedtclk) {
     sbwSETTCLK();
   } else {
     sbwCLRTCLK();
   }
-  
-  // update state
-  sbw_tms = 0;
-  sbw_clock();
   
   return word;
 }
@@ -194,12 +189,10 @@ unsigned long sbwtransn(unsigned long word,
 u32 sbw_dr_shift20(unsigned long in){
 
   // idle
-  sbw_tms = 1;
-  sbw_clock();
+  sbw_tms = 1;  sbw_clock();
 
   // select DR
-  sbw_tms = 0;
-  sbw_clock();
+  sbw_tms = 0;  sbw_clock();
 
   // capture IR
   sbw_clock();
@@ -212,12 +205,10 @@ u32 sbw_dr_shift20(unsigned long in){
 u16 sbw_dr_shift16(unsigned int in){
 
   // idle
-  sbw_tms = 1;
-  sbw_clock();
+  sbw_tms = 1;  sbw_clock();
 
   // select DR
-  sbw_tms = 0;
-  sbw_clock();
+  sbw_tms = 0;  sbw_clock();
 
   // capture IR
   sbw_clock();
@@ -230,15 +221,13 @@ u16 sbw_dr_shift16(unsigned int in){
 u8 sbw_ir_shift8(unsigned char in){
 
   // idle
-  sbw_tms = 1;
-  sbw_clock();
+  sbw_tms = 1;  sbw_clock();
 
   // select DR
   sbw_clock();
 
   // select IR
-  sbw_tms = 0;
-  sbw_clock();
+  sbw_tms = 0;  sbw_clock();
 
   // capture IR
   sbw_clock();
@@ -249,19 +238,16 @@ u8 sbw_ir_shift8(unsigned char in){
 
 //! Set the program counter.
 void sbw430_setpc(unsigned int adr){
-  sbw_ir_shift8(IR_CNTRL_SIG_16BIT);
-  sbw_dr_shift16(0x3401);// release low byte
-  sbw_ir_shift8(IR_DATA_16BIT);
-  sbw_dr_shift16(0x4030);//Instruction to load PC
+  sbw_ir_shift8(IR_CNTRL_SIG_16BIT);  sbw_dr_shift16(0x3401);// release low byte
+  sbw_ir_shift8(IR_DATA_16BIT);       sbw_dr_shift16(0x4030);//Instruction to load PC
   sbwCLRTCLK();
   sbwSETTCLK();
   sbw_dr_shift16(adr);// Value for PC
   sbwCLRTCLK();
-  sbw_ir_shift8(IR_ADDR_CAPTURE);
   sbwSETTCLK();
+  sbw_ir_shift8(IR_ADDR_CAPTURE);
   sbwCLRTCLK() ;// Now PC is set to "PC_Value"
-  sbw_ir_shift8(IR_CNTRL_SIG_16BIT);
-  sbw_dr_shift16(0x2401);// low byte controlled by SBW
+  sbw_ir_shift8(IR_CNTRL_SIG_16BIT);  sbw_dr_shift16(0x2401);// low byte controlled by SBW
 }
 
 //! Halt the CPU
@@ -298,8 +284,7 @@ unsigned int sbw430_readmem(unsigned int adr){
     sbw_dr_shift16(0x2409);//word read
   else
     sbw_dr_shift16(0x2419);//byte read
-  sbw_ir_shift8(IR_ADDR_16BIT);
-  sbw_dr_shift16(adr);//address
+  sbw_ir_shift8(IR_ADDR_16BIT);    sbw_dr_shift16(adr);//address
   sbw_ir_shift8(IR_DATA_TO_ADDR);
   sbwSETTCLK();
 
@@ -317,11 +302,17 @@ void sbw430_writemem(unsigned int adr, unsigned int data){
     sbw_dr_shift16(0x2408);//word write
   else
     sbw_dr_shift16(0x2418);//byte write
-  sbw_ir_shift8(IR_ADDR_16BIT);
-  sbw_dr_shift16(adr);
-  sbw_ir_shift8(IR_DATA_TO_ADDR);
-  sbw_dr_shift16(data);
+  sbw_ir_shift8(IR_ADDR_16BIT);    sbw_dr_shift16(adr);
+  sbw_ir_shift8(IR_DATA_TO_ADDR);  sbw_dr_shift16(data);
   sbwSETTCLK();
+}
+
+void sbw430_tclk_flashpulses(unsigned int count) {
+  unsigned int i;
+  for(i=0;i<count;i++) {
+    sbwCLRTCLK();
+    sbwSETTCLK();
+  }
 }
 
 //! Write data to flash memory.  Must be preconfigured.
@@ -348,10 +339,8 @@ void sbw430_writeflashword(unsigned int adr, unsigned int data){
   sbw_dr_shift16(0x2409);
   */
   
-  debugstr("ERROR: Haven't got ASM to flash-pulse SBW.");
-  
   //Pulse TCLK
-  //sbw430_tclk_flashpulses(35); //35 standard
+  sbw430_tclk_flashpulses(35); //35 standard
 }
 
 //! Configure flash, then write a word.
@@ -420,8 +409,7 @@ void sbw430_eraseflash(unsigned int mode, unsigned int adr, unsigned int count){
   sbw_dr_shift16(0x2409);
   
   //Send the pulses.
-  debugstr("ERROR: Haven't got ASM to flash-pulse SBW.");
-  //sbw430_tclk_flashpulses(count);
+  sbw430_tclk_flashpulses(count);
   
   //FCTL1=0xA500, disabling flash write
   sbw430_writemem(0x0128, 0xA500);
@@ -447,27 +435,33 @@ void sbw430_setinstrfetch(){
 void sbw430_resettap(){
   int i;
 
-  // Settle output
-  sbw_tdi = 1; //430X2
-  sbw_tms = 1;
-  //sbw_tdi = 1; //classic
-  sbw_clock();
-
   // Navigate to reset state.
+  sbw_tdi = 1;
+  sbw_tms = 1;
+
   // Should be at least six.
-  for(i=0;i<4;i++){
+  for(i=0;i<6;i++){
     sbw_clock();
   }
 
-  // test-logic-reset
-  sbw_tms = 0;
-  sbw_clock();
+  // in test-logic-reset
 
-  sbw_tms = 1;
-//  sbw_clock();
-  // idle
+  sbw_tms = 0;  sbw_clock();
 
-  //sbw fuse check ??
+  // now in idle
+
+  //fuse check
+  sbw_tms = 1;  sbw_clock();
+  sbw_tms = 0;  sbw_clock();
+  sbw_tms = 1;  sbw_clock();
+  sbw_tms = 0;  sbw_clock();
+  sbw_tms = 1;  sbw_clock();
+
+  //once more to go idle
+  sbw_tms = 1;  sbw_clock();
+  sbw_tms = 0;  sbw_clock();
+
+  //in idle
 }
 
 void sbwsetup(){
@@ -492,6 +486,7 @@ void sbwsetup(){
   SBWCLK();
 
   // now we're in SBW mode
+
 }
 
 
