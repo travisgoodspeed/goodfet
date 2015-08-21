@@ -1,0 +1,10 @@
+lib/apps.c
+apps/*/*.o
+lib/*.o
+include/apps.h
+include/builddate.h
+include/config.h
+goodfet.o
+goodfet
+goodfet.hex
+
