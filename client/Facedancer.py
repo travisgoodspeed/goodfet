@@ -11,8 +11,8 @@ class Facedancer:
         self.serialport = serialport
         self.verbose = verbose
 
-        self.reset()
         self.monitor_app = GoodFETMonitorApp(self, verbose=self.verbose)
+        self.reset()
         self.monitor_app.announce_connected()
 
     def halt(self):
@@ -23,10 +23,30 @@ class Facedancer:
         if self.verbose > 1:
             print("Facedancer resetting...")
 
-        self.halt()
-        self.serialport.setDTR(0)
+        connected = False
 
-        c = self.readcmd()
+        while not connected:
+            try:
+                c = FacedancerCommand()
+
+                while c.verb != 0x7F or c.data != b"http://goodfet.sf.net/":
+                    self.halt()
+                    self.serialport.setDTR(0)
+
+                    c = self.readcmd()
+
+                connected = True
+
+                clocking = self.monitor_app.get_clocking()
+
+                for i in range(50):
+                    if not self.monitor_app.echo('The quick brown fox jumped over the lazy dog.'):
+                        if self.verbose > 1:
+                            print("Comm error on %i try, resyncing out of %d." % (i, clocking))
+                        connected = False
+                        break
+            except:
+                connected = False
 
         if self.verbose > 0:
             print("Facedancer reset")
