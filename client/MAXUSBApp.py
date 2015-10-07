@@ -113,7 +113,7 @@ class MAXUSBApp(FacedancerApp):
         self.device.readcmd()
 
     def connect(self, usb_device):
-        if self.read_register(self.reg_usb_control) & self.usb_control_connect:
+        while self.read_register(self.reg_usb_control) & self.usb_control_connect:
             self.write_register(self.reg_usb_control, self.usb_control_vbgate)
             time.sleep(.1)
 
