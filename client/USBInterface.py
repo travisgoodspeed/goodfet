@@ -89,7 +89,10 @@ class USBInterface:
         if self.iclass:
             iclass_desc_num = USB.interface_class_to_descriptor_type(self.iclass)
             if iclass_desc_num:
-                d += self.descriptors[iclass_desc_num]
+                desc = self.descriptors[iclass_desc_num]
+                if callable(desc):
+                    desc = desc(self.iclass)
+                d += desc
 
         for e in self.endpoints:
             d += e.get_descriptor()
