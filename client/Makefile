@@ -7,7 +7,7 @@ link:
 	rm -f $(prefix)/bin/goodfet.* $(prefix)/bin/goodfet $(prefix)/bin/facedancer*
 	rm -rf *~
 	mkdir -p $(prefix)/bin
-	ln -s `pwd`/goodfet `pwd`/goodfet.* `pwd`/facedancer* $(prefix)/bin/
+	ln -s "`pwd`"/goodfet "`pwd`"/goodfet.* "`pwd`"/facedancer* $(prefix)/bin/
 install:
 	echo "Try 'make link' instead."
 
