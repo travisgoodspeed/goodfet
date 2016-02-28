@@ -29,12 +29,12 @@
 #  - Use FTDI Serial Number to archive info text and/or password (dragorn's idea)
 #      /sys/bus/usb-serial/devices/ttyUSB0/../../serial
 
-import sys, time, string, cStringIO, struct, urllib2, tempfile
+import sys, time, string, io, struct, urllib.request, urllib.error, urllib.parse, tempfile
 #sys.path.append("/usr/lib/tinyos")  #We no longer require TinyOS.
 import serial, os, glob
 
 #forked from TinyOS Telos version.
-VERSION = string.split("Revision: 1.39-goodfet-8 ")[1] 
+VERSION = "Revision: 1.39-goodfet-8 ".split()[1] 
 
 DEBUG = 0                                       #disable debug messages by default
 
@@ -991,7 +991,7 @@ class BootStrapLoader(LowLevel):
         for c in data:
             hex+=("%02x "%ord(c));
         hex+="\nq\n";
-        print hex;
+        print(hex);
         return data;
 
     def saveinfo(self):
@@ -1125,7 +1125,7 @@ class BootStrapLoader(LowLevel):
         else:
             #sanity check of password
             if len(passwd) != 32:
-                raise ValueError, "password has wrong length (%d)\n" % len(passwd)
+                raise ValueError("password has wrong length (%d)\n" % len(passwd))
             sys.stderr.write('Transmit password ...\n')
             sys.stderr.flush()
         #send the password
@@ -1175,7 +1175,7 @@ class BootStrapLoader(LowLevel):
         
         
         if self.cpu is None:                        #cpy type forced?
-            if deviceids.has_key(dev_id):
+            if dev_id in deviceids:
                 self.cpu = deviceids[dev_id]        #try to autodectect CPU type
                 
                 if DEBUG:
@@ -1215,12 +1215,12 @@ class BootStrapLoader(LowLevel):
                 if DEBUG:
                     sys.stderr.write("Using built in BSL replacement for F4x devices\n")
                     sys.stderr.flush()
-                replacementBSL.loadTIText(cStringIO.StringIO(F4X_BSL))  #parse embedded BSL
+                replacementBSL.loadTIText(io.StringIO(F4X_BSL))  #parse embedded BSL
             else:
                 if DEBUG:
                     sys.stderr.write("Using built in BSL replacement for F1x devices\n")
                     sys.stderr.flush()
-                replacementBSL.loadTIText(cStringIO.StringIO(F1X_BSL))  #parse embedded BSL
+                replacementBSL.loadTIText(io.StringIO(F1X_BSL))  #parse embedded BSL
     
         #now download the new BSL, if allowed and needed (version lower than the
         #the replacement) or forced
@@ -1243,7 +1243,7 @@ class BootStrapLoader(LowLevel):
                 #Programming and verification is done in one pass.
                 #The patch file is only read and parsed once.
                 segments = Memory()                     #data to program
-                segments.loadTIText(cStringIO.StringIO(PATCH))  #parse embedded patch
+                segments.loadTIText(io.StringIO(PATCH))  #parse embedded patch
                 #program patch
                 self.programData(segments, self.ACTION_PROGRAM | self.ACTION_VERIFY)
                 self.patchLoaded = 1
@@ -1294,7 +1294,7 @@ class BootStrapLoader(LowLevel):
         if self.data is not None:
             self.programData(self.data, self.ACTION_ERASE_CHECK)
         else:
-            raise BSLException, "cannot do erase check against data with not knowing the actual data"
+            raise BSLException("cannot do erase check against data with not knowing the actual data")
 
     def actionProgram(self):
         """program data into flash memory."""
@@ -1305,20 +1305,20 @@ class BootStrapLoader(LowLevel):
             sys.stderr.write("%i bytes programmed.\n" % self.byteCtr)
             sys.stderr.flush()
         else:
-            raise BSLException, "programming without data not possible"
+            raise BSLException("programming without data not possible")
 
     def prepareFromweb(self):
         """Grab GoodFET firmware from the web."""
         url="%s%s.hex" % (FIRMWARE_BASEURL, self.board);
-        print "Grabbing %s firmware from %s" % (self.board, url);
-        response = urllib2.urlopen(url)
+        print("Grabbing %s firmware from %s" % (self.board, url));
+        response = urllib.request.urlopen(url)
         data = response.read()
         if 0 < len(data):
             tempFile = file(self.tempFileName, 'wb')
             tempFile.write(data)
             tempFile.close()
         else:
-            print "Failed to download file %s" % url
+            print("Failed to download file %s" % url)
             sys.exit()
 
     def actionFromweb(self):
@@ -1338,7 +1338,7 @@ class BootStrapLoader(LowLevel):
             sys.stderr.flush()
             self.programData(self.data, self.ACTION_VERIFY)
         else:
-            raise BSLException, "verify without data not possible"
+            raise BSLException("verify without data not possible")
 
     def actionReset(self):
         """perform a reset, start user programm"""
@@ -1378,11 +1378,11 @@ class BootStrapLoader(LowLevel):
         try:
             baudconfigs = self.bauratetable[self.cpu]
         except KeyError:
-            raise ValueError, "unknown CPU type %s, can't switch baudrate" % self.cpu
+            raise ValueError("unknown CPU type %s, can't switch baudrate" % self.cpu)
         try:
             a,l = baudconfigs[baudrate]
         except KeyError:
-            raise ValueError, "baudrate not valid. valid values are %r" % baudconfigs.keys()
+            raise ValueError("baudrate not valid. valid values are %r" % list(baudconfigs.keys()))
         
         sys.stderr.write("Changing baudrate to %d ...\n" % baudrate)
         sys.stderr.flush()
@@ -1397,7 +1397,7 @@ class BootStrapLoader(LowLevel):
         ans = self.bslTxRx(self.BSL_TXVERSION, 0) #Command: receive version info
         #the following values are in big endian style!!!
         family_type, bsl_version = struct.unpack(">H8xH4x", ans[:-2]) #cut away checksum and extract data
-        print "Device Type: 0x%04x\nBSL version: 0x%04x\n" % (family_type, bsl_version)
+        print("Device Type: 0x%04x\nBSL version: 0x%04x\n" % (family_type, bsl_version))
 
 
 def usage():
@@ -1524,12 +1524,12 @@ class curry:
             kw.update(kwargs)
         else:
             kw = kwargs or self.kwargs
-        return apply(self.fun, self.pending + args, kw)
+        return self.fun(*self.pending + args, **kw)
 
     def __repr__(self):
         #first try if it a function
         try:
-            return "curry(%s, %r, %r)" % (self.fun.func_name, self.pending, self.kwargs)
+            return "curry(%s, %r, %r)" % (self.fun.__name__, self.pending, self.kwargs)
         except AttributeError:
             #fallback for callable classes
             return "curry(%s, %r, %r)" % (self.fun, self.pending, self.kwargs)
@@ -1539,7 +1539,7 @@ def hexify(line, bytes, width=16):
         line,
         ('%02x '*len(bytes)) % tuple(bytes),
         '   '* (width-len(bytes)),
-        ('%c'*len(bytes)) % tuple(map(lambda x: (x>=32 and x<127) and x or ord('.'), bytes))
+        ('%c'*len(bytes)) % tuple([(x>=32 and x<127) and x or ord('.') for x in bytes])
         )
 
 #Main:
@@ -1805,8 +1805,8 @@ def main(itest=1):
 
     if os.environ.get("board")==None:
         if board==None:
-            print >>sys.stderr, "Board not specified.  Defaulting to goodfet41."
-            raw_input("Press Ctrl+C to cancel, or Enter to continue.");
+            print("Board not specified.  Defaulting to goodfet41.", file=sys.stderr)
+            input("Press Ctrl+C to cancel, or Enter to continue.");
             board='goodfet41';
         bsl.board=board;
     else:
@@ -1816,10 +1816,10 @@ def main(itest=1):
         except:
             pass;
     if bsl.board==None:
-        print >>sys.stderr, "Unknown board specified.  Try board=goodfet41 if unsure."
-	raw_input("Press Ctrl+C to cancel, or Enter to continue using unknown board.");
-	bsl.board=os.environ.get("board").lower();
-      
+        print("Unknown board specified.  Try board=goodfet41 if unsure.", file=sys.stderr)
+        input("Press Ctrl+C to cancel, or Enter to continue using unknown board.");
+        bsl.board=os.environ.get("board").lower();
+    
     if bsl.board=='telosb':
         bsl.swapRSTTEST = 1
         bsl.telosI2C = 1
@@ -1878,12 +1878,12 @@ def main(itest=1):
         elif filename:
             bsl.data.loadFile(filename)             #autodetect otherwise
 
-    if DEBUG > 3: print >>sys.stderr, "File: %r" % filename
+    if DEBUG > 3: print("File: %r" % filename, file=sys.stderr)
 
     bsl.comInit(comPort)                            #init port
 
     if bsl.actionMassErase in deviceinit:
-        if DEBUG: print >>sys.stderr, "Starting BSL to save info..."
+        if DEBUG: print("Starting BSL to save info...", file=sys.stderr)
         bsl.actionStartBSL()
         bsl.saveinfo()
 
@@ -1912,7 +1912,7 @@ def main(itest=1):
             sys.stderr.write("TODO list:\n")
             for f in todo:
                 try:
-                    sys.stderr.write("   %s\n" % f.func_name)
+                    sys.stderr.write("   %s\n" % f.__name__)
                 except AttributeError:
                     sys.stderr.write("   %r\n" % f)
         for f in todo: f()                          #work through todo list
@@ -1925,15 +1925,15 @@ def main(itest=1):
     if reset:                                       #reset device first if desired
         bsl.actionReset()
     if dumpivt:
-        if DEBUG: print >>sys.stderr, "Dumping IVT..."
+        if DEBUG: print("Dumping IVT...", file=sys.stderr)
         bsl.txPasswd(); #default pass
         data=bsl.uploadData(0xc00,1024);
         hex="";
         for c in data:
             hex+=("%02x "%ord(c));
-        print hex;
+        print(hex);
     if dumpinfo:
-        if DEBUG: print >>sys.stderr, "Dumping info..."
+        if DEBUG: print("Dumping info...", file=sys.stderr)
         # I don't know what bslreset is all about, but if it is enabled and
         # the wrong password is provided, the chip gets erased.
         reset = True
@@ -1958,7 +1958,7 @@ def main(itest=1):
         if hexoutput:                               #depending on output format
             m = 0
             while m < len(data):                    #print a hex display
-                print hexify(startaddr+m, map(ord,data[m:m+16]))
+                print(hexify(startaddr+m, list(map(ord,data[m:m+16]))))
                 m = m + 16
         else:
             sys.stdout.write(data)                  #binary output w/o newline!
@@ -1967,7 +1967,7 @@ def main(itest=1):
     if wait:                                        #wait at the end if desired
         sys.stderr.write("Press <ENTER> ...\n")     #display a prompt
         sys.stderr.flush()
-        raw_input()                                 #wait for newline
+        input()                                 #wait for newline
 
     bsl.comDone()           #Release serial communication port
 
@@ -1980,7 +1980,7 @@ if __name__ == '__main__':
         if DEBUG: raise     #show full trace in debug mode
         sys.stderr.write("user abort.\n")   #short messy in user mode
         sys.exit(1)         #set errorlevel for script usage
-    except Exception, msg:  #every Exception is caught and displayed
+    except Exception as msg:  #every Exception is caught and displayed
         if DEBUG: raise     #show full trace in debug mode
         #sys.stderr.write("\nAn error occoured:\n%s\n" % msg) #short messy in user mode
         #sys.exit(1)         #set errorlevel for script usage
