@@ -1,0 +1,59 @@
+#!/usr/bin/env python
+
+import sys
+import struct
+import binascii
+import time
+
+from GoodFETAT91SAM7S import *
+from intelhex import IntelHex16bit, IntelHex
+
+#######################################
+#   GoodFET              AT91r40008  
+#     PIN                 PIN
+#
+#      1 <----- TDO ----> 90
+#      3 <----- TDI ----> 89
+#      5 <----- TMS ----> 88
+#      7 <----- TCK ----> 91
+#      9 <----- GND ----> GND
+#     11 <----- RST ----> 79
+#######################################
+
+
+def at91sam7s_syntax():
+    print "Usage: %s verb [objects]\n" % sys.argv[0]
+    print "%s info" % sys.argv[0]
+    print "%s dump $foo.hex [0x$start 0x$stop]" % sys.argv[0]
+    print "%s ecdump $foo.hex [0x$start 0x$stop] [$chipselectregnum 0x$chipselectregvalue] - exception-handling dump" % sys.argv[0]
+    print "%s erase" % sys.argv[0]
+    print "%s eraseinfo" % sys.argv[0]
+    print "%s flash $foo.hex [0x$start 0x$stop]" % sys.argv[0]
+    print "%s verify $foo.hex [0x$start 0x$stop]" % sys.argv[0]
+    print "%s poke 0x$adr 0x$val" % sys.argv[0]
+    print "%s peek 0x$start [0x$stop]" % sys.argv[0]
+    print "%s stat_watchdog" % sys.argv[0]
+    print "%s test_disable_watchdog" % sys.argv[0]
+    print "%s reset" % sys.argv[0]
+    sys.exit()
+
+def at91sam7s_main():
+    ''' this function should be called from command line app '''
+
+    #Initialize FET and set baud rate
+    client=GoodFETAT91SAM7S()
+    client.serInit()
+
+    client.setup()
+    client.start()
+
+    arm7_cli_handler(client, sys.argv)
+
+if __name__ == "__main__":
+    if(len(sys.argv)==1):
+        at91sam7s_syntax()
+
+    else: 
+        at91sam7s_main()
+
+
