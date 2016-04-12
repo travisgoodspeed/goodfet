@@ -31,24 +31,6 @@ EBI_6_beg  =    0x60000000
 EBI_7_beg  =    0x70000000
 
 
-
-def at91sam9g20_syntax():
-    print "Usage: %s verb [objects]\n" % sys.argv[0]
-    print "%s info" % sys.argv[0]
-    print "%s dump $foo.hex [0x$start 0x$stop]" % sys.argv[0]
-    print "%s ecdump $foo.hex [0x$start 0x$stop] [$chipselectregnum 0x$chipselectregvalue] - exception-handling dump" % sys.argv[0]
-    print "%s erase" % sys.argv[0]
-    print "%s eraseinfo" % sys.argv[0]
-    print "%s flash $foo.hex [0x$start 0x$stop]" % sys.argv[0]
-    print "%s verify $foo.hex [0x$start 0x$stop]" % sys.argv[0]
-    print "%s poke 0x$adr 0x$val" % sys.argv[0]
-    print "%s peek 0x$start [0x$stop]" % sys.argv[0]
-    print "%s stat_watchdog" % sys.argv[0]
-    print "%s test_disable_watchdog" % sys.argv[0]
-    print "%s reset" % sys.argv[0]
-    sys.exit()
-
-
 def read(start, lenght, fname):
     stop=start+lenght
     f=fname

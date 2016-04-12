@@ -48,7 +48,7 @@ PERIPH1_BASE =  0xf0008000
 # etc...
 
 
-class GoodFETAT91SAM7S(GoodFETARM):
+class GoodFETAT91SAM7S(GoodFETARM7):
     def getChipID(self):
         chipid = self.ARMreadMem(SF_CIDR,1)
         return chipid[0]
