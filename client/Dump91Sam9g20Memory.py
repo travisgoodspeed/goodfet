@@ -37,7 +37,7 @@ def read(start, lenght, fname):
     print "Dumping from %04x to %04x as %s." % (start,stop,f)
     #h = IntelHex16bit(None)
     # FIXME: get mcu state and return it to that state
-    client.halt()
+    
 
     try:
         h = IntelHex(None)
@@ -55,8 +55,6 @@ def read(start, lenght, fname):
         print "Unknown error during read. Writing results to output file."
         print "Rename file with last address dumped %06x."%i
         pass
-
-    client.resume()
     h.write_hex_file(f)
 
 
@@ -65,6 +63,8 @@ client.serInit()
 client.setup()
 client.start()
 
+client.halt()
+
 read(EBI_1_beg,EBI_Block, "EBI_1.hex")
 read(EBI_2_beg,EBI_Block, "EBI_2.hex")
 read(EBI_3_beg,EBI_Block, "EBI_3.hex")
@@ -72,4 +72,6 @@ read(EBI_4_beg,EBI_Block, "EBI_4.hex")
 read(EBI_5_beg,EBI_Block, "EBI_5.hex")
 read(EBI_6_beg,EBI_Block, "EBI_6.hex")
 read(EBI_7_beg,EBI_Block, "EBI_7.hex")
+
+client.resume()
 
