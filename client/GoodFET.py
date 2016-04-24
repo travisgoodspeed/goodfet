@@ -197,7 +197,7 @@ class GoodFET:
                     return
                 elif attempts==2 and os.environ.get("board")!='telosb':
                     print "See the GoodFET FAQ about missing info flash.";
-                    self.serialport.setTimeout(0.2);
+                    self.serialport.timeout=0.2;
                 elif attempts == 100:
 		    print "Tried 100 times to connect and failed."
 		    sys.stdout.write("Continuing to try forever.")	# No newline
@@ -261,7 +261,7 @@ class GoodFET:
                     break;
         if self.verbose: print "Connected after %02i attempts." % attempts;
         self.mon_connected();
-        self.serialport.setTimeout(12);
+        self.serialport.timeout=12;
     def serClose(self):
         self.serialport.close();
     def telosSetSCL(self, level):

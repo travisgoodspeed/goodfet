@@ -241,6 +241,7 @@ class GoodFETARM7(GoodFET):
         print "Dumping from %04x to %04x as %s." % (start,stop,f);
         # FIXME: get mcu state and return it to that state
         self.halt()
+        print "halted, starting the dump"
 
         h = IntelHex(None);
         i=start;
