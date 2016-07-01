@@ -227,6 +227,9 @@ class MAXUSBApp(FacedancerApp):
                 self.clear_irq_bit(self.reg_endpoint_irq, self.is_setup_data_avail)
 
                 b = self.read_bytes(self.reg_setup_data_fifo, 8)
+                if (irq & self.is_out0_data_avail) and (b[0] & 0x80 == 0x00):
+                    data_bytes_len = b[6] + (b[7] << 8)
+                    b += self.read_bytes(self.reg_ep0_fifo, data_bytes_len)
                 req = USBDeviceRequest(b)
                 self.connected_device.handle_request(req)
 
