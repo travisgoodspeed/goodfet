@@ -5,6 +5,7 @@
 
 from util import *
 import serial
+import os
 
 class Facedancer:
     def __init__(self, serialport, verbose=0):
@@ -211,7 +212,8 @@ class GoodFETMonitorApp(FacedancerApp):
 def GoodFETSerialPort(**kwargs):
     "Return a Serial port using default values possibly overriden by caller"
 
-    args = dict(port="/dev/ttyUSB0", baudrate=115200,
+    port = os.environ.get('GOODFET') or "/dev/ttyUSB0"
+    args = dict(port=port, baudrate=115200,
                 parity=serial.PARITY_NONE, timeout=2)
     args.update(kwargs)
     return serial.Serial(**args)
