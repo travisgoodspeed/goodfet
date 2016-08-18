@@ -25,7 +25,6 @@ class USBHIDClass(USBClass):
     def handle_set_idle_request(self, req):
         print(self.name, "received SET_IDLE request, duration %d, report ID %d" \
               % (req.value >> 8, req.value & 0xFF))
-        self.interface.configuration.device.send_control_message(b'')
 
 
 class USBMouseInterface(USBInterface):
