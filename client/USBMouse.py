@@ -23,7 +23,7 @@ class USBHIDClass(USBClass):
         }
 
     def handle_set_idle_request(self, req):
-        print(self.name, "received SET_IDLE request, duration %d, report %d" \
+        print(self.name, "received SET_IDLE request, duration %d, report ID %d" \
               % (req.value >> 8, req.value & 0xFF))
         self.interface.configuration.device.send_control_message(b'')
 
@@ -31,7 +31,8 @@ class USBHIDClass(USBClass):
 class USBMouseInterface(USBInterface):
     name = "USB mouse interface"
 
-    hid_descriptor = b'\x09\x21\x10\x01\x00\x01\x22\x2c\x01'
+    hid_descriptor = b'\x09\x21\x10\x01\x00\x01\x22\x34\x00'
+                     #                               ^---^-- report desc. len
     report_descriptor = ( b'\x05\x01\x09\x02\xa1\x01\x09\x01\xa1'
                           #                ^-- usage 2 = mouse
                           b'\x00\x05\x09\x19\x01\x29\x03\x15\x00\x25\x01'
@@ -43,7 +44,7 @@ class USBMouseInterface(USBInterface):
                           b'\x75\x08\x95\x03\x81\x06\xc0\xc0' )
                           #                ^-- no. of axes
 
-    def __init__(self, device, verbose=0):
+    def __init__(self, verbose=0):
         descriptors = { 
                 USB.desc_type_hid    : self.hid_descriptor,
                 USB.desc_type_report : self.report_descriptor
@@ -98,7 +99,7 @@ class USBMouseDevice(USBDevice):
         config = USBConfiguration(
                 1,                                          # index
                 "Emulated Mouse",    # string desc
-                [ USBMouseInterface(self) ]                 # interfaces
+                [ USBMouseInterface() ]                     # interfaces
         )
 
         USBDevice.__init__(
