@@ -61,8 +61,25 @@ Differences with original Facedancer11/21 (besides removal of GoodFET parts):
 Software:
 =========
     Things have been done to be able to reuse the MAXUSB python libraries
-written for facedancer. All you need is to replace the original GoodFET.py
-by the version provided here. It relies on SPI and GPIO libraries, see below.
+written for facedancer. For modern libraries, the only required change is to
+switch which object you're instantiating. So, instead of creating a Facedancer
+object...
+
+    from Facedancer import *
+
+    sp = GoodFETSerialPort()
+    fd = Facedancer(sp, verbose=1)
+
+... create a Raspdancer object:
+
+    from Raspdancer import *
+
+    fd = Raspdancer(verbose=1)
+
+To run the legacy MAXUSB applications, you can replace the original GoodFET.py
+by the version provided here. 
+
+Both the modern and legacy support rely on SPI and GPIO libraries; see below.
 Code has to be run as root or user with enough rights on SPI & GPIO.
 
 Activating SPI on Raspberry PI
