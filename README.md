@@ -23,13 +23,17 @@ You will need python-serial, wget, gcc-msp430, and curl.  These might
 have different names, and the MSP430 compiler might be separated from
 its libc implementation.
 
+```sh
+sudo apt-get install -y gcc-msp430 msp430-libc curl wget python-serial # Ubuntu Xenial
+```
+
 
 Client
 ------
 
 First, grab a copy of the client code and link it into /usr/local/bin.
 
-```
+```sh
 git clone https://github.com/travisgoodspeed/goodfet/
 (cd client && sudo make link)
 ```
@@ -44,7 +48,7 @@ Firmware
 If your GoodFET has not yet been flashed, or if you would like to
 develop new firmware features, you will need to compile from scratch.
 
-```
+```sh
 cd ~/goodfet/firmware
 board=goodfet41 make clean all
 ```
