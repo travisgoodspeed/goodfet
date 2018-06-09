@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python2
 
 #GoodFET Chipcon CC2500 SPI Client
 #by Jean-Michel Picod <jean-michel.picod at cassidan.com>

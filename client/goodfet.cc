@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python2
 # GoodFET Chipcon Example
 # 
 # (C) 2009 Travis Goodspeed <travis at radiantmachines.com>
