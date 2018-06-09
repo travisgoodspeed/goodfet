@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python2
 
 #GoodFET Chipcon SPI Client
 # (C) 2011 Travis Goodspeed

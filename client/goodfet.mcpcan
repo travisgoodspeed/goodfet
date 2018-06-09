@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python2
 # GoodFET SPI Flash Client
 #
 # (C) 2012 Travis Goodspeed <travis at radiantmachines.com>

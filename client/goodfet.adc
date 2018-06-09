@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python2
 """
 ADC10 client (currently only supports x2274 chip, on the GoodFET31
 board, where pin 5 of JTAG header is sampled.)
