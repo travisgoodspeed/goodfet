@@ -7,10 +7,12 @@ import time;
 
 from GoodFETowe import GoodFETowe;
 from intelhex import IntelHex;
+from collections import namedtuple;
 
 if(len(sys.argv)==1):
     print "Usage: %s verb [objects]\n" % sys.argv[0];
     print "%s readrom" % sys.argv[0];
+    print "%s searchrom" % sys.argv[0];
     print "%s readtemp" % sys.argv[0];
     sys.exit();
 
@@ -36,6 +38,92 @@ if(sys.argv[1]=="readrom"):
         else:
             sys.stdout.write("%s " % data[i]);
 
+SearchROMState = namedtuple("SearchROMState", ["conflict", "address"]);
+
+def makeSearchROMState():
+    return SearchROMState(conflict = 0, address = 0L);
+
+# Takes a SearchROMState
+# Returns a new SearchROMState containing the address of a device on the bus.
+# Returns False if there are no devices on the bus or the bus is being pulled
+# high.
+# If the returned SearchROMState and the provided SearchROMState are the same
+# then no more ROMs were found.
+# Keep calling searchROM with the previous return value until no more ROMs are
+# found.
+def searchROM(state):
+
+    assert (type(0L) == type(state.address)), "SearchROM requires addr to have type 'long' but we got %r!" % type(addr);
+
+    bit = 0;      # The bit of the address are we calculating
+    address = 0L; # 64 bits of address
+    conflict = 0; # The bit position of the conflict to resolve in the next call to SearchROM()
+
+    client.sendCommand(0xf0); # Search ROM
+
+    # Find each bit in the ROM of one device
+    for bit in range(0, 64):
+        b = 0;
+        b = b | (client.readBit() << 1);
+        b = b | (client.readBit() << 0);
+        if b == 0b01:   # 01 -> 0
+            # This bit of the address is 0 for all devices in this subtree.
+            b = 0;
+
+        elif b == 0b10: # 10 -> 1
+            # This bit of the address is 1 for all devices in this subtree.
+            b = 1;
+
+        elif b == 0b00: # 00 -> Conflict
+            if bit < state.conflict:
+                # Choose the path we chose last time because there are more
+                # conflicts in that subtree.
+                b = (state.address & (0x1 << bit));
+                conflict = bit;
+
+            elif bit == state.conflict:
+
+                stateBit = state.address & (0x1 << bit);
+
+                if stateBit == 1:
+                    # We've already resolved this conflict and there aren't any
+                    # others to resolve so we must have found everything! Just
+                    # return the same things we returned last time.
+                    return state;
+
+                else:
+                    assert (stateBit == 0);
+
+                    if state.address == 0:
+                        # We're only just beginning so choose 0.
+                        b = 0;
+
+                    else:
+                        # Choose the other path because this is the deepest
+                        # unresolved conflict and there's another subtree to
+                        # search.
+                        b = 1;
+
+            elif bit > state.conflict:
+                # This is a new conflict that we might need to resolve next time.
+                b = 0;
+                conflict = bit;
+
+            else:
+                assert 0, "Unexpected condition in SearchROM! bit = %r, address = %r, conflict = %r, state = %r" % (bit, address, conflict, state);
+
+        elif b == 0b11: # 11 -> No devices
+            # This can only happen when we're at the first bit.
+            assert (bit == 0), "Search ROM: unexpectedly received 'No devices'!";
+            assert (address == 0), "Search ROM: received 'No devices' but addr is %r" % addr;
+            return False;
+
+        address = address | (b << bit);
+        client.writeBit(b);
+
+    return SearchROMState(conflict = conflict, address = address);
+
+
 if(sys.argv[1]=="readtemp"):
     #Start temperatur conversion
     client.sendCommand(0xcc);              # Skip ROM
@@ -56,3 +144,21 @@ if(sys.argv[1]=="readtemp"):
     client.read()                          # Receive Byte
     temp += ord(client.data)<<4;
     sys.stdout.write("Temperature: %i\n" % temp);
+
+
+if(sys.argv[1]=="searchrom"):
+    sys.stdout.write("Seaching for ROMs...\n")
+    previous = makeSearchROMState();
+
+    while True:
+        current = searchROM(previous);
+        if current == False:
+            print "No devices found or bus pulled high!";
+            break;
+
+        elif current == previous:
+            break;
+
+        else:
+            print "Found ROM: %x" % current.address;
+            previous = current;
