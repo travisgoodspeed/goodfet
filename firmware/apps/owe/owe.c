@@ -128,8 +128,16 @@ void owe_handle_fn(uint8_t  const app,
 			sendbyte(cmddata[0]);
 			txdata(app,0,0);
 			break;
+		case 0x81:
+			sendbit(cmddata[0]);
+			txdata(app,0,0);
+			break;
 		case 0x00:
 			cmddata[0] = receivebyte();	
+			txdata(app,0,1);
+			break;
+		case 0x80:
+			cmddata[0] = receivebit();
 			txdata(app,0,1);
 			break;
 		default:
