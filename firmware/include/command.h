@@ -44,6 +44,7 @@ extern unsigned char silent;
 #define PEEK  0x02
 #define POKE  0x03
 #define SETUP 0x10
+#define PEEK32 0x13
 #define START 0x20
 #define STOP  0x21
 #define CALL  0x30
