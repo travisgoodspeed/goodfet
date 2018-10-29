@@ -299,6 +299,15 @@ class GoodFETSPIFlash(GoodFETSPI):
         
         self.writecmd(0x01,0x02,3,data);
         return self.data;
+    def SPIpeekblock32(self,adr):
+        """Grab a few block from an SPI Flash ROM.  Block size is unknown"""
+        data=[(adr&0xFF000000)>>24,
+              (adr&0xFF0000)>>16,
+              (adr&0xFF00)>>8,
+              adr&0xFF];
+        
+        self.writecmd(0x01,0x13,4,data);
+        return self.data;
     
     def SPIpokebyte(self,adr,val):
         self.SPIpokebytes(adr,[val]);
