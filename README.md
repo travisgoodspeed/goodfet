@@ -2,7 +2,12 @@ GoodFET
 =======
 
 The GoodFET is a nifty little tool for quickly exposing embedded
-system buses to userland Python code.
+system buses to userland Python code.  It is no longer under active
+development, but I hope that you find it useful nonetheless.
+
+If you are experimenting with the Facedancer USB emulator framework,
+you probably want Kate Tempkin's fork.  It is available at
+https://github.com/ktemkin/Facedancer .
 
 Drivers
 -------
@@ -13,7 +18,7 @@ For Windows, install Python 2.7 as 32-bit, FTDI VCP Drivers,
 and add Python your %PATH% in order to run the scripts in \client.
 
 In Linux, the FTDI drivers are included by default.  Be sure that the
-user has permissions for /dev/ttyUSB0, which will likely require
+user has permissions for `/dev/ttyUSB0`, which will likely require
 adding that user to the dialout group.
 
 Packages
@@ -31,7 +36,8 @@ sudo apt-get install -y gcc-msp430 msp430-libc curl wget python-serial # Ubuntu 
 Client
 ------
 
-First, grab a copy of the client code and link it into /usr/local/bin.
+First, grab a copy of the client code and link it into
+`/usr/local/bin`.
 
 ```sh
 git clone https://github.com/travisgoodspeed/goodfet/
@@ -39,7 +45,7 @@ git clone https://github.com/travisgoodspeed/goodfet/
 ```
 
 Before using the client, you will need to specify your hardware
-revision in the $client or %client% environment variable.
+revision in the `$client` or `%client%` environment variable.
 
 
 Firmware
