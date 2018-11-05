@@ -58,6 +58,12 @@ void spiflash_peekblock(unsigned long adr,
 			unsigned int len);
 
 
+//! Read a block to a buffer. 32b Adr
+void spiflash_peekblock32(unsigned long adr,
+			unsigned char *buf,
+			unsigned int len);
+
+
 //! Write many blocks to the SPI Flash.
 void spiflash_pokeblocks(unsigned long adr,
 			 unsigned char *buf,

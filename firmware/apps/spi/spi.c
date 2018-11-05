@@ -170,6 +170,27 @@ void spiflash_peekblock(unsigned long adr,
 }
 
 //! Read a block to a buffer.
+void spiflash_peekblock32(unsigned long adr,
+			unsigned char *buf,
+			unsigned int len){
+  unsigned char i;
+
+  SETSS;
+  CLRSS; //Drop !SS to begin transaction.
+  spitrans8(0x13);//Flash Read Command
+
+  //Send address
+  spitrans8((adr&0xFF000000)>>24);
+  spitrans8((adr&0xFF0000)>>16);
+  spitrans8((adr&0xFF00)>>8);
+  spitrans8(adr&0xFF);
+
+  for(i=0;i<len;i++)
+    buf[i]=spitrans8(0);
+  SETSS;  //Raise !SS to end transaction.
+}
+
+//! Read a block to a buffer.
 void spiflash_pokeblock(unsigned long adr,
 			unsigned char *buf,
 			unsigned int len){
@@ -232,6 +253,26 @@ void spiflash_peek(unsigned char app,
   CLRSS; //Drop !SS to begin transaction.
   spitrans8(0x03);//Flash Read Command
   len=3;//write 3 byte pointer
+  for(i=0;i<len;i++)
+    spitrans8(cmddata[i]);
+
+  //Send reply header
+  len=0x1000;
+  txhead(app,verb,len);
+
+  while(len--)
+    serial_tx(spitrans8(0));
+
+  SETSS;  //Raise !SS to end transaction.
+}
+
+void spiflash_peek32(unsigned char app,
+		   unsigned char verb,
+		   unsigned long len){
+  unsigned int i;
+  CLRSS; //Drop !SS to begin transaction.
+  spitrans8(0x13);//Flash Read Command
+  len=4;//write 3 byte pointer
   for(i=0;i<len;i++)
     spitrans8(cmddata[i]);
 
@@ -424,6 +465,10 @@ void spi_handle_fn( uint8_t const app,
 
 	case PEEK://Grab 128 bytes from an SPI Flash ROM
 		spiflash_peek(app,verb,len);
+		break;
+
+	case PEEK32://Grab 128 bytes from an SPI Flash ROM
+		spiflash_peek32(app,verb,len);
 		break;
 
 	case POKE://Poke up bytes from an SPI Flash ROM.
