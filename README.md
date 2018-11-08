@@ -6,7 +6,7 @@ system buses to userland Python code.  It is no longer under active
 development, but I hope that you find it useful nonetheless.
 
 If you are experimenting with the Facedancer USB emulator framework,
-you probably want Kate Tempkin's fork.  It is available at
+you probably want Kate Temkin's fork.  It is available at
 https://github.com/ktemkin/Facedancer .
 
 Drivers
