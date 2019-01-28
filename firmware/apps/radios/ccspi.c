@@ -552,7 +552,7 @@ void ccspi_handle_fn( uint8_t const app,
     //Load the packet.
     CLRSS;
     ccspitrans8(CCSPI_TXFIFO);
-    for(i=0;i<cmddata[0];i++)
+    for(i=0;i<len;i++)
       ccspitrans8(cmddata[i]);
     SETSS;
 
