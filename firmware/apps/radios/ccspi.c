@@ -253,7 +253,7 @@ void ccspireflexjam(u16 delay){
 }
 
 //! Writes bytes into the CC2420's RAM.  Untested.
-void ccspi_pokeram(u8 addr, u8 *data, int len){
+void ccspi_pokeram(u16 addr, u8 *data, int len){
   CLRSS;
   //Begin with the start address.
   ccspitrans8(0x80 | (addr & 0x7F)); 

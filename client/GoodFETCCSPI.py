@@ -19,6 +19,7 @@ class GoodFETCCSPI(GoodFET):
         
         #Set up the radio for ZigBee
         self.strobe(0x01);       #SXOSCON
+        self.strobe(0x01);       #SXOSCON ## YL: idk why but needed to enable ram poking
         self.strobe(0x02);       #SCAL
         self.poke(0x11, 0x0AC2 & (~0x0800)); #MDMCTRL0, promiscuous
         self.poke(0x12, 0x0500); #MDMCTRL1
