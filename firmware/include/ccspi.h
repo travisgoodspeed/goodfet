@@ -28,6 +28,8 @@
 #define CCSPI_PEEK_RAM 0x84
 //Poke RAM
 #define CCSPI_POKE_RAM 0x85
+//Send a packet wait for reply.
+#define CCSPI_TX_RX 0x86
 
 
 //Reflexive jam.
