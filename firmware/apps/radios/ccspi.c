@@ -88,6 +88,104 @@ u8 ccspitrans8(u8 byte){
   return byte;
 }
 
+int ccspi_tx(u8 *data, int len) {
+#ifdef FIFOP
+    int i;
+
+    //Wait for last packet to TX.
+    //while(ccspi_status()&BIT3);
+    
+    //Flush TX buffer.
+    CLRSS;
+    ccspitrans8(0x09); //SFLUSHTX
+    SETSS;
+    
+
+    //Load the packet.
+    CLRSS;
+    ccspitrans8(CCSPI_TXFIFO);
+    for(i=0;i<len;i++)
+      ccspitrans8(data[i]);
+    SETSS;
+
+    //Transmit the packet.
+    CLRSS;
+    ccspitrans8(0x04); //STXON
+    SETSS;
+
+    //Wait for the pulse on SFD, after which the packet has been sent.
+    while(!SFD);
+    while(SFD);
+    
+    return 0;
+#else
+    debugstr("Can't TX a packet with SFD and FIFOP definitions.");
+    txdata(app,NOK,0);
+    return 1;
+#endif
+}
+
+int ccspi_rx(u16 timeout, u8 *pkt, u16 pktsize) {
+#ifdef FIFOP
+    u8 len;
+    u8 packet_ready = 0;
+    int i;
+
+    if (!pktsize) {
+        return -2;
+    }
+
+    //Has there been an overflow?
+    if((!FIFO)&&FIFOP){
+      debugstr("Clearing overflow");
+      CLRSS;
+      ccspitrans8(0x08); //SFLUSHRX
+      ccspitrans8(0x08); //SFLUSHRX
+      SETSS;
+      return -3;
+    }
+    
+    packet_ready = FIFOP && FIFO;
+    while (timeout--) {
+        if (packet_ready) {
+            break;
+        }
+        msdelay(1);
+        packet_ready = FIFOP && FIFO;
+    }
+
+    if (!packet_ready) {
+        return -4;
+    }
+
+    //Wait for completion.
+    while(SFD);
+    
+    //Get the packet.
+    CLRSS;
+    ccspitrans8(CCSPI_RXFIFO | 0x40);
+    //ccspitrans8(0x3F|0x40);
+    len = (pkt[0] = ccspitrans8(0x00)) & 0x7f;
+
+    /* This reads too far on some CC2420 revisions, but on others it
+	orks fine.  It probably has to do with whether FIFO drops
+	efore or after the SPI clocking.
+	
+	 software fix is to reset the CC2420 between packets.  This
+	orks, but a better solution is desired.
+    */
+    for (i=1; FIFO && i<len+1 && i < pktsize; i++){
+        pkt[i] = ccspitrans8(0x00);
+    }
+    
+    SETSS;
+    return i;
+#else
+    debugstr("Can't RX a packet with SFD and FIFOP definitions.");
+    return -5;
+#endif
+}
+
 
 //! Reflexively jam on the present channel.
 void ccspireflexjam(u16 delay){
@@ -221,6 +319,8 @@ void ccspi_handle_fn( uint8_t const app,
 		      uint32_t const len){
   unsigned long i;
   u8 j;
+  u16 timeout;
+  int ret;
 
   switch(verb){
   case PEEK:
@@ -272,68 +372,13 @@ void ccspi_handle_fn( uint8_t const app,
     }
     break;
   case CCSPI_RX:
-#ifdef FIFOP
-    //Has there been an overflow?
-    
-    if((!FIFO)&&FIFOP){
-      debugstr("Clearing overflow");
-      CLRSS;
-      ccspitrans8(0x08); //SFLUSHRX
-      ccspitrans8(0x08); //SFLUSHRX
-      SETSS;
-      txdata(app,verb,0); //no packet
-      return;
-    }
-        
-    /* Uncomment this to wait around a bit for the packet.
-       Might reduce dropped packet count.
-    i=1000; //Number of tries.
-    while(!(FIFOP&&FIFO) && i--);
-    */
-    
-    //Is there a packet?
-    if (FIFOP && FIFO){
-      //Wait for completion.
-      while(SFD);
-      
-      //Get the packet.
-      CLRSS;
-      ccspitrans8(CCSPI_RXFIFO | 0x40);
-      //ccspitrans8(0x3F|0x40);
-      cmddata[0]=0x20; //to be replaced with length
-      
-      
-      /* This reads too far on some CC2420 revisions, but on others it
-	 works fine.  It probably has to do with whether FIFO drops
-	 before or after the SPI clocking.
-	 
-	 A software fix is to reset the CC2420 between packets.  This
-	 works, but a better solution is desired.
-      */
-      //for(i=0;i<cmddata[0]+1;i++)
-      for(i=0;FIFO && i<0x80;i++)
-        cmddata[i]=ccspitrans8(0x00);
-      SETSS;
+      ret = ccspi_rx(0, cmddata, 0x80);
+      if (0 > ret) {
+          txdata(app,NOK,0);
+      } 
 
-      /* We used to flush the RX buffer after receive. No longer.
-      CLRSS;
-      ccspitrans8(0x08); //SFLUSHRX
-      SETSS;
-      */
-      
-      //Only transmit a packet if the length is legal.
-      if(cmddata[0]&0x80 || cmddata[0]==0) i=0;
       txdata(app,verb,i);
-    }else{
-      
-      //No packet.
-      txdata(app,verb,0);
-    }
-#else
-    debugstr("Can't RX a packet with SFD and FIFOP definitions.");
-    txdata(app,NOK,0);
-#endif
-    break;
+      break;
   case CCSPI_RXDEC:
 #ifdef FIFOP
     //Has there been an overflow?
@@ -538,39 +583,29 @@ void ccspi_handle_fn( uint8_t const app,
     txdata(app,verb,0);
     break;
   case CCSPI_TX:
-#ifdef FIFOP
+    if (0 != ccspi_tx(cmddata, len)) {
+        txdata(app,NOK,0);
+        break;
+    }
 
-    //Wait for last packet to TX.
-    //while(ccspi_status()&BIT3);
-    
-    //Flush TX buffer.
-    CLRSS;
-    ccspitrans8(0x09); //SFLUSHTX
-    SETSS;
-    
-
-    //Load the packet.
-    CLRSS;
-    ccspitrans8(CCSPI_TXFIFO);
-    for(i=0;i<len;i++)
-      ccspitrans8(cmddata[i]);
-    SETSS;
-
-    //Transmit the packet.
-    CLRSS;
-    ccspitrans8(0x04); //STXON
-    SETSS;
-
-    //Wait for the pulse on SFD, after which the packet has been sent.
-    while(!SFD);
-    while(SFD);
-    
     txdata(app,verb,0);
-#else
-    debugstr("Can't TX a packet with SFD and FIFOP definitions.");
-    txdata(app,NOK,0);
-#endif
     break;
+  case CCSPI_TX_RX:
+    timeout = (u16) cmddataword[0];
+    if (0 != ccspi_tx(cmddata+2, len-2)) {
+        txdata(app,NOK,0);
+        break;
+    }
+
+    ret = ccspi_rx(timeout, cmddata, 0x80);
+    if (0 > ret) {
+        txdata(app,NOK,0);
+        break;
+    }
+
+    txdata(app,verb,ret);
+    break;
+
   default:
     debugstr("Not yet supported in CCSPI");
     txdata(app,verb,0);

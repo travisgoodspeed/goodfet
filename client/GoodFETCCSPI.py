@@ -196,6 +196,20 @@ class GoodFETCCSPI(GoodFET):
         return;
     
     lastpacket=range(0,0xff);
+
+    def RF_txrxpacket(self,packet,timeout=1):
+        data="\0";
+        self.data=data;
+        packet = [timeout&0xff, timeout>>8] + packet
+
+        self.writecmd(self.CCSPIAPP,0x86,len(packet),packet);
+        buffer=self.data;
+        self.lastpacket=buffer;
+        if(len(buffer)==0):
+            return None;
+        
+        return buffer;
+
     def RF_rxpacket(self):
         """Get a packet from the radio.  Returns None if none is
         waiting."""
