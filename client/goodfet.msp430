@@ -15,6 +15,8 @@ if(len(sys.argv)==1):
     print "%s erase" % sys.argv[0];
     print "%s eraseinfo" % sys.argv[0];
     print "%s flash $foo.hex [0x$start 0x$stop]" % sys.argv[0];
+    print "%s info" % sys.argv[0];
+    print "%s ivt" % sys.argv[0];
     print "%s verify $foo.hex [0x$start 0x$stop]" % sys.argv[0];
     print "%s poke 0x$adr 0x$val" % sys.argv[0];
     print "%s serial [$val]" % sys.argv[0];
@@ -32,6 +34,7 @@ client.start();
 if(sys.argv[1]=="starttest"):
     for foo in range(1,10):
         client.start();
+
 if(sys.argv[1]=="info"):
     #print "Model    %08x " % client.MSP430deviceid();
     #print "Core     %04x " % client.MSP430coreid();
@@ -39,14 +42,18 @@ if(sys.argv[1]=="info"):
     print "Identifies as %s (%04x)" % (
         client.MSP430identstr(),
         client.MSP430ident());
+
 if(sys.argv[1]=="test"):
     print "This test is dangerous and will erase the target device.\nDo 'goodfet.msp430 dangeroustest' instead."
+
 if(sys.argv[1]=="dangeroustest"):
     print "Running an erase/program test."
     client.MSP430test();
+
 if(sys.argv[1]=="glitch"):
     for foo in range(0,100):
         print "Identifies as %04x" % client.MSP430ident();
+
 if(sys.argv[1]=="dump"):
     f = sys.argv[2];
     start=0x0200;
@@ -67,9 +74,11 @@ if(sys.argv[1]=="dump"):
             if i<=stop: h[i]=ord(j);
             i+=1;
     h.write_hex_file(f);
+
 if(sys.argv[1]=="erase"):
     print "Erasing main flash memory."
     client.MSP430masserase();
+
 if(sys.argv[1]=="eraseinfo"):
     print "Erasing info memory."
     client.MSP430infoerase();
@@ -105,6 +114,7 @@ if(sys.argv[1]=="selftest"):
     
 if(sys.argv[1]=="ivt"):
     client.MSP430dumpmem(0xFFC0,0xFFFF);
+
 if(sys.argv[1]=="regs"):
     for i in range(0,16):
         print "r%i=%04x" % (i,client.MSP430getreg(i));
@@ -147,6 +157,7 @@ if(sys.argv[1]=="flash"):
                 print "%04x" % i;
     if count>0: #last commit, ivt
         client.MSP430pokeflashblock(first,vals);
+
 if(sys.argv[1]=="verify"):
     f=sys.argv[2];
     start=0;
@@ -164,6 +175,7 @@ if(sys.argv[1]=="verify"):
                 print "ERROR at %04x, found %04x not %04x"%(i,peek,h[i>>1]);
             if(i%0x100==0):
                 print "%04x" % i;
+
 if(sys.argv[1]=="peek"):
     start=0x0000;
     if(len(sys.argv)>2):
@@ -188,6 +200,7 @@ if(sys.argv[1]=="poke"):
     while client.MSP430peek(start)&(~val)>0:
         client.MSP430pokeflash(start,val);
         print "Poked to %04x" % client.MSP430peek(start);
+
 if(sys.argv[1]=="serial"):
     oid=0xdeadbeef;
     if(len(sys.argv)>2):

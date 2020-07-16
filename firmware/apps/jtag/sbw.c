@@ -10,10 +10,7 @@
 
 #include "platform.h"
 #include "command.h"
-//#include "jtag.h"
-#include "jtag430.h"
 
-#define SBWREWRITE
 #include "sbw.h"
 
 // define the sbw app's app_t
@@ -32,209 +29,225 @@ app_t const sbw_app = {
   "\tsupport for SBW'ing MSP430 devices with two wires.\n"
 };
 
-//! Shift 8 bits in and out.
+int sbw_tms=1, sbw_tdi=1, sbw_tdo=0;
+char sbw_savedtclk = 0;
+
+// Macros
+#define SBWCLK() do { \
+    asm("nop");	      \
+    asm("nop");	      \
+    asm("nop");	      \
+    asm("nop");	      \
+    asm("nop");	      \
+    P5OUT &= ~SBWTCK; \
+    asm("nop");	      \
+    asm("nop");	      \
+    asm("nop");	      \
+    asm("nop");	      \
+    asm("nop");	      \
+    P5OUT |= SBWTCK;  \
+  } while (0)
+
+#define SETSBWIO(x) do { 	\
+  if (x)			\
+    P5OUT |= SBWTDIO;		\
+  else				\
+    P5OUT &= ~SBWTDIO;		\
+  } while (0)
+
+void sbw_clock() {
+  //exchange TMS
+  SETSBWIO(sbw_tms);
+  SBWCLK();
+
+  //exchange TDI
+  SETSBWIO(sbw_tdi);
+  SBWCLK();
+
+  //exchange TDO
+  /* read TDO on trailing edge */
+  P5DIR &= ~SBWTDIO; //input mode
+  asm("nop"); asm("nop"); asm("nop"); asm("nop"); asm("nop");
+  P5OUT &= ~SBWTCK;  //Drop SBW clock
+  asm("nop"); asm("nop"); asm("nop"); asm("nop"); asm("nop");
+  sbw_tdo=!!(P5IN & SBWTDIO);
+  asm("nop"); asm("nop"); asm("nop"); asm("nop"); asm("nop");
+  P5OUT |= SBWTCK;   //Raise SBW clock
+  P5DIR |= SBWTDIO;  //output mode
+
+  //SBWCLK implied
+}
+
+void sbwSETTCLK(void) {
+  sbw_tms = 0;
+  SETSBWIO(sbw_tms); //shall be zero
+  SBWCLK();
+
+  SETSBWIO(1);
+  SBWCLK();
+
+  P5DIR &= ~SBWTDIO;
+  asm("nop"); asm("nop"); asm("nop"); asm("nop"); asm("nop");
+  P5OUT &= ~SBWTCK;
+  asm("nop"); asm("nop"); asm("nop"); asm("nop"); asm("nop");
+  P5OUT |= SBWTCK;
+  P5DIR |= SBWTDIO;
+  asm("nop"); asm("nop"); asm("nop"); asm("nop"); asm("nop");
+
+  sbw_savedtclk = 1;
+}
+
+void sbwCLRTCLK(void) {
+  sbw_tms = 0;
+  SETSBWIO(sbw_tms);
+  SBWCLK();
+
+  SETSBWIO(0);
+  SBWCLK();
+
+  P5DIR &= ~SBWTDIO;
+  asm("nop"); asm("nop"); asm("nop"); asm("nop"); asm("nop");
+  P5OUT &= ~SBWTCK;
+  asm("nop"); asm("nop"); asm("nop"); asm("nop"); asm("nop");
+  P5OUT |= SBWTCK;
+  P5DIR |= SBWTDIO;
+  asm("nop"); asm("nop"); asm("nop"); asm("nop"); asm("nop");
+
+  sbw_savedtclk = 0;
+}
+
+//! Shift 8 bits in and out, MSB first.
 unsigned char sbwtrans8(unsigned char byte){
   unsigned int bit;
-  SAVETCLK;
+
   for (bit = 0; bit < 8; bit++) {
-    /* write MOSI on trailing edge of previous clock */
     if (byte & 0x80)
-      {SETMOSI;}
+      {sbw_tdi = 1;}
     else
-      {CLRMOSI;}
+      {sbw_tdi = 0;}
     byte <<= 1;
     
     if(bit==7)
-      SETTMS;//TMS high on last bit to exit.
+      sbw_tms = 1;//TMS high on last bit to exit.
     
-    TCKTOCK;
-     /* read MISO on trailing edge */
-    byte |= READMISO;
+    sbw_clock();
+    byte |= sbw_tdo;
   }
-  RESTORETCLK;
-  
-  // update state
-  CLRTMS;
-  TCKTOCK;
+
+  sbw_tms = 1; sbw_tdi = 1;  sbw_clock();
+
+  if(sbw_savedtclk) {
+    sbwSETTCLK();
+  } else {
+    sbwCLRTCLK();
+  }
   
   return byte;
 }
 
-//! Shift n bits in and out.
+//! Shift n bits in and out, MSB first.
 unsigned long sbwtransn(unsigned long word,
 			 unsigned int bitcount){
   unsigned int bit;
   //0x8000
   unsigned long high=0x8000;
-  
+
   if(bitcount==20)
     high=0x80000;
   if(bitcount==16)
     high= 0x8000;
   
-  SAVETCLK;
-  
   for (bit = 0; bit < bitcount; bit++) {
     /* write MOSI on trailing edge of previous clock */
-    if (word & high)
-      {SETMOSI;}
-    else
-      {CLRMOSI;}
+    if (word & high) {sbw_tdi = 1;}
+    else             {sbw_tdi = 0;}
     word <<= 1;
     
     if(bit==bitcount-1)
-      SETTMS;//TMS high on last bit to exit.
+      sbw_tms = 1;//TMS high on last bit to exit.
     
-    TCKTOCK;
-    /* read MISO on trailing edge */
-    word |= READMISO;
+    sbw_clock();
+    word |= sbw_tdo;
   }
   
   if(bitcount==20){
     word = ((word << 16) | (word >> 4)) & 0x000FFFFF;
   }
   
-  RESTORETCLK;
-  
-  // update state
-  CLRTMS;
-  TCKTOCK;
+  sbw_tms = 1; sbw_tdi = 1;  sbw_clock();
+
+  if(sbw_savedtclk) {
+    sbwSETTCLK();
+  } else {
+    sbwCLRTCLK();
+  }
   
   return word;
 }
 
-
-
 //! Shift all bits of the DR.
 u32 sbw_dr_shift20(unsigned long in){
+
   // idle
-  SETTMS;
-  TCKTOCK;
+  sbw_tms = 1;  sbw_clock();
+
   // select DR
-  CLRTMS;
-  TCKTOCK;
+  sbw_tms = 0;  sbw_clock();
+
   // capture IR
-  TCKTOCK;
+  sbw_clock();
   
   // shift DR, then idle
   return(sbwtransn(in,20));
 }
 
-
 //! Shift 16 bits of the DR.
 u16 sbw_dr_shift16(unsigned int in){
+
   // idle
-  SETTMS; // 1
-  TCKTOCK;
+  sbw_tms = 1;  sbw_clock();
+
   // select DR
-  CLRTMS; // 0
-  TCKTOCK;
+  sbw_tms = 0;  sbw_clock();
+
   // capture IR
-  TCKTOCK;
+  sbw_clock();
   
   // shift DR, then idle
   return(sbwtransn(in,16));
 }
 
-
 //! Shift 8 bits of the IR.
 u8 sbw_ir_shift8(unsigned char in){
+
   // idle
-  SETTMS;
-  TCKTOCK;
+  sbw_tms = 1;  sbw_clock();
+
   // select DR
-  TCKTOCK;
+  sbw_clock();
+
   // select IR
-  CLRTMS;
-  TCKTOCK;
+  sbw_tms = 0;  sbw_clock();
+
   // capture IR
-  TCKTOCK;
+  sbw_clock();
   
   // shift IR, then idle.
   return(sbwtrans8(in));
 }
 
-
-//FIXME these should be prefixed with sbw
-//to prevent name pollution.
-int tms=1, tdi=1, tdo=0;
-
-void clock_sbw() {
-  //exchange TMS
-  SETSBWIO(tms);
-  SBWCLK();
-  
-  //exchange TDI
-  SETSBWIO(tdi);
-  SBWCLK();
-  
-  //exchange TDO
-  P5DIR &= ~SBWTDIO; //input mode
-  P5OUT &= ~SBWTCK;  //Drop Metaclock
-  tdo=!!(P5IN & SBWTDIO);
-  P5OUT |= SBWTCK;   //output mode
-  P5DIR |= SBWTDIO;  //Raise Metaclock
-  
-  //TCK implied
-}
-
-
-void sbwSETTCLK(){
-  SETSBWIO(tms);
-  SBWCLK();
-
-  SETSBWIO(1);asm("nop");asm("nop");	 
-  SETSBWIO(0);asm("nop");asm("nop");	 
-  SETSBWIO(1);asm("nop");asm("nop");	 
-  SETSBWIO(0);asm("nop");asm("nop");	 
-  SETSBWIO(1);asm("nop");asm("nop");	 
-
-  SBWCLK();
-  
-  P5DIR &= ~SBWTDIO;
-  P5OUT &= ~SBWTCK; 
-  //tdo=!!(P5IN & SBWTDIO);
-  P5OUT |= SBWTCK;
-  P5DIR |= SBWTDIO; 
-}
-
-void sbwCLRTCLK(){
-  SETSBWIO(tms);
-  SBWCLK();
-
-  SETSBWIO(0);asm("nop");asm("nop");	 
-  SETSBWIO(1);asm("nop");asm("nop");	 
-  SETSBWIO(0);asm("nop");asm("nop");	 
-  SETSBWIO(1);asm("nop");asm("nop");	 
-  SETSBWIO(0);asm("nop");asm("nop");	 
-
-  SBWCLK();
-
-  P5DIR &= ~SBWTDIO;
-  P5OUT &= ~SBWTCK; 
-  //tdo=!!(P5IN & SBWTDIO);
-  P5OUT |= SBWTCK;
-  P5DIR |= SBWTDIO;   
-}
-
-
-
-
 //! Set the program counter.
 void sbw430_setpc(unsigned int adr){
-  sbw_ir_shift8(IR_CNTRL_SIG_16BIT);
-  sbw_dr_shift16(0x3401);// release low byte
-  sbw_ir_shift8(IR_DATA_16BIT);
-  sbw_dr_shift16(0x4030);//Instruction to load PC
-  CLRTCLK;
-  SETTCLK;
+  sbw_ir_shift8(IR_CNTRL_SIG_16BIT);  sbw_dr_shift16(0x3401);// release low byte
+  sbw_ir_shift8(IR_DATA_16BIT);       sbw_dr_shift16(0x4030);//Instruction to load PC
+  sbwCLRTCLK();
+  sbwSETTCLK();
   sbw_dr_shift16(adr);// Value for PC
-  CLRTCLK;
+  sbwCLRTCLK();
+  sbwSETTCLK();
   sbw_ir_shift8(IR_ADDR_CAPTURE);
-  SETTCLK;
-  CLRTCLK ;// Now PC is set to "PC_Value"
-  sbw_ir_shift8(IR_CNTRL_SIG_16BIT);
-  sbw_dr_shift16(0x2401);// low byte controlled by SBW
+  sbwCLRTCLK() ;// Now PC is set to "PC_Value"
+  sbw_ir_shift8(IR_CNTRL_SIG_16BIT);  sbw_dr_shift16(0x2401);// low byte controlled by SBW
 }
 
 //! Halt the CPU
@@ -244,19 +257,19 @@ void sbw430_haltcpu(){
   sbw_ir_shift8(IR_DATA_16BIT);
   sbw_dr_shift16(0x3FFF);//JMP $+0
   
-  CLRTCLK;
+  sbwCLRTCLK();
   sbw_ir_shift8(IR_CNTRL_SIG_16BIT);
   sbw_dr_shift16(0x2409);//set SBW_HALT bit
-  SETTCLK;
+  sbwSETTCLK();
 }
 
 //! Release the CPU
 void sbw430_releasecpu(){
-  CLRTCLK;
+  sbwCLRTCLK();
   sbw_ir_shift8(IR_CNTRL_SIG_16BIT);
   sbw_dr_shift16(0x2401);
   sbw_ir_shift8(IR_ADDR_CAPTURE);
-  SETTCLK;
+  sbwSETTCLK();
 }
 
 //! Read data from address
@@ -264,19 +277,18 @@ unsigned int sbw430_readmem(unsigned int adr){
   unsigned int toret;
   sbw430_haltcpu();
   
-  CLRTCLK;
+  sbwCLRTCLK();
   sbw_ir_shift8(IR_CNTRL_SIG_16BIT);
   
   if(adr>0xFF)
     sbw_dr_shift16(0x2409);//word read
   else
     sbw_dr_shift16(0x2419);//byte read
-  sbw_ir_shift8(IR_ADDR_16BIT);
-  sbw_dr_shift16(adr);//address
+  sbw_ir_shift8(IR_ADDR_16BIT);    sbw_dr_shift16(adr);//address
   sbw_ir_shift8(IR_DATA_TO_ADDR);
-  SETTCLK;
+  sbwSETTCLK();
 
-  CLRTCLK;
+  sbwCLRTCLK();
   toret=sbw_dr_shift16(0x0000);//16 bit return
   
   return toret;
@@ -284,47 +296,51 @@ unsigned int sbw430_readmem(unsigned int adr){
 
 //! Write data to address.
 void sbw430_writemem(unsigned int adr, unsigned int data){
-  CLRTCLK;
+  sbwCLRTCLK();
   sbw_ir_shift8(IR_CNTRL_SIG_16BIT);
   if(adr>0xFF)
     sbw_dr_shift16(0x2408);//word write
   else
     sbw_dr_shift16(0x2418);//byte write
-  sbw_ir_shift8(IR_ADDR_16BIT);
-  sbw_dr_shift16(adr);
-  sbw_ir_shift8(IR_DATA_TO_ADDR);
-  sbw_dr_shift16(data);
-  SETTCLK;
+  sbw_ir_shift8(IR_ADDR_16BIT);    sbw_dr_shift16(adr);
+  sbw_ir_shift8(IR_DATA_TO_ADDR);  sbw_dr_shift16(data);
+  sbwSETTCLK();
+}
+
+void sbw430_tclk_flashpulses(unsigned int count) {
+  unsigned int i;
+  for(i=0;i<count;i++) {
+    sbwCLRTCLK();
+    sbwSETTCLK();
+  }
 }
 
 //! Write data to flash memory.  Must be preconfigured.
 void sbw430_writeflashword(unsigned int adr, unsigned int data){
   
-  CLRTCLK;
+  sbwCLRTCLK();
   sbw_ir_shift8(IR_CNTRL_SIG_16BIT);
   sbw_dr_shift16(0x2408);//word write
   sbw_ir_shift8(IR_ADDR_16BIT);
   sbw_dr_shift16(adr);
   sbw_ir_shift8(IR_DATA_TO_ADDR);
   sbw_dr_shift16(data);
-  SETTCLK;
+  sbwSETTCLK();
   
   //Return to read mode.
-  CLRTCLK;
+  sbwCLRTCLK();
   sbw_ir_shift8(IR_CNTRL_SIG_16BIT);
   sbw_dr_shift16(0x2409);
   
   /*
   sbw430_writemem(adr,data);
-  CLRTCLK;
+  sbwCLRTCLK();
   sbw_ir_shift8(IR_CNTRL_SIG_16BIT);
   sbw_dr_shift16(0x2409);
   */
   
-  debugstr("ERROR: Haven't got ASM to flash-pulse SBW.");
-  
   //Pulse TCLK
-  //sbw430_tclk_flashpulses(35); //35 standard
+  sbw430_tclk_flashpulses(35); //35 standard
 }
 
 //! Configure flash, then write a word.
@@ -357,18 +373,16 @@ void sbw430_por(){
   sbw_ir_shift8(IR_CNTRL_SIG_16BIT);
   sbw_dr_shift16(0x2C01); // apply
   sbw_dr_shift16(0x2401); // remove
-  CLRTCLK;
-  SETTCLK;
-  CLRTCLK;
-  SETTCLK;
-  CLRTCLK;
+  sbwCLRTCLK();
+  sbwSETTCLK();
+  sbwCLRTCLK();
+  sbwSETTCLK();
+  sbwCLRTCLK();
   sbwid = sbw_ir_shift8(IR_ADDR_CAPTURE); // get SBW identifier
-  SETTCLK;
+  sbwSETTCLK();
   
   sbw430_writemem(0x0120, 0x5A80);   // Diabled Watchdog
 }
-
-
 
 #define ERASE_GLOB 0xA50E
 #define ERASE_ALLMAIN 0xA50C
@@ -390,13 +404,12 @@ void sbw430_eraseflash(unsigned int mode, unsigned int adr, unsigned int count){
   //Write the erase word.
   sbw430_writemem(adr, 0x55AA);
   //Return to read mode.
-  CLRTCLK;
+  sbwCLRTCLK();
   sbw_ir_shift8(IR_CNTRL_SIG_16BIT);
   sbw_dr_shift16(0x2409);
   
   //Send the pulses.
-  debugstr("ERROR: Haven't got ASM to flash-pulse SBW.");
-  //sbw430_tclk_flashpulses(count);
+  sbw430_tclk_flashpulses(count);
   
   //FCTL1=0xA500, disabling flash write
   sbw430_writemem(0x0128, 0xA500);
@@ -404,41 +417,51 @@ void sbw430_eraseflash(unsigned int mode, unsigned int adr, unsigned int count){
   //sbw430_releasecpu();
 }
 
+//! Set CPU to Instruction Fetch
+void sbw430_setinstrfetch(){
+  
+  sbw_ir_shift8(IR_CNTRL_SIG_CAPTURE);
+
+  // Wait until instruction fetch state.
+  while(1){
+    if (sbw_dr_shift16(0x0000) & 0x0080)
+      return;
+    sbwCLRTCLK();
+    sbwSETTCLK();
+  }
+}
 
 //! Reset the TAP state machine.
 void sbw430_resettap(){
   int i;
-  // Settle output
-  SETTDI; //430X2
-  SETTMS;
-  //SETTDI; //classic
-  TCKTOCK;
 
   // Navigate to reset state.
+  sbw_tdi = 1;
+  sbw_tms = 1;
+
   // Should be at least six.
-  for(i=0;i<4;i++){
-    TCKTOCK;
+  for(i=0;i<6;i++){
+    sbw_clock();
   }
 
-  // test-logic-reset
-  CLRTMS;
-  TCKTOCK;
+  // in test-logic-reset
 
-  SETTMS;
-  // idle
+  sbw_tms = 0;  sbw_clock();
 
-    
-  /* sacred, by spec.
-     Sometimes this isn't necessary.  */
-  // fuse check
-  CLRTMS;
-  delay(50);
-  SETTMS;
-  CLRTMS;
-  delay(50);
-  SETTMS;
-  /**/
-  
+  // now in idle
+
+  //fuse check
+  sbw_tms = 1;  sbw_clock();
+  sbw_tms = 0;  sbw_clock();
+  sbw_tms = 1;  sbw_clock();
+  sbw_tms = 0;  sbw_clock();
+  sbw_tms = 1;  sbw_clock();
+
+  //once more to go idle
+  sbw_tms = 1;  sbw_clock();
+  sbw_tms = 0;  sbw_clock();
+
+  //in idle
 }
 
 void sbwsetup(){
@@ -451,7 +474,7 @@ void sbwsetup(){
      holding the TEST/SWBCLK low for more than 100 μs. 
   */
 
-  // tdio up, tck low
+  // sbwdio up, sbwtck low
   //   
   P5OUT &= ~SBWTCK;
   P5OUT |= SBWTDIO;
@@ -463,20 +486,21 @@ void sbwsetup(){
   SBWCLK();
 
   // now we're in SBW mode
+
 }
 
 
 //! Start SBW, take pins
 void sbw430_start(){
-  sbwsetup();
-  
+//  sbwsetup();
+
   //Known-good starting position.
   //Might be unnecessary.
-  SETTST;
-  SETRST;
-  delay(0xFFFF);
+  //SETTST;
+  //SETRST;
+  //delay(0xFFFF);
   
-  sbwsetup();
+//  sbwsetup();
 
   //Perform a reset and disable watchdog.
   sbw430_por();
@@ -487,46 +511,22 @@ void sbw430_start(){
 //! Start normally, not SBW.
 void sbw430_stop(){
   debugstr("Exiting SBW.");
-  sbwsetup();
   
   //Known-good starting position.
   //Might be unnecessary.
   //SETTST;
-  CLRTST;
-  SETRST;
-  delay(0xFFFF);
+  //CLRTST;
+  //SETRST;
+  //delay(0xFFFF);
   
   //Entry sequence from Page 67 of SLAU265A for 4-wire MSP430 SBW
-  CLRRST;
-  delay(0xFFFF);
-  SETRST;
+  //CLRRST;
+  //delay(0xFFFF);
+  //SETRST;
   //P5DIR&=~RST;
   //delay(0xFFFF);
   
 }
-
-//! Set CPU to Instruction Fetch
-void sbw430_setinstrfetch(){
-  
-  sbw_ir_shift8(IR_CNTRL_SIG_CAPTURE);
-
-  // Wait until instruction fetch state.
-  while(1){
-    if (sbw_dr_shift16(0x0000) & 0x0080)
-      return;
-    CLRTCLK;
-    SETTCLK;
-  }
-}
-
-
-//! Stop JTAG, release pins
-void sbw_stop(){
-  P5OUT=0;
-  P4OUT=0;
-}
-
-
 
 //! Handles classic MSP430 SBW commands.  Forwards others to SBW.
 
@@ -551,10 +551,12 @@ void sbw_handler_fn(u8 app, u8 verb, u32 len){
 
   //debughex(verb);
   switch(verb){
+
   case SETUP:
     sbwsetup();
     txdata(app,verb,0);
     break;
+
   case START:
     //Enter SBW mode.
     sbw430_start();
@@ -565,18 +567,22 @@ void sbw_handler_fn(u8 app, u8 verb, u32 len){
     //cmddata[0]=0x89; //STINT
     txdata(app,verb,1);
     break;
+
   case STOP:
     sbw430_stop();
     txdata(app,verb,0);
     break;
+
   case JTAG430_HALTCPU:
     sbw430_haltcpu();
     txdata(app,verb,0);
     break;
+
   case JTAG430_RELEASECPU:
     sbw430_releasecpu();
     txdata(app,verb,0);
     break;
+
   case JTAG430_SETINSTRFETCH:
     sbw430_setinstrfetch();
     txdata(app,verb,0);
@@ -604,6 +610,7 @@ void sbw_handler_fn(u8 app, u8 verb, u32 len){
       serial_tx((val&0xFF00)>>8);
     }
     break;
+
   case JTAG430_WRITEMEM:
   case POKE:
     sbw430_haltcpu();
@@ -624,14 +631,15 @@ void sbw_handler_fn(u8 app, u8 verb, u32 len){
     }
     
     //Return result of first write as a word.
-    cmddataword[0]=sbw430_readmem(cmddataword[0]);
-    
+    cmddataword[0]=sbw430_readmem(cmddataword[0]);  
     txdata(app,verb,2);
     break;
+
   case JTAG430_ERASEFLASH:
     sbw430_eraseflash(ERASE_MASS,0xFFFE,0x3000);
     txdata(app,verb,0);
     break;
+
   case JTAG430_SETPC:
     sbw430_haltcpu();
     sbw430_setpc(cmddataword[0]);

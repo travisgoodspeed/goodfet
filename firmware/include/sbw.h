@@ -19,83 +19,55 @@ extern app_t const sbw_app;
 #define SBWTCK  BIT3
 #define SBWTDIO BIT2
 
-//This should be universal, move to jtag.h
-#define TCKTOCK CLRTCK,SETTCK
-
-//If SBW is defined, rewrite JTAG functions to be SBW.
-#ifdef SBWREWRITE
-#define jtagsetup sbwsetup
-
-// I/O Redefintions
-extern int tms, tdi, tdo;
-#undef SETTMS
-#define SETTMS tms=1
-#undef CLRTMS
-#define CLRTMS tms=0
-#undef SETTDI
-#define SETTDI tdi=1
-#undef CLRTDI
-#define CLRTDI tdi=0
-#undef TCKTOCK
-#define TCKTOCK clock_sbw()
-#undef SETMOSI
-#define SETMOSI SETTDI
-#undef CLRMOSI
-#define CLRMOSI CLRTDI
-#undef READMISO
-#define READMISO tdo
-
-#endif
-
 //! Enter SBW mode.
 void sbwsetup();
 
 //! Handle a SBW request.
 void sbw_handler_fn(u8 app, u8 verb, u32 len);
 
-//! Perform a SBW bit transaction.
-void clock_sbw();
-//! Set the TCLK line, performing a transaction.
-void sbwSETTCLK();
-//! Clear the line.
-void sbwCLRTCLK();
+//16-bit MSP430 JTAG commands, bit-swapped
+#define IR_CNTRL_SIG_16BIT         0xC8   // 0x13
+#define IR_CNTRL_SIG_CAPTURE       0x28   // 0x14
+#define IR_CNTRL_SIG_RELEASE       0xA8   // 0x15
+// Instructions for the JTAG Fuse
+#define IR_PREPARE_BLOW            0x44   // 0x22
+#define IR_EX_BLOW                 0x24   // 0x24
+// Instructions for the JTAG data register
+#define IR_DATA_16BIT              0x82   // 0x41
+#define IR_DATA_QUICK              0xC2   // 0x43
+// Instructions for the JTAG PSA mode
+#define IR_DATA_PSA                0x22   // 0x44
+#define IR_SHIFT_OUT_PSA           0x62   // 0x46
+// Instructions for the JTAG address register
+#define IR_ADDR_16BIT              0xC1   // 0x83
+#define IR_ADDR_CAPTURE            0x21   // 0x84
+#define IR_DATA_TO_ADDR            0xA1   // 0x85
+// Bypass instruction
+#define IR_BYPASS                  0xFF   // 0xFF
 
-// Macros
-#define SBWCLK() do { \
-    SPIOUT &= ~SBWTCK; \
-    asm("nop");	      \
-    asm("nop");	      \
-    asm("nop");	      \
-    SPIOUT |= SBWTCK;  \
-  } while (0)
-#define SETSBWIO(x) do { 			\
-  if (x)					\
-    SPIOUT |= SBWTDIO;				\
-  else						\
-    SPIOUT &= ~SBWTDIO;				\
-  } while (0)
-#undef RESTORETCLK
-#define RESTORETCLK do {			\
-    if(savedtclk) {				\
-      SETTCLK; 					\
-    } else {					\
-      CLRTCLK;					\
-    }						\
-  } while (0);
-#undef SETTCLK
-#define SETTCLK do {				\
-    sbwSETTCLK();				\
-    savedtclk=1;				\
-  } while (0);
-#undef CLRTCLK
-#define CLRTCLK do {				\
-    sbwCLRTCLK();				\
-    savedtclk=0;				\
-  } while (0); 
+//MSP430X2 unique
+#define IR_COREIP_ID               0xE8   // 0x17 
+#define IR_DEVICE_ID               0xE1   // 0x87
 
-#undef SAVETCLK
-//Do nothing for this.
-#define SAVETCLK 
+//SBW commands
+#define JTAG430_HALTCPU 0xA0
+#define JTAG430_RELEASECPU 0xA1
+#define JTAG430_SETINSTRFETCH 0xC1
+#define JTAG430_SETPC 0xC2
+#define JTAG430_SETREG 0xD2
+#define JTAG430_GETREG 0xD3
+
+#define JTAG430_WRITEMEM 0xE0
+#define JTAG430_WRITEFLASH 0xE1
+#define JTAG430_READMEM 0xE2
+#define JTAG430_ERASEFLASH 0xE3
+#define JTAG430_ERASECHECK 0xE4
+#define JTAG430_VERIFYMEM 0xE5
+#define JTAG430_BLOWFUSE 0xE6
+#define JTAG430_ISFUSEBLOWN 0xE7
+#define JTAG430_ERASEINFO 0xE8
+#define JTAG430_COREIP_ID 0xF0
+#define JTAG430_DEVICE_ID 0xF1
 
 #endif // SBW_H
 

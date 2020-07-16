@@ -427,7 +427,7 @@ class GoodFET:
         self.serialport.write(chr(count>>8));
 
         if self.verbose:
-            print "Tx: ( 0x%02x, 0x%02x, 0x%04x )" % ( app, verb, count )
+            print "Tx: ( 0x%02x, 0x%02x, 0x%04x )" % ( app, verb, count ),
         
         #print "count=%02x, len(data)=%04x" % (count,len(data));
         
@@ -438,7 +438,10 @@ class GoodFET:
                     data[i]=chr(data[i]);
             #print type(data);
             outstr=''.join(data);
+            if self.verbose:
+                print outstr.encode('hex_codec') #http://stackoverflow.com/questions/1238002/python-binary-hex-string-conversion
             self.serialport.write(outstr);
+        if self.verbose and count==0: print
         if not self.besilent:
             return self.readcmd()
         else:
@@ -465,8 +468,7 @@ class GoodFET:
                     );
 
                 if self.verbose:
-                    print "Rx: ( 0x%02x, 0x%02x, 0x%04x )" % ( self.app, self.verb, self.count )
-            
+                    print "Rx: ( 0x%02x, 0x%02x, 0x%04x )" % ( self.app, self.verb, self.count ),
                 #Debugging string; print, but wait.
                 if self.app==0xFF:
                     if self.verb==0xFF:
@@ -480,6 +482,8 @@ class GoodFET:
                     sys.stdout.flush();
                 else:
                     self.data=self.serialport.read(self.count);
+                    if self.verbose:
+                        print self.data.encode('hex_codec') #http://stackoverflow.com/questions/1238002/python-binary-hex-string-conversion
                     return self.data;
             except TypeError:
                 if self.connected:
