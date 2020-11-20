@@ -375,9 +375,13 @@ void ccspi_handle_fn( uint8_t const app,
       ret = ccspi_rx(0, cmddata, 0x80);
       if (0 > ret) {
           txdata(app,NOK,0);
-      } 
-
-      txdata(app,verb,i);
+      } else {
+        
+        // Potentially useless but I didn't know...
+        if(cmddata[0]&0x80 || cmddata[0]==0) ret=0;
+        
+        txdata(app,verb,ret);
+      }
       break;
   case CCSPI_RXDEC:
 #ifdef FIFOP
