@@ -72,7 +72,7 @@ if sys.argv[1] == "read":
     if len(sys.argv) > 4:
         count = int(sys.argv[4], 16)
     print "Reading %i bytes from device 0x%02x starting at 0x%02x." % (count, devadr, start)
-    data = []
+    data = b''
     for x in xrange(0, count, 128):
         data += client.I2Ctrans(min(128, count - x), [devadr, ((start + x) >> 8) & 0x0ff, (start + x) & 0x0ff])
     if data:
