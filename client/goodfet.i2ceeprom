@@ -14,6 +14,8 @@ if len(sys.argv) == 1:
     print "%s dump 0x$target $filename.bin [0x$start [0x$length]]" % sys.argv[0]
     print "%s read 0x$target [0x$start [0x$length]]" % sys.argv[0]
     print "%s write 0x$target 0x$adr 0x$val [0x...]" % sys.argv[0]
+    print "   NOTE: Some chips use 2 address bytes, in this case use:"
+    print "         %s write 0x$target 0x$adrHigh 0x$addrLow 0x$val [0x...]" % sys.argv[0]
     print "%s scan" % sys.argv[0]
     sys.exit()
 
