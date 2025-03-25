@@ -8,7 +8,7 @@ mcu?=RUNCONFIG
 GOODFET?=/dev/tty.usbser*
 
 #For tos-bsl, use --invert-reset --invert-test
-MSP430BSL?=goodfet.bsl --speed=38400
+MSP430BSL?=goodfet.bsl #--speed=38400
 JTAG=msp430-jtag
 
 
